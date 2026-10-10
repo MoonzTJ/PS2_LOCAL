@@ -31,6 +31,28 @@ including rejection of different source files/corrupt payloads and rollback
 after an interrupted write. The Windows folder picker and patched live game
 need the next Windows run. No executable, assets, credentials or logs are shipped.
 
+## Optional launcher for one test folder
+
+If you have several test folders, an optional helper can apply V31.2 and open
+the server, client and controls from one verified folder:
+
+[Download ps2_preload_timing_v31_2_launcher.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/main/downloads/ps2_preload_timing_v31_2_launcher.zip)
+
+Close all old consoles, **Extract All**, and double-click
+**start_patched_test.cmd**. Choose the existing V31 test folder. Wait for
+**V31.2 SERVER VERIFIED**, then perform the same LocalVS timeline capture.
+The helper refuses occupied server ports and checks the running build before
+opening the client and controls. It preserves backups and also accepts the
+original V31.2 patch. The server startup banner now explicitly identifies V31.2.
+The original timing patch above remains valid; its packet behavior is unchanged.
+
+Package SHA-256: `0b06458a7a3b668025f1767c2009e5214fdc2a43a2d347e291c84c534c36fba3`.
+
+Validation: all 158 Python tests pass. A patched copy of the original V31 archive
+starts the backend with the expected fingerprint and preserves the zone/starter
+data. The launch-order and wrong-build guards pass. Actual Windows window/game
+launches remain for Windows verification.
+
 ## Loading timeline helper
 
 [Download ps2_loading_observer.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/main/downloads/ps2_loading_observer.zip)
@@ -53,7 +75,7 @@ Package SHA-256: `db349a677b16f305c3970db6997827dd7b21ce22db3167a8a1aca4d1160bd4
 
 Validation: standalone ZIP/import and ten observation guards passed. The user
 successfully captured two Windows timelines with 597 available samples each.
-The current full 151-test regression suite still passes.
+The current full 158-test regression suite passes.
 
 ## Loaded code capture
 
