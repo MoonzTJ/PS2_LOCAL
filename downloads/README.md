@@ -1,11 +1,42 @@
 # Local PS2 test helpers
 
-## Next test: loading timeline
+## Next test: V31.2 preload timing
 
-[Download ps2_loading_observer.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/main/downloads/ps2_loading_observer.zip)
+[Download ps2_preload_timing_v31_2.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/main/downloads/ps2_preload_timing_v31_2.zip)
+
+On the GitHub file page, click **Download raw file** near the upper right. Use
+your signed-in GitHub session.
+
+1. Close the game, client launcher, controls window, and local server.
+2. Save the patch ZIP, choose **Extract All**, and double-click
+   **apply_preload_patch.cmd**.
+3. Choose your existing **V31 test folder** containing
+   `start_local_server.cmd` and `start_local_client.cmd`. The installer verifies
+   the three original source files and backs them up automatically.
+4. Restart the server, client and controls from that same test folder.
+   Select **LocalVS** and wait before clicking Play.
+5. Use your existing **ps2_loading_observer** helper below. Capture Play once
+   for **90 seconds** and upload the timeline ZIP and same-run console report.
+
+This patch sends PreloadDone after the client's native readiness message,
+following the loading flag reset. The next check is whether the preload flag
+stays true. Complete class definitions are still missing; world entry remains
+unfinished. The packet bytes, starter data and other V31 controls are preserved.
+
+Package SHA-256: `92f448427a181984f876a1602c45ab0ba539e94699ec88a9c18a7b057325c2fd`.
+
+Validation: 151 Python tests and 83 native world checks passed, including native
+loading reset and readiness-message serialization. Five installer checks passed,
+including rejection of different source files/corrupt payloads and rollback
+after an interrupted write. The Windows folder picker and patched live game
+need the next Windows run. No executable, assets, credentials or logs are shipped.
+
+## Loading timeline helper
+
+[Download ps2_loading_observer.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/main/downloads/ps2_loading_observer.zip)
 
 1. Save the ZIP and choose **Extract All** in Windows.
-2. Start your existing V31 local server and game. Select **LocalVS** in the
+2. Start your patched V31.2 local server and game. Select **LocalVS** in the
    character menu and wait before clicking Play.
 3. In the extracted `ps2_loading_observer` folder, double-click
    **capture_loading_timeline.cmd**.
@@ -20,10 +51,9 @@ the game or server. Short transitions can fall between samples.
 
 Package SHA-256: `db349a677b16f305c3970db6997827dd7b21ce22db3167a8a1aca4d1160bd4b1`.
 
-Validation: standalone ZIP/import checks, ten observation guard cases, all
-149 Python regression checks, eight native profile cases and 75 native world
-cases passed in the cloud workspace. The new timeline helper still needs its
-first Windows run.
+Validation: standalone ZIP/import and ten observation guards passed. The user
+successfully captured two Windows timelines with 597 available samples each.
+The current full 151-test regression suite still passes.
 
 ## Loaded code capture
 
