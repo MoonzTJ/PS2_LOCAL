@@ -1,6 +1,27 @@
 # Local PS2 test helpers
 
-## Next capture: compare the online executable
+## Next capture: online loaded code and constants
+
+[Download ps2_online_code_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_online_code_capture.zip)
+
+Sign into GitHub and choose **Download raw file**, then extract into a fresh
+folder. Close the local game; leave the normal online game at its character
+menu. Double-click **capture_online_image.cmd**. Upload **every file inside the
+folder that opens separately**: one ZIP, or all `.part` files plus `manifest.json`.
+Send its failure report too. No spawning or folder-zipping is needed.
+
+All three supplied disk-copy parts and the executable verify. The online version
+is 0.0.1534.609692; the local reference is 0.0.1533.609523. Section positions
+changed, and code/class constants are protected on disk. This collector is
+locked to the supplied online hash and captures only loaded code and read-only
+constants for comparison. It exports no class values or writable/heap regions.
+All 232 Python tests pass. Actual Windows code capture and class compatibility
+still need verification. Keep V31.2 installed. See `docs/ONLINE_CODE_CAPTURE.md`.
+
+Package SHA-256:
+`dc559123ca9f9f9d2b01633238c98a4daedea60ef01bd31b8040dac4ab98697e`.
+
+## Earlier capture: compare the online executable
 
 [Download ps2_client_build_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_client_build_capture.zip)
 
