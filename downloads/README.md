@@ -14,9 +14,16 @@ This read-only helper verifies the matching executable and exports only static
 numeric VS class definitions, including both collections. A different build
 produces a hash report before memory is opened. Keep V31.2 installed in the
 local copy. This capture is separate from a local loading-screen trial.
-Standalone package checks and 211 Python tests pass; 357 native expectations
-include full record reconstruction. Actual Windows helper execution still
-requires the user's capture. See `docs/CLASS_DEFINITION_EXPORT.md`.
+Revision 2 fixes the first capture's missing executable path by querying Windows
+directly with limited process access. No install-folder selection is needed.
+The console displays **Read-only class exporter revision 2**. If Windows denies
+access, upload the report with its stage and error code.
+Standalone package checks and 217 Python tests pass; 357 native expectations
+include full record reconstruction. The revised Windows helper still needs a
+capture on the user's PC. See `docs/CLASS_DEFINITION_EXPORT.md`.
+
+Revision 2 package SHA-256:
+`b88b12f44428fb04ad9cf4f18f7b86efab5330bc1b888fea98152a2e839b3b56`.
 
 ## Earlier test: V31.2 preload timing
 

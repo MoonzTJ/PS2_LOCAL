@@ -1,5 +1,10 @@
 # Read-only class definition export
 
+Revision 2 fixes detection when PowerShell finds the game but returns no
+executable path. The helper now obtains that path directly from Windows using
+QUERY_LIMITED_INFORMATION, before hashing the file or requesting memory access.
+The window identifies itself as `Read-only class exporter revision 2`.
+
 Use the normal online PlanetSide 2 client for this capture. Keep the V31.2
 local copy installed for later local tests. This helper runs separately and
 does not install or patch anything in either game folder.
@@ -18,10 +23,12 @@ It records the executable hash and stops before reading process memory. If
 the class map is empty or exceeds the capture limits, the report marks it
 incomplete and exports no fabricated record values.
 
-The helper uses 64-bit Python 3 and Windows PowerShell. It verifies the selected
+The helper uses 64-bit Python 3 and Windows PowerShell. No install folder needs
+to be selected: it locates the executable of the running game. It verifies the selected
 executable against the matching build's SHA-256 and checks the loaded native
-signatures. Access uses QUERY_INFORMATION and VM_READ only. If Windows denies
-access, send the generated report; the helper does not change access protections.
+signatures. Class reads use QUERY_INFORMATION and VM_READ only. If Windows denies
+access, send the generated report; it includes the failing stage and Windows error
+code, without local paths. The helper does not change access protections.
 
 Only static numeric definitions for VS class keys 17/19/20/21/22/23 are exported.
 The helper does not read command lines, credentials, account/character lists,
