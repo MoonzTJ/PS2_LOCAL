@@ -1,6 +1,27 @@
 # Local PS2 test helpers
 
-## Next capture: complete static class definitions
+## Next capture: compare the online executable
+
+[Download ps2_client_build_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_client_build_capture.zip)
+
+Sign into GitHub and choose **Download raw file**. Extract into a fresh folder.
+Close the local game, open the normal online game at its character menu, and
+double-click **capture_client_build.cmd**. Upload **all files in the folder that
+opens**: either one ZIP or every `.part` file plus `manifest.json`. Large files
+are split automatically; no manual Python commands or spawning are needed.
+
+The revision 2 class report confirms executable detection, but the online file's
+SHA-256 differs from the local reference. This separate helper copies only the
+on-disk executable and metadata for offline comparison. It reads no process
+memory and does not authorize an unverified layout for class capture.
+The original matching executable passes the disk-copy, CRC/checksum and three-part
+reconstruction check. All 224 Python tests pass. Actual online capture remains
+pending. Keep V31.2 installed. See `docs/CLIENT_BUILD_CAPTURE.md`.
+
+Package SHA-256:
+`363ce00d0f12510fcce2ec5b3e6ff268a145bfabc72b378e843a85b3a2cd6592`.
+
+## Earlier capture: complete static class definitions
 
 [Download ps2_class_definition_export.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_class_definition_export.zip)
 
