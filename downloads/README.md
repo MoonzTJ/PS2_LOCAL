@@ -1,6 +1,24 @@
 # Local PS2 test helpers
 
-## Next test: V31.2 preload timing
+## Next capture: complete static class definitions
+
+[Download ps2_class_definition_export.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_class_definition_export.zip)
+
+Use a signed-in GitHub session and choose **Download raw file**. Extract the
+ZIP to its own folder. Enter the normal online game, spawn once, leave that
+game window open, and double-click **capture_class_definitions.cmd**. Upload
+the generated **local-class-definitions-....zip** from its **reports** folder.
+Close the local game window first so only one game process is running.
+
+This read-only helper verifies the matching executable and exports only static
+numeric VS class definitions, including both collections. A different build
+produces a hash report before memory is opened. Keep V31.2 installed in the
+local copy. This capture is separate from a local loading-screen trial.
+Standalone package checks and 211 Python tests pass; 357 native expectations
+include full record reconstruction. Actual Windows helper execution still
+requires the user's capture. See `docs/CLASS_DEFINITION_EXPORT.md`.
+
+## Earlier test: V31.2 preload timing
 
 [Download ps2_preload_timing_v31_2.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/main/downloads/ps2_preload_timing_v31_2.zip)
 
