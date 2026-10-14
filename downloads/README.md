@@ -1,4 +1,27 @@
-## Next test: local weapon and ability resources
+## Next test: complete shared data pack
+
+[Download ps2_shared_data_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_shared_data_capture.zip)
+
+Extract to your Desktop, outside the game folder. Double-click
+**collect_shared_data.cmd**, choose the copied **PlanetSide 2 Local** game folder
+containing `PlanetSide2_x64.exe` and `Resources`, then upload the
+**local-shared-data-….zip inside the results folder** that opens. Upload the
+small failure ZIP too if verification stops. No running game/server, launcher,
+administrator startup or manual Python commands are needed. Keep V31.2.
+
+This captures the complete 10 MB shared asset pack with 2,647 resources,
+including entries with unrecovered filenames. It verifies every resource,
+anchors, exact matching pins, stable bytes and output hashes. The prior asset
+test is complete; no repeat of that test or the online capture is requested.
+Complete definitions and Indar entry remain unfinished.
+
+All **275 Python tests pass**; setup and backend status/report export verify.
+Prior native outcomes are retained history. All ten earlier helper ZIPs are
+unchanged. SHA-256:
+`5e821048f2b4273ad6191079b325b48058ac2099fc67c976d9b2aadd936fe110`.
+See [the procedure](../docs/SHARED_DATA_CAPTURE.md).
+
+## Earlier test: local weapon and ability resources
 
 [Download ps2_weapon_resource_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_weapon_resource_capture.zip)
 
