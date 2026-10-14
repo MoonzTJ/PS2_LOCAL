@@ -1,3 +1,24 @@
+## Next test: local weapon and ability resources
+
+[Download ps2_weapon_resource_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_weapon_resource_capture.zip)
+
+Extract the ZIP into a fresh folder, then double-click
+**collect_weapon_resources.cmd**. Choose the copied **PlanetSide 2 Local** game
+folder containing `PlanetSide2_x64.exe` and `Resources/Assets`. Upload every file
+inside the folder that opens: the capture ZIP, or all parts plus `manifest.json`.
+Upload the small failure ZIP if the exact build/asset checks stop the capture.
+
+No game, server, DBG launcher, administrator startup or manual Python commands
+are needed. This reads only disk assets. It looks for 25 weapon/ability/skill table
+candidates and preserves all matching pack indexes for further offline searches.
+The executable, two anchors and all 132 saved index pins must match. Candidates
+are not verified server-field mappings; Indar entry remains unfinished.
+Keep V31.2 installed. All nine earlier helper ZIPs remain unchanged.
+
+260 Python tests and 38 new native checks pass. Package CRC, source manifests,
+standalone imports and backend status/export verify. Windows capture remains to
+test. SHA-256: `31c6627613c149edccffe80e2578709b0fec58201ecb118367de83e54218c6d2`. See [the procedure](../docs/WEAPON_RESOURCE_CAPTURE.md).
+
 ## Next test: online code collector revision 2
 
 [Download ps2_online_code_capture_v2.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_online_code_capture_v2.zip)
