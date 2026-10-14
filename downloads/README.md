@@ -1,3 +1,23 @@
+## Next test: online code collector revision 2
+
+[Download ps2_online_code_capture_v2.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_online_code_capture_v2.zip)
+
+Extract into a fresh folder. Close the local game, launch the normal online game
+through DBG and leave it at the character menu. Double-click
+**capture_online_image_v2.cmd**. Upload every file inside the folder that opens,
+including the small failure ZIP if access is denied. No spawning, administrator
+launch or manual Python commands are needed.
+
+This separate collector requests narrower read access and reports the exact
+failing API. It keeps the verified online build/section guards and stops on
+denial. A successful capture supplies code/constants for offline class-layout
+comparison; it exports no class values and does not change local Indar loading.
+Keep V31.2 installed. The eight earlier helper ZIPs remain unchanged.
+
+SHA-256: `77bed3eb596a26974641a329db4410317bc5e2b8e4ec27579992829b007955b3`. All 246 Python tests pass; package CRC, source manifest
+and standalone imports verify. Real Windows capture remains for this test.
+See [the procedure](../docs/ONLINE_CODE_CAPTURE_V2.md).
+
 # Local PS2 test helpers
 
 ## Next capture: online loaded code and constants
