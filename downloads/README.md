@@ -1,4 +1,29 @@
-## Next client test: isolated class delivery probe
+## Next capture: current local game state
+
+[Download ps2_local_state_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_state_capture.zip)
+
+The received Windows timeline confirms 24 classes, completed profile preloading
+and state 27, matching the gameplay HUD/map screenshots. The 3D view is sky-only;
+spawn, terrain and item/inventory delivery remain unfinished. The original
+probe's detailed snapshot worker had an import-path packaging error.
+
+Leave the local game and class-probe server open. Extract this new helper into
+its own Desktop folder, run **capture_local_state.cmd**, choose the copied local
+game folder containing PlanetSide2_x64.exe, and upload **local-state-....zip** from
+the **reports** folder that opens. No repeat 90-second timeline, game patch,
+server replacement or manual Python commands are needed.
+See [the complete procedure](../docs/LOCAL_STATE_CAPTURE.md).
+
+This read-only capture verifies the local server instance/mode and matching
+local process, then exports bounded class/loader/player state. Two decoded
+player-record vectors are observed without claiming live camera or valid-spawn
+semantics. A failure ZIP contains no partial snapshot or install paths.
+All twelve earlier helper ZIPs and game packet sources are unchanged.
+New ZIP SHA-256: `2b9570421ef9043a2b22081ea32ed2d82de4d7f7564de7da4717dd7c3f5d6dcb`.
+292 Python tests pass, including standalone/direct-subprocess regressions.
+The earlier native execution counts are retained history, not newly rerun.
+
+## Completed client test: isolated class delivery probe
 
 [Download ps2_class_delivery_probe.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_class_delivery_probe.zip)
 

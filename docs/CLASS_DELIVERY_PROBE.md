@@ -1,5 +1,13 @@
 # Local class delivery probe
 
+**Windows result received:** the timeline confirms 24 classes, completed profile
+preloading and state 27. The user reached the gameplay HUD/map with a sky-only
+3D view and empty menus. No repeat loading timeline is needed for that result.
+The original ZIP's detailed snapshot subprocess has a server/tools import-path
+error. Keep that ZIP unchanged and use the separate
+[current-state capture](LOCAL_STATE_CAPTURE.md) with the already-open local game
+to obtain the missing details. The package generator is repaired for future builds.
+
 This isolated experiment checks whether the matching Windows client receives
 class records and creates its profile loader. It is **not an Indar loading fix**.
 It supplies 24 known class identities, with all other fields left at the current
