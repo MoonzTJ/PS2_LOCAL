@@ -1,4 +1,41 @@
-## Next test: complete shared data pack
+## Next client test: isolated class delivery probe
+
+[Download ps2_class_delivery_probe.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_class_delivery_probe.zip)
+
+Extract outside your game and old V31.2 test folder. Close the old game/server.
+Run **start_class_probe.cmd** and choose the copied **PlanetSide 2 Local game
+folder containing PlanetSide2_x64.exe**. Select **LocalVS** and capture its class
+state. Run **capture_probe_timeline.cmd**, press Enter, click Play once and wait
+90 seconds. Capture class/loading state again, wait five seconds and save a
+console report. Send both ZIPs from the helper's **reports** folder plus a screenshot.
+See [the complete procedure](../docs/CLASS_DELIVERY_PROBE.md).
+
+This tests receipt of 24 identity-only class records and loader creation. Native
+constructor defaults fill the other fields; these are incomplete experimental
+records. **It is not an Indar loading fix.** Full class-data research continues.
+V31.2 timing and the existing controls/preview are preserved. The helper has its
+own server/tools folders and installs nothing over the existing test.
+
+282 Python tests pass; eight focused native constructor/delivery checks,
+54 profile regressions (including three expected guarded overreads), and 83
+world-confirmation checks meet expectations. Windows acceptance is unverified.
+All eleven earlier helper ZIPs retain their hashes. New ZIP SHA-256:
+`5f4b6e35922ac80e18b5225b07e9e1168320322097951fad84abd4f4e84d2f7e`.
+
+The sections below retain completed tests and earlier evidence.
+
+## Latest result: complete shared data received
+
+The full pack verifies: all 2,647 resources and all 42 earlier tables match.
+It supplies 225 tables, including the previously missing client requirement
+tables. Jump-jet expression 3519 and its operands resolve, alongside all twelve
+nonzero starter client expression references. The real Light Assault criterion
+queries classification 12; full class memberships and Indar entry remain open.
+Keep V31.2. No repeat capture or unchanged loading test is requested.
+See `docs/reviews/shared-data-result-20261014.md` and the current checkpoint.
+The helper procedure below describes the completed test.
+
+## Earlier test: complete shared data pack
 
 [Download ps2_shared_data_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_shared_data_capture.zip)
 
@@ -21,6 +58,15 @@ unchanged. SHA-256:
 `5e821048f2b4273ad6191079b325b48058ac2099fc67c976d9b2aadd936fe110`.
 See [the procedure](../docs/SHARED_DATA_CAPTURE.md).
 
+## Latest result: local asset test completed successfully
+
+The uploaded capture verifies all 132 matching pack indexes and recovers 19
+tables, including 16 new ability/skill and weapon display/effect tables. The
+results are saved. No repeat capture or new Windows loading test is requested.
+Keep V31.2. Complete native definitions and requirements remain incomplete.
+See `docs/reviews/weapon-resources-result-20261014.md` and the current checkpoint.
+The helper procedure below describes the already completed test.
+
 ## Earlier test: local weapon and ability resources
 
 [Download ps2_weapon_resource_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_weapon_resource_capture.zip)
@@ -41,6 +87,15 @@ Keep V31.2 installed. All nine earlier helper ZIPs remain unchanged.
 260 Python tests and 38 new native checks pass. Package CRC, source manifests,
 standalone imports and backend status/export verify. Windows capture remains to
 test. SHA-256: `31c6627613c149edccffe80e2578709b0fec58201ecb118367de83e54218c6d2`. See [the procedure](../docs/WEAPON_RESOURCE_CAPTURE.md).
+
+## Latest result: revision-2 capture completed
+
+The supplied online build and executable identity verify, but the module
+snapshot is denied with OS error 5 before any process-memory reads. No unchanged
+retry or new Windows test is requested. Keep V31.2 installed. See
+`docs/reviews/online-module-snapshot-denied-20261014.md` and the current checkpoint
+for the retained failure report and matching offline weapon-delivery trace.
+The helper download/procedure below describes the already completed test.
 
 ## Next test: online code collector revision 2
 
@@ -64,7 +119,34 @@ See [the procedure](../docs/ONLINE_CODE_CAPTURE_V2.md).
 
 # Local PS2 test helpers
 
-## Next capture: online loaded code and constants
+## Current status
+
+Local source work now executes named loadout membership, item-line-to-definition
+resolution and packed loadout/slot key operations alongside received records,
+owned-item indexes and bounded weapon detail: 233 Python tests and 731 native
+expectations pass. Equipment wire/reverse GUID indexes now execute, and slots
+resolve to real owned objects; native removal breaks stale references. Selected
+equipment-row key/mode and shared catalog/progression/options are fixtures.
+Native weapon conversion, metadata lookup and current/old loadout auxiliary
+references now execute. GUID and definition lookups can select different owned
+copies. Real ammunition/group/mode initialization and nonempty instance detail
+now execute through the factory, including all four full player fixtures.
+Partial auxiliary/service values remain fixtures; actor setup and notifications
+are observed boundaries. Shared catalog
+delivery, complete class/item/weapon values, publication and Windows Indar entry
+remain unfinished. These changes are
+validation tools; no new Windows helper or game-loading patch is published.
+Keep V31.2 installed. See `docs/reviews/weapon-initialization-20261014.md`.
+
+The online code collector verified the supplied build but Windows denied process
+access (error 5). Its report contains no code sections or class values. The user
+launches normally through DBG without administrator startup; the exact cause
+is not established. The report is saved. No unchanged capture or new Windows
+loading test is requested. Local-image class analysis continues; keep V31.2.
+See `docs/CURRENT_CHECKPOINT.md` and
+`docs/reviews/weapon-initialization-20261014.md` for the current review.
+
+## Earlier capture: online loaded code and constants
 
 [Download ps2_online_code_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_online_code_capture.zip)
 
