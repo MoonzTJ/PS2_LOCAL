@@ -1,4 +1,25 @@
-## Next test: active world actor and graphics location
+## Next test: LocalVS actor identity and position
+
+[Download ps2_local_actor_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_actor_capture.zip)
+
+The previous capture found an active actor but did not measure its position.
+This read-only diagnostic adds verified actor identity and clean position-cache
+observations. It does not change spawn or equipment data.
+
+Keep the local class-probe server and existing **LocalVS** world view open.
+Extract into a new Desktop folder, run **capture_local_actor.cmd**, select the
+copied Local game folder and keep the view still. Upload the **local-state-....zip**
+from this helper's **reports** folder and a screenshot. It does not start the
+server; use the original **start_class_probe.cmd** if needed and leave its READY
+console open. See [the procedure](../docs/LOCAL_ACTOR_CAPTURE.md).
+
+**317 Python tests** and **16 pinned native actor getter cases** pass. Native
+objects/Lua output sinks are fixtures; actual getters and original vtables run.
+Windows actor measurement is pending. All14 older ZIPs retain their hashes.
+31,351 bytes; SHA-256:
+`4e1059776186140a72e66c9db2be21ffdfd3a525663127f28861a64df6e3b4ba`.
+
+## Completed capture: active world actor and graphics location
 
 [Download ps2_local_scene_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_scene_capture.zip)
 
