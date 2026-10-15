@@ -1,4 +1,26 @@
-## Next capture: current local game state
+## Next test: active world actor and graphics location
+
+[Download ps2_local_scene_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_scene_capture.zip)
+
+The previous state capture succeeded and the screenshot shows 3D map geometry.
+This read-only diagnostic checks whether the client has an active world actor
+and observes the graphics position used by GetPlayerLoc's fallback. It does
+not change spawn data or claim to fix placement.
+
+Keep the existing local class-probe server and game open on **LocalVS**. Extract
+this ZIP into its own Desktop folder, run **capture_local_scene.cmd**, choose
+the copied Local game folder and hold the view still. Upload **local-state-....zip**
+from its **reports** folder and a screenshot. This helper does not start the
+server; use the original **start_class_probe.cmd** if needed and leave its READY
+server window open. No repeat timeline. See [the procedure](../docs/LOCAL_SCENE_CAPTURE.md).
+
+All **303 Python tests pass** and **four pinned native GetPlayerLoc branch
+cases pass**. The actor virtual getter/Lua sink in those native fixtures are
+explicit substitutes; actual Windows scene observation is the next test.
+All 13 previous ZIPs retain their hashes. SHA-256:
+`47564f556151144fb1895d7976f075a40b3156d59f9d813f60438dc0159f1663`.
+
+## Completed capture: current local game state
 
 [Download ps2_local_state_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_state_capture.zip)
 
