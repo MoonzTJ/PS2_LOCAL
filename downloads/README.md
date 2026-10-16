@@ -1,4 +1,27 @@
-## Separate VS testing character
+## Current test: character loadout delivery
+
+[Download ps2_character_loadout_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_loadout_test.zip)
+
+On the GitHub file page, click **Download raw file**. This separate test applies
+the verified saved/current VS Light Assault loadout references to **LocalVSTest**
+and captures their actual native state, owned/equipped counts and bounded shared
+rank-zero item-line lookups. Appearance, owned items and playable control remain
+unfinished; this is a character-data test, not a spawning fix.
+
+Close the old local game/server, extract outside the copied game, run
+**start_character_loadout_test.cmd**, choose the copied Local client, select
+**LocalVSTest** and press Play. At the world HUD, run
+**capture_character_loadout_test.cmd** and upload the new **local-state-....zip**.
+If loading stays up, wait30 seconds and capture there. See
+[the procedure](../docs/CHARACTER_LOADOUT_TEST.md). No repeat location probe.
+
+345 Python tests and14 focused native checks pass. Extracted package imports,
+live startup/report CRC and unchanged starter saves across2 starts verify.
+Actual format8 Windows capture/rendering remains to be tested. All17 earlier
+ZIPs stay frozen.2,944,599 bytes; SHA-256:
+`3b4d3d4ae10dfcf0d511caf9f226193ec8e85ac8ee73b4a94f77037edd85f303`.
+
+## Previous release: separate VS testing character
 
 [Download ps2_vs_test_character.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_vs_test_character.zip)
 
@@ -21,7 +44,7 @@ Windows display/login of the fifth character remains unverified.
 All16 prior helpers stay frozen.2,931,086 bytes; SHA-256:
 `ea996259d2d39303f332baa7e9e521b043ff5c28283519c338c23dddcc2e8b8a`.
 
-## Next test: one-shot LocalVS placement
+## Previous test: one-shot LocalVS placement
 
 [Download ps2_location_delivery_probe.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_location_delivery_probe.zip)
 
