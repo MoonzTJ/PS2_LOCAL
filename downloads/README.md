@@ -1,4 +1,24 @@
-## Next test: LocalVS actor identity and position
+## Next test: one-shot LocalVS placement
+
+[Download ps2_location_delivery_probe.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_location_delivery_probe.zip)
+
+The matching actor was measured at the origin. This opt-in experiment sends the
+native UpdateLocation message once, targeting an exact Indar spawn-tube asset
+anchor. A safe player spawn and rendered camera attachment remain unverified.
+
+Close the previous local game/server. Extract into a new folder outside the game,
+run **start_location_probe.cmd**, select the copied Local client and enter
+**LocalVS**. When its world view/HUD appears, run **apply_location_once.cmd**.
+Upload the resulting **local-location-....zip** and a screenshot. Do not resend
+in the same run. See [the procedure](../docs/LOCATION_DELIVERY_PROBE.md).
+
+**325 Python tests** and **44 pinned native location checks** pass. Fixtures
+isolate services/notifications and camera output; actual decoder, actor setter
+and transform math execute. Windows acceptance remains the next test.
+All15 previous helper ZIPs remain frozen. 2,930,319 bytes; SHA-256:
+`95f8904b53e0d15ef22b1b1c6231e5ebb864a1774d6f269a30f01a10df902ef7`.
+
+## Earlier test: LocalVS actor identity and position
 
 [Download ps2_local_actor_capture.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_local_actor_capture.zip)
 
