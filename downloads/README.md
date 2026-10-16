@@ -1,3 +1,26 @@
+## Separate VS testing character
+
+[Download ps2_vs_test_character.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_vs_test_character.zip)
+
+Adds **LocalVSTest** as a fifth character with a separate identity. The original
+LocalVS/NC/TR/NSO records remain unchanged. A shared server initializer persists
+separate starter seeds for LocalVS and LocalVSTest: VS Light Assault profile19,
+loadout17,14 resolved equipment references and per-character backend slot links.
+Native appearance/loadout/inventory delivery and playable control remain pending.
+This is a new testing identity, not the equipment/character-rendering fix.
+
+Extract into a separate folder outside the copied game. Close the previous local
+game/server, run **start_vs_test_character.cmd**, select the copied Local client
+and choose **LocalVSTest** (fifth entry). No repeat location test needed yet.
+See [the procedure](../docs/VS_TEST_CHARACTER.md). An opt-in five-row read-only
+capture is supplied for future initialization tests.
+
+333 Python tests and3 pinned native decoder cases pass. Extracted bundle start,
+report integrity and stable starter seeds across a restart are verified.
+Windows display/login of the fifth character remains unverified.
+All16 prior helpers stay frozen.2,931,086 bytes; SHA-256:
+`ea996259d2d39303f332baa7e9e521b043ff5c28283519c338c23dddcc2e8b8a`.
+
 ## Next test: one-shot LocalVS placement
 
 [Download ps2_location_delivery_probe.zip](https://github.com/MoonzTJ/PS2_LOCAL/raw/refs/heads/codex/class-definition-export/downloads/ps2_location_delivery_probe.zip)
