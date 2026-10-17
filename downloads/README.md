@@ -1,4 +1,29 @@
-## Current test: LocalVSTest owned equipment
+## Current test: owned equipment revision2
+
+[Download ps2_owned_inventory_test_v2.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_owned_inventory_test_v2.zip)
+
+Click **Download raw file** on the GitHub file page. Close the previous local game
+and server; extract this ZIP to a new folder outside the game. Run
+**start_owned_inventory_test.cmd**, choose the copied Local client, select
+**LocalVSTest** and press Play. At the world HUD run
+**apply_and_capture_owned_inventory.cmd** once. Upload its
+**local-owned-inventory-….zip**, including any failure report.
+[Procedure](../docs/OWNED_INVENTORY_TEST.md).
+
+The first report confirmed the equipment references and both item definitions,
+but the helper rejected native lookup mode1. Revision2 validates both modes0/1
+and requires the same exact single equipment row and slot/GUID links. Server
+item/self packets and saved state are unchanged. Appearance, weapons, abilities,
+control and spawning remain unfinished.
+
+352 Python tests and13 focused native expectations pass, including the expected
+missing-metadata boundary. The revised guard accepts the original unmodified
+Windows report. The extracted bundle verifies imports, health/status/report CRC
+and unchanged state across two starts. All19 older ZIPs stay frozen.
+2,954,606 bytes; SHA256:
+`5f363dc69369a0fd31653b7a406972967f1c616b6279da4d66802bf8b1a7bbe3`.
+
+## Previous test: LocalVSTest owned equipment v1
 
 [Download ps2_owned_inventory_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_owned_inventory_test.zip)
 

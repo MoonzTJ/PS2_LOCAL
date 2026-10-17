@@ -1,11 +1,11 @@
-# LocalVSTest owned inventory test
+# LocalVSTest owned inventory test — revision2
 
 This test adds two verified generic starter equipment instances and their slot
 GUID references. It checks actual receipt and linkage. Character appearance,
 weapons, abilities, movement and spawning remain incomplete.
 
 1. Close the previous local game and server windows.
-2. Extract the complete `ps2_owned_inventory_test.zip` into a new folder outside
+2. Extract the complete `ps2_owned_inventory_test_v2.zip` into a new folder outside
    the copied game. Keep its PS2_Server and PS2_Tools folders together.
 3. Run `start_owned_inventory_test.cmd`, choose the copied **Local** game,
    select **LocalVSTest**, and press Play. Keep the server and launcher open.
@@ -32,3 +32,8 @@ server-assigned test identities, separate from item-definition IDs. Raw unknown
 instance fields retain native constructor defaults. Equipment row zero is an
 experimental row matching the observed raw selector, with no claimed class-ID
 mapping. No online game capture or administrator launch is required.
+
+Revision2 corrects the prerequisite check for the client’s observed first-row
+equipment lookup mode1. Modes0 and1 are validated with the same single test row
+and exact slot/GUID links. The item packets and server state are unchanged.
+All identity, metadata, initialization and one-attempt guards remain enabled.
