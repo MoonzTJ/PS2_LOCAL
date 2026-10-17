@@ -1,4 +1,29 @@
-## Current test: character loadout delivery
+## Current test: LocalVSTest owned equipment
+
+[Download ps2_owned_inventory_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_owned_inventory_test.zip)
+
+On the GitHub file page, click **Download raw file**. Extract into a new folder
+outside the copied game. Close the old local game/server. Run
+**start_owned_inventory_test.cmd**, choose the copied Local client, select
+**LocalVSTest** and press Play. At the world HUD, run
+**apply_and_capture_owned_inventory.cmd** once. Upload its
+**local-owned-inventory-….zip**, even if the test stops or the game closes.
+See [the procedure](../docs/OWNED_INVENTORY_TEST.md).
+
+This checks two owned starter equipment instances and their GUID links.
+Before sending, it captures and verifies actual character state and native item
+metadata. It then sends once and captures again. Appearance, weapons, abilities,
+movement and spawning remain incomplete. No location command is included.
+
+351 Python tests pass.20 focused native cases meet expectations, including one
+expected missing-metadata boundary. The actual incremental decoder creates both
+items and resolves their slot references without changing the raw selection.
+The extracted bundle verifies status/report CRC and unchanged state over two
+starts. Actual Windows acceptance remains the next test. All18 previous ZIPs
+stay frozen.2,953,503 bytes; SHA-256:
+`d0cfe623d88d08a43bb00b1cdfb59b355274d008cd477ab55ca8bbe826264c84`.
+
+## Previous test: character loadout delivery
 
 [Download ps2_character_loadout_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_loadout_test.zip)
 
