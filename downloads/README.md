@@ -1,4 +1,26 @@
-## Current test: owned equipment revision2
+## Current test: character model and movement diagnostics
+
+[Download ps2_actor_loading_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_actor_loading_test.zip)
+
+Click **Download raw file**. Extract into a new folder outside the copied game;
+close the old local game/server. Run **start_actor_loading_test.cmd**, select
+the copied Local client and **LocalVSTest**, then Play. At the world HUD close
+menus/chat and run **capture_actor_loading_test.cmd** once. Switch back to the
+game within eight seconds. Remain idle until **TWO beeps**, then hold **W** until
+**THREE beeps**. Upload **local-actor-loading-....zip**, including a failure.
+See [the procedure](../docs/ACTOR_LOADING_TEST.md).
+
+The unchanged v2 server reproduces the verified two-item baseline. New read-only
+observations check the matching actor's model, actor-definition name, first-person
+arms flags and movement fields at idle and W-held, together with game focus.
+This is a diagnostic test, not a movement or appearance fix. No PC REA setup.
+365 Python tests and24 native getter cases pass; extracted imports, manifest,
+health/status/report CRC and stable saved state across2 backend starts verify.
+Actual Windows rendering, input consumption and playable spawning are pending.
+All20 earlier ZIPs stay frozen.2,961,361 bytes; SHA256:
+`d519855e9149c792c117fb4678d294155dfc87cecb3f3d79ef0a47ae0d5a5d5a`.
+
+## Previous test: owned equipment revision2
 
 [Download ps2_owned_inventory_test_v2.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_owned_inventory_test_v2.zip)
 
