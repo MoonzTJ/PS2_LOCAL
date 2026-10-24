@@ -1,4 +1,25 @@
-## Current test: character model and movement diagnostics
+## Current test: VS armor and helmet delivery
+
+[Download ps2_cosmetic_inventory_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_cosmetic_inventory_test.zip)
+
+Click **Download raw file**. Close the old local game/server and extract into a
+new folder outside the copied game. Run **start_cosmetic_inventory_test.cmd**,
+choose the copied Local client, select **LocalVSTest**, then Play. At the3D world
+view close menus/chat, run **apply_and_capture_cosmetics.cmd** once and switch
+back to the game. Stay idle until **THREE beeps** (about15 seconds); no W key is
+required. Upload **local-cosmetic-inventory-....zip**, including a failure, and
+report any armor/helmet/arms change. See [the procedure](../docs/COSMETIC_INVENTORY_TEST.md).
+
+This new isolated server mode supplies the VS starter armor/helmet instances and
+slot10/11 GUID links. It verifies actual client type39 metadata and model templates
+before sending. Appearance application, full weapons and movement remain
+unverified. Original preview, controls, timing and all21 older ZIPs stay frozen.
+370 Python tests and24 native expectations pass (including2 expected metadata
+boundaries). Extracted imports, manifests, actual encrypted delivery, status/report
+CRC and stable saved state across2 starts verify.2,967,926 bytes; SHA256:
+`859f60ee171595712237d23e06f1fe6d0125df789be9a1fb33eadd90750ee6db`.
+
+## Completed test: character model and movement diagnostics
 
 [Download ps2_actor_loading_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_actor_loading_test.zip)
 
