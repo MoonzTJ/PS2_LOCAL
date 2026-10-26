@@ -1,0 +1,439 @@
+PS2_LOCAL — PROGRESS AND BLOCKER REPORT FOR CLAUDE OPUS
+Prepared by Codex / Sol for Moon to share
+Date: October 26, 2026 (America/New_York)
+
+STATUS AT A GLANCE
+
+We can start our own local backend, select a synthetic character, authenticate
+the gateway, get through the loading sequence, and render Indar geometry and
+the game's menu shells. A targeted location message has also moved the actor
+and rendered view into the northern warpgate spawn room on Moon's Windows PC.
+
+We do NOT yet have a correctly initialized, equipped, freely movable soldier.
+The selected player actor exists, but its class/model/resource initialization
+is incomplete. We have just implemented a recovered active-profile message
+that changes actor class 0 to 19 in the matching native offline fixture. The
+new Windows client test is packaged and published; its result is still pending.
+
+This report distinguishes actual Windows results, native fixture results,
+backend implementation, and hypotheses. It is not a claim of complete PS2
+server infrastructure or a working movement fix.
+
+
+1. PUBLIC GITHUB ACCESS AND WHAT OPUS SHOULD READ
+
+Moon has made the repository public. During preparation of this report:
+  - GitHub API returned private=false and visibility=public.
+  - The current helper branch tip was verified with git ls-remote.
+  - The latest helper downloaded over HTTP with exactly the local file's hash.
+
+Repository:
+https://github.com/MoonzTJ/PS2_LOCAL
+
+CURRENT WORK BRANCH — use this rather than assuming main is current:
+https://github.com/MoonzTJ/PS2_LOCAL/tree/codex/class-definition-export
+
+Latest implementation publication, pinned commit:
+deaf2dbdf9da7825e7cefebd32453b1234518f53
+
+Download index at that commit:
+https://github.com/MoonzTJ/PS2_LOCAL/blob/deaf2dbdf9da7825e7cefebd32453b1234518f53/downloads/README.md
+
+Latest helper, direct ZIP:
+https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/deaf2dbdf9da7825e7cefebd32453b1234518f53/downloads/ps2_profile_activation_test.zip
+
+Latest procedure:
+https://github.com/MoonzTJ/PS2_LOCAL/blob/deaf2dbdf9da7825e7cefebd32453b1234518f53/docs/PROFILE_ACTIVATION_TEST.md
+
+Important access distinction: this published commit contains 45 files under
+docs/ and downloads/. It is NOT the entire development checkout. Runnable
+server/tool source and required server datasets are inside the helper ZIPs.
+The larger local checkout also has tests, native validation harnesses, reviews,
+original input captures and retained analysis that are not all published.
+Public repository access does not give Opus access to our cloud filesystem.
+
+Unpack the latest ZIP and inspect, in particular:
+  PS2_Server/profile_activation.py
+  PS2_Server/gateway.py
+  PS2_Server/local_server.py
+  PS2_Server/player_world.py
+  PS2_Server/starter_character.py
+  PS2_Server/starter_inventory.py
+  PS2_Server/cosmetic_inventory.py
+  PS2_Server/profile_catalog.py
+  PS2_Server/profile_probe.py
+  PS2_Server/item_definitions.py
+  PS2_Tools/active_profile_observer.py
+  PS2_Tools/actor_initialization.py
+  PS2_Tools/profile_activation_capture.py
+  PS2_Tools/run_profile_activation_test.py
+
+Do not construct root-level GitHub links to those modules and interpret a 404
+as missing project work: they are packaged paths. If your tools cannot unpack
+ZIPs, identify the exact additional source/proof files you need from Moon.
+This new TXT is prepared for Moon to share; it is not included in the pinned
+implementation commit above.
+
+
+2. PROJECT GOAL AND PACKAGE BOUNDARIES
+
+The goal is an independently launched local PS2 backend using Moon's separate
+copied Windows client. First playable target: VS Light Assault on Indar.
+Broader faction/class support and world/gameplay services follow. Dedicated
+hosting and multiplayer are later milestones; feature completeness is not
+established or assigned a reliable completion date.
+
+Agreed layout:
+  PS2_Server/  Authoritative services, required data, settings, saves and logs
+  PS2_Client/  Separate copied game executable, rendering assets and settings
+  PS2_Tools/   Launchers, controls, test and capture helpers
+
+The test bundles implement the server/tools split without redistributing or
+moving Moon's client. The CMD files launch independent processes. Server code
+is currently Python with native C validation tools used during development.
+
+We do not have Daybreak's original closed-source server implementation.
+We are writing compatible backend behavior from supported local data,
+client-visible protocol contracts, matching native analysis and public sources.
+Original server binaries are not the only possible route to an emulator;
+their absence leaves substantial behavior for us to reconstruct and implement.
+
+
+3. INPUTS AND REFERENCE MATERIAL ALREADY AVAILABLE
+
+Matching local client: PlanetSide2_x64.exe, build 0.0.1533.609523.
+Executable SHA256:
+e32f897cd52e5f24e8000901ab8a18814c691eb8aeb21049b943fb1320bfe957
+
+We retained three readable loaded code/constants sections for this build.
+The executable's packed on-disk code is not interchangeable with those loaded
+sections. Native runners pin the appropriate inputs rather than executing
+unknown bytes. Original executable/code captures are not in the public helper.
+
+Local asset work includes a verified shared pack with 2,647 decoded resources,
+225 delimited tables, and matching Indar zone/object-placement data. The
+backend catalog imports nine relevant pinned tables containing 33,720 unique
+client item definitions and resolves 24 faction/class default-reference maps.
+VS Light Assault profile 19/loadout 17 resolves fourteen starter references.
+These are local-build data joins, not complete serialized gameplay objects.
+
+Historical references include psemu's PS2 emulator/SOE networking, Forgelight
+zone and character-view tools, SOE locale tooling, PS2LS, and the PSForever
+PS1 login/server architecture. Sanctuary protocol/tooling references and
+public Census data are also useful. Historical schemas and PS1 protocol
+details are not assumed compatible with this client. Public Census provides
+useful identities/relations but has no matching-client-build marker.
+
+Moon also supplied normal-game screenshots/videos of selection, deployment,
+warpgates, menus and a VR target. They document expected behavior, not the
+network contract or evidence that our local gameplay systems work.
+
+
+4. VERIFIED ACCOMPLISHMENTS
+
+A. Local transport and handoff
+
+Our backend implements the exercised local SOE UDP session/reliable transport,
+ACK/retry/fragmentation and gateway handoff paths. Encrypted test clients
+exercise login and continuous gateway traffic. This is a functioning base,
+although most higher-level gameplay traffic remains unimplemented or untraced.
+
+The working initialization order is meaningful:
+  validated handoff -> zone/self initialization
+  startup signal 0x73 -> class probe + initial-data completion
+  later signal 0x04 -> PreloadDone
+
+The V31.2 timing change avoids the observed earlier preload-flag reset problem.
+Preserve that order and the once-per-session guards. Existing transport
+success is not proof of every gameplay packet or required response.
+
+B. World data and visible scene loading
+
+The backend independently loads 2,793 Indar areas, 631 actor groups and 67,308
+placement records. Moon's Windows screenshots show rendered 3D geometry;
+loading is no longer confined to a login screen or a 2D map texture.
+Menu shells also open, but their inventories/profile/territory content is
+largely empty or inconsistent because the corresponding data/services are
+incomplete.
+
+C. Targeted placement, verified on Windows
+
+A recovered 37-byte ClientUpdate.UpdateLocation message, header 11 0C 00,
+moved the measured actor and rendered view to the northern warpgate area.
+Target/graphics position:
+  (2946.908203125, 65.78419494628906, 126.0810546875, 1)
+Measured actor position:
+  (2946.908203125, 65.35009002685547, 128.92059326171875, 1)
+
+Moon saw the textured spawn-room interior but reported a fixed view and no
+WASD movement. The position offset's cause is unknown. This proves accepted
+placement, not a valid spawn, grounding/collision or a controllable soldier.
+It also shows territory ownership is not required merely to render that
+location. Territory/spawn eligibility still need real server implementation.
+
+D. Starter references and two-item ownership, verified separately on Windows
+
+Current/saved VS starter references can be delivered and observed. The owned
+item probes demonstrated that the client receives/stores two generic native
+instances with matching equipment GUID links.
+
+One successful original probe supplied definition 804621 and definition 25.
+A later cosmetic probe supplied:
+  armor 6002573, slot 10, GUID 0x200000000001010A
+  helmet 108, slot 11, GUID 0x200000000001010B
+
+In the cosmetic result, owned definition/GUID counts changed from 0/0 to 2/2.
+Both type-39 metadata records and exact model templates were already present
+before delivery. Matching counters reported one 115-byte application send.
+
+Moon reported no visible change. The observed base actor/arms fields were
+unchanged. This does not prove third-person attachment failure: those
+attachments were not measured by the first-person screenshot/observer.
+No weapon was delivered by the cosmetic test.
+
+E. Actor identity and input-related observation, verified on Windows
+
+A selected typed actor matches the local character's GUID and actor manager.
+The actor is not wholly absent. That is different from being fully initialized.
+
+The October 24 idle/W-held run verified game focus and W up/down at both ends
+of the corresponding captures. Actor velocity changed approximately from
+(0, -0.055555552, 0, 0) to (0, 0, 0.055555556, 0), while measured clean position
+remained (0, 0, 0, 1). Moon confirmed a fixed view and no weapon.
+This is input-correlated state, not proof of a working movement/controller path.
+
+
+5. STRONGEST RECENT WINDOWS FINDING: SAVED PROFILE IS NOT ACTOR CLASS
+
+Latest completed initialization report:
+  local-character-initialization-20261026-081250-134229-d0a77f2a.zip
+  server instance 71f6d15af21db825
+
+Its paired/nested snapshots, manifests and exact helper fingerprints verify.
+The report read 14,144 bytes within its 16 KiB cap and confirmed:
+  LocalVSTest, faction 1, Indar zone 2, Running state 27
+  current/saved loadout 17 and profile 19, with fourteen starter references
+  selected typed actor class/profile 0, model ID 0, raw gender 0
+  class key 0: complete lookup miss
+  class key 19: present, model references +28/+2C both zero
+  model definition 0: INCOMPLETE search; presence UNKNOWN
+  model-0 FIRST_PERSON_ARMS mapping: COMPLETE lookup miss
+  actor definition Armor_NC_Male_Base.adr
+  arms resource absent, raw arms flags 32; ready/failure bits both unset
+  clean position still (0, 0, 0, 1)
+
+This confirms a real mismatch between saved/current loadout state and the
+actor's own class. It does not establish a prior valid-to-zero reset, prove
+model definition 0 absent, or identify the sole movement blocker.
+Zero owned items were expected in this capture-only run; that does not undo
+the separate successful ownership results.
+
+
+6. NEW IMPLEMENTATION: CURRENT-BUILD ACTIVE-PROFILE MESSAGE
+
+We recovered a distinct ClientUpdate.ActivateProfile route, rather than
+assuming saved loadout references automatically activate the actor.
+
+Matching-image addresses below are RVAs, not universal addresses for PS2:
+  A4B9B0: ClientUpdate dispatcher, case 0x14 for subtype 0x15
+  98BD00: outer activation decoder
+  97B600 / 98A3D0: active-profile allocation/inner decoding
+  DA62C0 -> DA61B0: active-profile cache insertion
+  DB4DC0: profile selection, including player +218
+  BDFB70: actor class setter, including actor +7D8
+
+Current wire header: 11 15 00; subtype 0x15 is decimal 21.
+Inner active-profile body: 102 bytes.
+Complete packet: 138 bytes.
+Only verified profile ID 19 is assigned. The actual constructor default
+float 0.35 is preserved at inner wire offset 57 (bits 0x3EB33333). Other
+profile fields are incomplete zero/empty synthetic data, not recovered stats.
+The outer message keeps model ID 0 and supplies no attachments/items/weapons.
+
+Packet SHA256:
+517264669a36698f6b0af5a4d6a889502257060e1ba9e7b09c96cc15b73d641f
+
+In the pinned offline native fixture, the original dispatcher, profile
+decoder, cache insertion/selection and class setter execute. The packet:
+  changes actor class 0 -> 19
+  inserts/selects active profile 19
+  keeps actor model ID 0
+  reaches the component-request and final class-refresh boundaries
+
+Important fixture limits: allocation services, render-component creation,
+inventory/view notifications, CVars, mesh absence and final actor resource
+refresh are supplied by the harness. We have not executed the real renderer,
+resource loading, physics or Windows control pipeline in that fixture.
+
+The new server mode is opt-in and isolated to LocalVSTest. A manual,
+instance-bound control command requires one authenticated target, completed
+class/preload initialization and no pending reliable sends. Exactly one
+application attempt is allowed. An uncertain application send is never
+reissued; transport-level reliable retransmissions remain enabled. Incremental
+inventory delivery is disabled for this experiment.
+
+The read-only format-13 helper captures before/idle/W-held, including actor
+class and the actual profile-19 cache/selector, under one global 16 KiB cap.
+It requires the observed actor class/model 0/0, zero class-19 model references,
+complete active-profile-19 absence and native equipment mode 1 before sending.
+Mode 1 uses the first equipment row; we do not rekey row 0 or overwrite the
+mode to conceal the selector's change to profile 19.
+
+REA helped inspect the matching offline code. Decompiler output was checked
+against assembly/native execution. One setter pseudocode export ends early;
+we do not treat it as a full-function recovery. The native harness executes
+the full original setter. REA sessions were exported and closed.
+
+
+7. CURRENT BLOCKERS AND REMAINING BACKEND WORK
+
+Immediate blocker A — Windows activation result pending.
+We have not yet observed the new activation message changing class in Moon's
+running Windows client. That is the next evidence point, even if the visual
+result remains unchanged.
+
+Immediate blocker B — complete class/model/resource contract.
+The 24 delivered class records are identity fields plus verified constructor
+defaults, not complete class definitions. Correct model/body/head/gender
+namespaces, class memberships, resource parameters and ability dependencies
+are not fully recovered. Profile 19 alone with model 0 is not a complete VS
+Light Assault soldier. Arms mapping/resource requests and usable weapon
+construction/equipping remain unfinished.
+
+Immediate blocker C — control, motion and grounding.
+The exact dependencies for a controllable local actor, camera association,
+collision and authoritative movement remain open. W-correlated velocity or
+channel traffic does not prove accepted gameplay motion. No evidence supports
+a blanket fix that echoes every movement packet back to the client.
+
+Backend gap D — authoritative character lifecycle.
+The roster still uses presets. LocalVSTest was added as a predefined identity;
+it was not created by a completed native character-creation transaction.
+Creation handling, one authoritative loaded character record, gameplay saves,
+updates and reliable save/restart/relogin are unfinished. Existing probe JSON
+files are validated templates; they are not a completed database/repository
+service whose saved inventory drives every login serializer.
+In-game Log Out currently leads to loading/disconnect rather than returning
+to selection. The correct logout/save/lobby-transition sequence is untraced.
+
+Backend gap E — full definitions and gameplay services.
+We can recognize a current item-definition request (zone channel 0 payload
+09 47 00 + little-endian u32 ID). Complete requested definition bodies and
+weapon/ammo/ability/resource graphs are not served end to end. Territory,
+lattice ownership, deployment/spawn eligibility and the broader gameplay
+systems remain to implement. Importing every ID does not supply those services.
+
+
+8. INTERPRETATIONS TO KEEP ACCURATE
+
+  - Menus opening proves presentation assets/functionality, not that each
+    server-backed system has been initialized.
+  - Our server does run code and load datasets. "No scripts are loaded" is
+    not a precise diagnosis of the current failure. Missing protocol and
+    gameplay services are concrete, separately identifiable gaps.
+  - Item definition ID, item-line ID, owned instance GUID, slot link, loadout
+    ID, active-profile ID and model-definition ID are different namespaces.
+  - Ownership and slot references do not establish rendered/effective equipment.
+  - A selected actor exists; a fully initialized soldier does not yet exist.
+  - An incomplete negative lookup means unknown presence, not proven absence.
+  - Both arms callback bits unset do not establish a failure callback.
+  - Correct territory control is needed for a faithful deployment system, but
+    its absence alone has not been established as the cause of class/model 0
+    or the fixed view. Warpgate placement succeeded without territory data.
+  - Native decoder/fixture success and automated tests do not prove Windows
+    rendering, physics or a playable session.
+  - Historical schemas and the newer online build are not interchangeable
+    with the pinned local build. A prior protected online capture failed
+    before useful reads; the current work proceeds with local offline inputs.
+
+Earlier peer review also found a clock-like channel-2 field. Independent
+analysis reproduced a ~1 unit/ms rate across 6,887 samples and two wraps.
+This is useful wire evidence, but its native full-width layout, epoch, seed
+and required replies remain unknown. The 0x0218 pair brackets W-held samples;
+press/release semantics are not established. We have not implemented guessed
+clock/ping/movement responses from those observations.
+
+
+9. CURRENT VALIDATION AND PENDING CLIENT TEST
+
+Latest completed implementation validation, October 26:
+  385 Python tests pass in 176.501 seconds.
+  10 pinned native activation cases pass.
+  Extracted standalone imports and ZIP/member manifests pass.
+  Real encrypted login/gateway UDP delivers one exact activation packet;
+  repeat, stale-instance and inventory requests are rejected in this mode.
+  Initial self/class/preload bytes remain unchanged.
+  Two cold backend starts verify health/status/report CRC and three stable
+  saved template files.
+  All 23 earlier helper archives retain their hashes; the new helper is #24.
+
+These are the last executed implementation checks, not suites rerun merely
+to write this report. The report preparation additionally rechecked public
+GitHub metadata, branch tip and the downloaded helper's exact bytes/hash.
+
+Current helper: ps2_profile_activation_test.zip
+Size: 2,984,244 bytes
+SHA256:
+b1070038bba02a5db5223551376615cc845665557ed2ce0bda9d11d1a43a05fa
+
+Pending Windows procedure:
+  Close old local game/server; extract into a fresh folder outside the game.
+  Run start_profile_activation_test.cmd; select copied Local client.
+  Select LocalVSTest -> Play; wait for 3D view and close menus/chat.
+  Run apply_and_capture_profile.cmd once.
+  Return to game within eight seconds and remain idle.
+  At TWO beeps hold W until THREE beeps, then release.
+  Upload local-profile-activation-....zip, including failures, and describe
+  view movement or any model/arms/weapon change.
+
+The primary acceptance criterion is observed actor class 19 plus a present
+and selected active-profile-19 record. Movement and appearance are separate
+observations. A visual nonchange can still accompany successful class activation.
+If class activation succeeds, trace the remaining correct model/resource/control
+pipeline. If it does not, inspect the actual receive/dispatch/lifecycle evidence
+before changing more fields.
+
+
+10. WHAT WOULD BE MOST USEFUL FROM OPUS
+
+Please independently review the accessible source and this evidence, and:
+  1. Check the active-profile message/initialization ordering for concrete
+     inconsistencies. Separate findings in code from unverified hypotheses.
+  2. Identify likely remaining dependencies between active profile, model
+     definition, arms/weapon resources and local controller activation.
+     Give exact files/functions/fields and a testable next discriminator.
+  3. Propose a staged authoritative character repository/service replacing
+     generated probe templates, while preserving proven packet behavior and
+     stable instance GUIDs. Unknown wire fields must remain explicit.
+  4. Keep logout/relogin and territory/deployment as real workstreams without
+     treating either as a proven universal explanation for actor class 0.
+  5. State which additional private proofs/source snippets you need; do not
+     assume access to unpublished cloud files or proprietary server internals.
+
+We should preserve the known startup ordering, normal controls/preview rollback,
+existing helper artifacts and supported inventory paths. We should not guess
+model IDs from old schemas, force readiness flags, or emit speculative protocol
+replies to make a screen advance.
+
+
+11. LOCAL EVIDENCE POINTERS FOR MOON/CODEX
+
+These are cloud workspace paths, not public URLs or files Opus can already read:
+  /workspace/PS2_LOCAL/docs/CURRENT_CHECKPOINT.md
+  /workspace/PS2_LOCAL/docs/reviews/profile-activation-test-20261026.md
+  /workspace/PS2_LOCAL/docs/reviews/initialization-result-081250-20261026.md
+  /workspace/PS2_LOCAL/docs/reviews/character-lifecycle-audit-20261017.md
+  /workspace/PS2_LOCAL/validation/native_profile_activation_check.c
+  /workspace/PS2_LOCAL/validation/native_profile_activation_cases.py
+  /workspace/ps2-runtime/actor-class-assignment-20261026/
+  /workspace/ps2-runtime/opus-status-report-20261026/github-access.json
+  /workspace/ps2-saved-checkpoints/profile-activation-test-20261026/
+
+The implementation checkpoint retains 398 source files, all 24 helper hashes,
+source/evidence archives and publication/configuration proofs. Restart
+instructions are saved separately; saving a configuration draft, publishing
+the environment filesystem and verifying a restored runtime are distinct actions.
+
+No runtime/backend behavior or existing helper was changed to write this report.
+The immediate project status remains: next Windows activation test ready;
+complete appearance, equipment, control and character lifecycle unfinished.
