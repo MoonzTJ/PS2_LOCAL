@@ -1,25 +1,36 @@
-## Current test: character initialization
+## Current test: actor profile activation
 
-[Download ps2_character_initialization_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_initialization_test.zip)
+[Download ps2_profile_activation_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_activation_test.zip)
 
-Click **Download raw file** and extract into a fresh folder outside the game.
-Close the old local game/server. Run **start_character_initialization_test.cmd**,
-select your copied Local client, then **LocalVSTest → Play**. At the 3D view,
-close map/menus/chat and run **capture_character_initialization.cmd** once.
-Return to the game within eight seconds and remain idle until **THREE beeps**.
-Upload **local-character-initialization-….zip**, including failures.
-See [the procedure](../docs/CHARACTER_INITIALIZATION_TEST.md).
+Click **Download raw file**. Close the old local game/server and extract into a
+fresh folder outside the game. Run **start_profile_activation_test.cmd**, choose
+your copied Local client, then **LocalVSTest → Play**. At the 3D view close
+map/menus/chat and run **apply_and_capture_profile.cmd** once. Return to the game
+within **eight seconds** and remain idle. At **TWO beeps**, hold **W** until
+**THREE beeps**. Upload **local-profile-activation-….zip**, including failures,
+and report whether the view moved or appearance changed.
+See [the procedure](../docs/PROFILE_ACTIVATION_TEST.md).
 
-This read-only diagnostic measures the actor's own class ID separately from
-saved/current loadout references, class model links, native model definitions
-and the first-person-arms mapping. The previous server and all existing tools
-remain byte-identical. No incremental item delivery, location change or gameplay
-fix is applied. Actual Windows observations remain to be collected.
+This sends one recovered current-build profile activation message to test actor
+class **0 → 19** independently of saved loadout references. The exact native
+dispatcher/cache/class setter passes in the offline fixture. Model 0 is preserved;
+correct appearance, weapons and movement remain unverified. The helper records
+before/idle/W-held snapshots and never retries an uncertain application.
 
-377 Python tests and8 native lookup cases pass. Extracted imports/manifest,
-all frozen backend/tool members, health/status/report CRC and stable state across
-two server starts verify. ZIP:2,976,715 bytes; SHA256:
-`758eae258f6ad56b74fa54d9e0410ff5c56b9416c5d4cb5769ff5d4b520c4363`.
+385 Python tests and 10 native cases pass. Extracted imports/manifest, actual
+encrypted UDP, health/status/report CRC and stable state across two starts verify.
+All 23 previous helpers are preserved. ZIP: 2,984,244 bytes; SHA256:
+`b1070038bba02a5db5223551376615cc845665557ed2ce0bda9d11d1a43a05fa`.
+
+## Completed test: character initialization
+
+[Previous diagnostic](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_initialization_test.zip)
+
+Actual 081250 confirmed actor class 0 while saved/current profile 19 was present.
+Class 19 model references remain zero; model 0 presence was unknown because the
+search was incomplete, while its arms mapping was a complete miss. The next
+test above applies the newly recovered activation route. No unchanged rerun of
+the old read-only diagnostic is requested.
 
 ## Completed test: VS armor and helmet delivery
 
