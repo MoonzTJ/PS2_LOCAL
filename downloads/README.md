@@ -1,4 +1,31 @@
-## Current test: VS armor and helmet delivery
+## Current test: character initialization
+
+[Download ps2_character_initialization_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_initialization_test.zip)
+
+Click **Download raw file** and extract into a fresh folder outside the game.
+Close the old local game/server. Run **start_character_initialization_test.cmd**,
+select your copied Local client, then **LocalVSTest → Play**. At the 3D view,
+close map/menus/chat and run **capture_character_initialization.cmd** once.
+Return to the game within eight seconds and remain idle until **THREE beeps**.
+Upload **local-character-initialization-….zip**, including failures.
+See [the procedure](../docs/CHARACTER_INITIALIZATION_TEST.md).
+
+This read-only diagnostic measures the actor's own class ID separately from
+saved/current loadout references, class model links, native model definitions
+and the first-person-arms mapping. The previous server and all existing tools
+remain byte-identical. No incremental item delivery, location change or gameplay
+fix is applied. Actual Windows observations remain to be collected.
+
+377 Python tests and8 native lookup cases pass. Extracted imports/manifest,
+all frozen backend/tool members, health/status/report CRC and stable state across
+two server starts verify. ZIP:2,976,715 bytes; SHA256:
+`758eae258f6ad56b74fa54d9e0410ff5c56b9416c5d4cb5769ff5d4b520c4363`.
+
+## Completed test: VS armor and helmet delivery
+
+The112826 result verified both owned items and GUID/slot links. The measured
+base actor state stayed unchanged. The first-person screenshot did not measure
+third-person cosmetic attachments. No unchanged rerun is needed.
 
 [Download ps2_cosmetic_inventory_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_cosmetic_inventory_test.zip)
 
