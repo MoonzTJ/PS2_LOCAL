@@ -1,4 +1,37 @@
-## Current test: actor profile activation
+## Current test: class19 placement and movement
+
+[Download ps2_profile_placement_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_placement_test.zip)
+
+Click **Download raw file**. Close the old local game/server and extract into a
+fresh folder outside the game. Run **start_profile_placement_test.cmd**, choose
+the copied Local client, then **LocalVSTest → Play**. At the3D view close
+menus/map/chat and run **place_and_capture_motion.cmd once**. Return within
+**eight seconds** and stay idle until **TWO beeps** (about25 seconds). Hold
+**W** then release at **ONE beep**. **THREE beeps** means finished; upload
+**local-profile-placement-….zip**, including failures. Report view translation;
+try mouse-look separately after capture. See [the procedure](../docs/PROFILE_PLACEMENT_TEST.md).
+
+Windows already verified class19 activation. This combines that exact message
+with the existing location packet, then measures actor position at idle,
+W-held and release at the northern-warpgate asset anchor. Model0 is preserved;
+correct appearance, safe floor and movement remain unverified. There is no
+new guessed state/stat/model/sync value or automatic character spawn.
+
+The original format13 observer/16KiB budget and86 parent members are byte-exact.
+All24 previous helper hashes remain unchanged. CRC/manifest/isolated imports
+and44 native class19 location fixture cases verify. All391 Python tests pass,
+including encrypted delivery, failure reports and stable saved state across
+two starts. Windows outcome is pending.
+ZIP2,990,073 bytes; SHA256:
+`4019590682ba913c4bf33c814a2c46e42cc92ce37957a56cc2218a6abaeda6d4`.
+
+## Completed test: actor profile activation
+
+Actual175452 confirmed actor class0 →19, cache19 installation and selection.
+Saved/current profile19 and loadout17 already existed. Model0/missing arms and
+origin position persisted with W. The new combined test above is the next
+comparison; no unchanged activation rerun is requested. The older procedure
+and validation below are preserved as history.
 
 [Download ps2_profile_activation_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_activation_test.zip)
 
