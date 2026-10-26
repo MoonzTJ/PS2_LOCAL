@@ -1,4 +1,35 @@
-## Current test: class19 placement and movement
+## Current test: local character admin access
+
+[Download ps2_local_admin_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_admin_test.zip)
+
+Click **Download raw file**. Close the old local game/server, extract into a
+fresh folder outside the game, then run **start_local_admin_test.cmd**.
+Choose the copied Local client and **LocalVSTest → Play**. At the3D view close
+menus/map/chat and run **activate_and_capture_admin.cmd once**. Return within
+**eight seconds** and stay idle until **THREE beeps**. **No W-held phase**.
+Upload **local-admin-access-….zip**, including failures. After capture try
+**/loc** and report the exact response. [Procedure](../docs/LOCAL_ADMIN_TEST.md).
+
+The server grants the verified IsAdminAccount login field to all five local
+characters. The test measures the native permission and retains the existing
+class19 activation/warpgate placement. It does not grant an admin client build
+or implement every gameplay command. Actual Windows access and execution are
+pending. Model/arms and camera remain incomplete; the CONTINENT header metadata
+issue is tracked separately and unchanged.
+
+All398 Python tests and16 native permission cases pass, including
+all-five-character encrypted delivery and stable saves across two starts.
+All25 previous helpers and87 parent members remain byte-identical.
+ZIP2,996,397 bytes; SHA256:
+`9643e66081e018c1ad060c3503cdf98b86fa967df62158749b9f5ee55d4ceaf8`.
+
+## Completed test: class19 placement and movement
+
+Actual220929 confirms actor position changes about9.48 game units between placed
+idle and W-held, with nonzero ground positions and jumping cleared. User says
+the view remained fixed and audio direction may have changed. Camera control,
+appearance, safe floor and complete spawning remain unresolved. The old test
+procedure is preserved below as history; no unchanged rerun is requested.
 
 [Download ps2_profile_placement_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_placement_test.zip)
 
