@@ -1,4 +1,63 @@
-## Current test: character model and movement diagnostics
+## Current test: actor profile activation
+
+[Download ps2_profile_activation_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_activation_test.zip)
+
+Click **Download raw file**. Close the old local game/server and extract into a
+fresh folder outside the game. Run **start_profile_activation_test.cmd**, choose
+your copied Local client, then **LocalVSTest → Play**. At the 3D view close
+map/menus/chat and run **apply_and_capture_profile.cmd** once. Return to the game
+within **eight seconds** and remain idle. At **TWO beeps**, hold **W** until
+**THREE beeps**. Upload **local-profile-activation-….zip**, including failures,
+and report whether the view moved or appearance changed.
+See [the procedure](../docs/PROFILE_ACTIVATION_TEST.md).
+
+This sends one recovered current-build profile activation message to test actor
+class **0 → 19** independently of saved loadout references. The exact native
+dispatcher/cache/class setter passes in the offline fixture. Model 0 is preserved;
+correct appearance, weapons and movement remain unverified. The helper records
+before/idle/W-held snapshots and never retries an uncertain application.
+
+385 Python tests and 10 native cases pass. Extracted imports/manifest, actual
+encrypted UDP, health/status/report CRC and stable state across two starts verify.
+All 23 previous helpers are preserved. ZIP: 2,984,244 bytes; SHA256:
+`b1070038bba02a5db5223551376615cc845665557ed2ce0bda9d11d1a43a05fa`.
+
+## Completed test: character initialization
+
+[Previous diagnostic](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_character_initialization_test.zip)
+
+Actual 081250 confirmed actor class 0 while saved/current profile 19 was present.
+Class 19 model references remain zero; model 0 presence was unknown because the
+search was incomplete, while its arms mapping was a complete miss. The next
+test above applies the newly recovered activation route. No unchanged rerun of
+the old read-only diagnostic is requested.
+
+## Completed test: VS armor and helmet delivery
+
+The112826 result verified both owned items and GUID/slot links. The measured
+base actor state stayed unchanged. The first-person screenshot did not measure
+third-person cosmetic attachments. No unchanged rerun is needed.
+
+[Download ps2_cosmetic_inventory_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_cosmetic_inventory_test.zip)
+
+Click **Download raw file**. Close the old local game/server and extract into a
+new folder outside the copied game. Run **start_cosmetic_inventory_test.cmd**,
+choose the copied Local client, select **LocalVSTest**, then Play. At the3D world
+view close menus/chat, run **apply_and_capture_cosmetics.cmd** once and switch
+back to the game. Stay idle until **THREE beeps** (about15 seconds); no W key is
+required. Upload **local-cosmetic-inventory-....zip**, including a failure, and
+report any armor/helmet/arms change. See [the procedure](../docs/COSMETIC_INVENTORY_TEST.md).
+
+This new isolated server mode supplies the VS starter armor/helmet instances and
+slot10/11 GUID links. It verifies actual client type39 metadata and model templates
+before sending. Appearance application, full weapons and movement remain
+unverified. Original preview, controls, timing and all21 older ZIPs stay frozen.
+370 Python tests and24 native expectations pass (including2 expected metadata
+boundaries). Extracted imports, manifests, actual encrypted delivery, status/report
+CRC and stable saved state across2 starts verify.2,967,926 bytes; SHA256:
+`859f60ee171595712237d23e06f1fe6d0125df789be9a1fb33eadd90750ee6db`.
+
+## Completed test: character model and movement diagnostics
 
 [Download ps2_actor_loading_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_actor_loading_test.zip)
 

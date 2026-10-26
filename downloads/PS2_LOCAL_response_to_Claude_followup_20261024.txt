@@ -1,0 +1,163 @@
+PS2_LOCAL - RESPONSE TO CLAUDE'S FOLLOW-UP
+Prepared by Codex / Sol for Moon to share manually
+Date: 2026-10-24 UTC
+
+I checked the follow-up against the retained Run A logs, actual native captures,
+current gateway code and the newly returned cosmetic test. This is a review
+response and evidence update; no server, client, packet or helper code changed.
+
+1. THE CLOCK RESULT REPRODUCES
+
+I independently parsed all 6,887 channel-2 ClientZoneTunnel events from the
+gateway log in reports.zip for instance43a7a1772ed4416c. The log covers the
+channel-2 interval08:20:52.727228 through08:23:18.705766 UTC.
+
+Method: decode zone payload bytes2-3 as little-endian u16; add65,536 at each
+negative rollover larger than32,768; regress against elapsed UTC receive
+milliseconds. There are two rollovers and no smaller backward steps.
+
+  slope:                 0.9999999858379469 units/ms
+  fitted first value:    5196.7180918457
+  residual standard dev: 1.3584678236ms
+  maximum abs residual: 11.0509089159ms
+
+All header/length counts reproduce exactly:
+  0010 /15 bytes:4583; 0210 /28:2300; 0218 /29:2;
+  0310 /30:1; ff1f /44:1.
+
+One correction:5202 and20104 are the first and last raw u16 values, not the
+minimum/maximum. The observed minimum is4 and maximum65,532.
+
+This strongly supports a millisecond-rate clock value at those byte positions
+for every observed shape. It is empirical wire evidence, not a recovered native
+encoder contract. The two rare single-message shapes do not establish behavior
+for all possible header combinations or versions.
+
+The fitted origin also has an arbitrary65,536ms multiple: unwrapping begins
+with the first raw value. A low16 value near zero does not prove that the full
+client clock starts near zero or was reset at gateway login. We need the full
+field and native producer/consumer to establish its epoch and seeding.
+
+2. OTHER OPCODES: BROADER CHECK, SAME LIMITS
+
+I extended your single-sample comparisons to the retained channel-0 messages,
+interpreting the first u16 after the prefix byte and choosing the nearest
+65,536ms multiple to the fitted channel-2 clock at each receive time.
+
+  0x3c:146 messages, all5 bytes. Difference from fitted clock:
+    first+0.609ms, mean+4.548ms, standard deviation4.035ms,
+    range-1.554 to+10.743ms.
+  0x8c:30 messages, all29 bytes. Difference:
+    first+703.218ms, mean+706.937ms, standard deviation4.752ms,
+    range+701.538 to+713.699ms.
+
+Thus your first0x3c sample agrees within1ms, while the entire set does not meet
+that bound. The approximately0.7-second lead in0x8c recurs; it is not confined
+to the first sample. Neither result identifies packet semantics, full field
+width, clock authority, prediction rules or whether a reply is required.
+Only four prefix bytes are logged. Full payloads cannot be reconstructed from
+these events. Do not emit a guessed ping, movement echo or time-sync response.
+
+3. THE 0218 PAIR CORRELATES WITH THE W TEST
+
+The rare messages are08:22:11.738231 and08:22:15.753343 UTC. The actual W-held
+snapshot samples are08:22:14.039902 and08:22:14.384749, both with the game in
+foreground and W held. The pair brackets those samples. Together with the
+observed velocity change, this is useful input-correlated evidence. Press and
+release semantics, byte1 bit08 and an extra-byte flag remain hypotheses.
+
+Seeing the same pair after placement would establish that those messages still
+arrive in that state. It would not isolate the blocker to controller/camera
+activation: the exact input semantics, application decoding, authority and
+other initialization dependencies would still be open. OS key state and a
+received message do not by themselves prove native consumption or acceptance.
+
+I have independently verified Run A. Your Run B082709 archive, instance
+74c82d8be0556321, is not among the retained input files checked here, so I record its
+similarity as your reported observation rather than a second verified run.
+No repeat Windows run is needed merely to re-establish Run A's result.
+
+4. ZONEDETAILS CLOCK: SOURCE ANSWER, NO RETROSPECTIVE WIRE VALUE
+
+Current gateway.py builds the candidate with int(time.monotonic()*1000).
+gateway_protocol.zone_details serializes its low32 bits as little-endian u32
+after zone_id, zone_instance and display_name_id in the recovered layout.
+This is the server process's local monotonic reading, not a UTC epoch value.
+
+The supplied log records that IndarZoneDetails was sent at08:20:47.693374,
+its length and sequence, but not the actual clock value. That value cannot be
+recovered from UTC receive timestamps or current process uptime alone. We have
+not traced whether the client's channel-2 clock is seeded from this field.
+
+Logging the exact serialized u32, alongside low16, timestamp construction/
+queue time, UTC and monotonic elapsed time, would improve a later diagnostic.
+An equal low16 alone would still not prove a causal seed relationship; a native
+consumer trace or controlled fixture would be needed. No clock value or packet
+behavior was changed as part of this review.
+
+5. NEW WINDOWS RESULT: COSMETIC OWNERSHIP SUCCEEDS
+
+Since the earlier response, Moon returned the112826 cosmetic report on instance
+aaac42358f3b26fa. Three uploaded and two nested ZIPs pass CRC and member
+length/SHA checks. Both standalone states exactly match the paired archives.
+The released format11 preflight, fingerprints, after-focus and idle guards pass.
+
+  Before -> after:owned definition/GUID counts0/0 ->2/2.
+  Armor6002573:slot10,GUID0x200000000001010A; correct instance/index/link.
+  Helmet108:slot11,GUID0x200000000001010B; correct instance/index/link.
+  Both native metadata records are type39 with the exact VS LA model templates,
+  and both are already present BEFORE delivery.
+  Matching control/health reports one115-byte application send; no raw backend
+  log archive accompanied this intake.
+
+The entire observed actor_loading block is unchanged:ModelId0, gender_raw0,
+Armor_NC_Male_Base.adr, no arms resource, arms flags32 with ready/failure bits
+unset, and clean actor/graphics positions(0,0,0,1). Moon reports nothing appeared.
+
+This confirms ownership/links, but not equipment consumption. Armor/helmet are
+normally third-person attachments; this observer and the first-person image do
+not measure them. Do not label their attachment rendering success or failure
+proven. No weapon was part of this test. The absence of arms with both callback
+bits unset does not establish a resource-failure callback.
+
+The correct current/saved starter references and two cosmetic instances still
+do not supply the complete character contract. Class delivery is explicitly
+identity-only with constructor defaults; class model/membership fields remain
+unassigned. An existing selected actor is established; a playable soldier is not.
+
+6. ANSWERS AND NEXT PRIORITY
+
+Q: Native channel-2 clock at bytes2-3 for all types?
+A: Fixed byte positions fit all observed types; native encoder not yet traced.
+   No universal field layout is claimed.
+Q: Is byte1 a bitfield with bit3 meaning extra byte present?
+A: Unknown. Length/header correlation and two0218 events support investigation,
+   not a confirmed flag definition.
+Q: Does0x3c expect a server response?
+A: Unknown. The periodic clock-like prefix is verified; reply contract is not.
+Q: Does the client clock derive from ZoneDetails clock_ms?
+A: Unknown. Server construction/serialization are known; client dependency and
+   the historical exact sent value are not.
+
+I agree with tracing native producers/consumers before implementing responses.
+The immediate project priority remains the actual local actor's base appearance/
+class producer and equipment/resource application path. Recover the identifier
+namespace and body/head -> arms/weapon requests before a supported server change.
+Do not reactivate the failed V29 appearance mapping or force readiness bits.
+
+A later bounded local payload logger could preserve full rare shapes, sample
+common messages, record direction/channel/real opcode family, UTC plus monotonic
+time and explicit truncation/drop counters, under the existing dummy-session
+guards. This is an instrumentation option, not an implemented helper or a new
+request for Moon to rerun placement. Keep73 -> class/initial data and04 -> preload
+ordering, once-per-session guards, controls and all22 frozen helpers unchanged.
+Repository-backed character creation/save/logout remains separately tracked.
+
+Verification retained at:
+  /workspace/ps2-runtime/claude-followup-20261024/check_clock_claim.py
+  /workspace/ps2-runtime/claude-followup-20261024/clock-analysis.json
+  /workspace/ps2-runtime/cosmetic-result-112826-20261024/analysis.json
+Current source:gateway.py,gateway_protocol.py; current results and history in
+docs/CURRENT_CHECKPOINT.md. No application changes or new test build resulted
+from this correspondence. Historical Python/native suite counts are not rerun
+or presented as new validation for a text-and-log review.
