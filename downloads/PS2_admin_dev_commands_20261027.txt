@@ -1,0 +1,909 @@
+PLANETSIDE 2 LOCAL - ADMIN / DEV COMMAND REFERENCE
+Exported 2026-10-27
+
+SCOPE AND STATUS
+All 283 active Alias entries in our pinned AdminCommandAliases.xml are included.
+There are 282 distinct alias names; player_respawn occurs twice. Both entries
+are retained with their source order. XML comment examples are excluded.
+This is complete for this shipped alias file, not a complete inventory of
+compiled-in commands or Daybreak internal server tools. Native handlers and
+permissions can differ. Many gameplay/chat handlers are not implemented locally.
+An alias existing does not mean it currently works. LocalVSTest admin permission
+is verified, while /loc and observer attempts produced no visible response.
+The source documents slash-prefixed commands. Names and expansions below are
+source data; actual chat/console routing has not been verified for every entry.
+
+SOURCE
+server_data/indar/AdminCommandAliases.xml
+SHA256: 42958cac4074c457dfcc91ec7ace40c1f915fe837579113b9e9359f04d779f2f
+Retained offline client: 0.0.1533.609523; no claim about newer live builds.
+
+A. ALL SHIPPED ALIASES (alphabetical; source_index preserves original order)
+
+[024] achievements
+    expands to: achievement
+
+[085] addallitems
+    expands to: reward give 746
+
+[155] aitest
+    expands to: debug_projectiles 1;zonevar zone_debug_ai_projectiles 1
+
+[088] alert
+    expands to: metagame
+
+[094] amerish
+    expands to: zone 6
+
+[139] ant
+    expands to: vehicle 15
+
+[140] antfull
+    expands to: vehicle 15 -d -r 58 max
+
+[147] asdf
+    expands to: empirescore
+
+[241] Ayla
+    expands to: /loc 0-.130 451.960 6.030 1.196
+
+[209] aziz
+    expands to: servertime hour 12
+
+[173] basegun
+    expands to: item add 6002421
+
+[176] bastion
+    expands to: zonelua WarAssetBastion.CreateBastion(self:GetGuid(), nil, true)
+
+[196] bastion_add_to_guild_bank
+    expands to: guildbank addasset 6008913
+
+[194] bastion_get_zone_status
+    expands to: zonelua WarAssetBastion_Vehicle.ZoneGetBastionStatus(self)
+
+[193] bastion_ignore_exit
+    expands to: zonelua WarAssetBastion_Vehicle.IgnoreExit(self)
+
+[192] bastion_instant_self_destruct
+    expands to: zonelua WarAssetBastion_Vehicle.SelfDestructCommand(self, 0)
+
+[177] bastion_mount
+    expands to: zonelua local bastion=WarAssetBastion.CreateBastion(self:GetGuid(), nil, true) self:MountVehicle(bastion)
+
+[197] bastion_refund_active_bastions
+    expands to: zonelua WarAssetBastion_Vehicle.RefundActiveBastions(self)
+
+[189] bastion_reset_movement_vars
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.InitializeScriptData ~= nil then vehicle:InitializeScriptData(0) else print('You need to be in a Bastion for this command to work.') end
+
+[190] bastion_self_destruct
+    expands to: zonelua WarAssetBastion_Vehicle.SelfDestructCommand(self, 1)
+
+[183] bastion_speed_down_05
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(-5) else print('You need to be in a Bastion for this command to work.') end
+
+[184] bastion_speed_down_20
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(-25) else print('You need to be in a Bastion for this command to work.') end
+
+[181] bastion_speed_up_05
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(5) else print('You need to be in a Bastion for this command to work.') end
+
+[182] bastion_speed_up_20
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(25) else print('You need to be in a Bastion for this command to work.') end
+
+[195] bastion_timeout
+    expands to: zonelua WarAssetBastion_Vehicle.TimeoutCommand(self)
+
+[186] bastion_turnRate_down_01
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyRotationRate ~= nil then vehicle:ModifyRotationRate(-1) else print('You need to be in a Bastion for this command to work.') end
+
+[185] bastion_turnRate_up_01
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyRotationRate ~= nil then vehicle:ModifyRotationRate(1) else print('You need to be in a Bastion for this command to work.') end
+
+[188] bastion_turnVelocityScalar_down_0005
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyTurningVelocityScalar ~= nil then vehicle:ModifyTurningVelocityScalar(-0.05) else print('You need to be in a Bastion for this command to work.') end
+
+[187] bastion_turnVelocityScalar_up_0005
+    expands to: /zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyTurningVelocityScalar ~= nil then vehicle:ModifyTurningVelocityScalar(0.05) else print('You need to be in a Bastion for this command to work.') end
+
+[191] bastion_wipe_all
+    expands to: zonelua WarAssetBastion_Vehicle.DestroyAllCommand(self, 1)
+
+[028] bcast
+    expands to: broadcast
+
+[272] boat
+    expands to: /vehicle 2142
+
+[151] briggs
+    expands to: worldvar ContinentLocking.MaxLockableContinents 3; continentlocking disablecap
+
+[116] bux
+    expands to: currency max;acquiretimers clearall;resources add 58 5000 -v
+
+[233] campaign01_AnalysisImplant
+    expands to: /item add 6009519
+
+[232] campaign01sowingChaos_SpawnPlant
+    expands to: /npc create 53947
+
+[231] campaign01sowingChaos_SpawnPlantSpawner
+    expands to: /npc create 53964
+
+[240] Campner
+    expands to: /loc -42.976 500.280 -14.956 2.131
+
+[207] CertAddPoints
+    expands to: skill addpoints
+
+[270] chimera
+    expands to: /vehicle 2137
+
+[105] cleanroom
+    expands to: zone 200
+
+[149] clientreq
+    expands to: clientrequirement
+
+[172] colossus
+    expands to: vehicle 2007
+
+[018] commands_list
+    expands to: commands
+
+[271] corsair
+    expands to: /vehicle 2142
+
+[026] councelor
+    expands to: referee
+
+[175] crystalgun
+    expands to: item add 6002429
+
+[083] cstat
+    expands to: characterstat
+
+[025] daily
+    expands to: repeatingactivity
+
+[156] debug_zone_projectiles
+    expands to: debug_projectiles 1;zonevar zone_debug_ai_projectiles 1;log_projectile_expiration 1
+
+[269] dervish
+    expands to: /vehicle 2136
+
+[159] desolation
+    expands to: zone 338
+
+[210] DetonateCortiumBomb
+    expands to: zonelua WarAsset_Merit_CortiumBomb_Npc.CommandAliasDetonate(self)
+
+[145] disablevrgrief
+    expands to: zonesetting var zonesetting.grief.disabled 0 0 1;zonesetting var zonesetting.grief.damage.multiplier 0 0 0;zonesetting var zonesetting.grief.point.multiplier 0 0 0
+
+[236] Dolan
+    expands to: /loc -77.320 473.210 27.730 4
+
+[267] drainnearbysilos
+    expands to: /zonelua devDebugTools.drainNearbySilosAlias( self, 50 )
+
+[171] drawbones
+    expands to: drawdebug skeleton 1 bonenames 1 bonescale 10
+
+[157] easymoney
+    expands to: item add 497;currency add 11 10000
+
+[211] ElectricalStorm
+    expands to: /zonelua ElectricalStorm.HelpCommand( self )
+
+[229] elysiumDrill_GetZoneStatus
+    expands to: /zonelua Mission_ElysiumDrill_ControllerNpc.PrintZoneStatus(self)
+
+[230] elysiumDrill_ResetDrills
+    expands to: /zonelua Mission_ElysiumDrill.ResetDrills(self)
+
+[275] EmbassyGoto
+    expands to: /zonelua SanctuaryZoneScript.AliasGotoEmbassy( self )
+
+[277] EmbassyGotoNc
+    expands to: /zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 2 )
+
+[278] EmbassyGotoTr
+    expands to: /zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 3 )
+
+[276] EmbassyGotoVs
+    expands to: /zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 1 )
+
+[235] Emerson
+    expands to: /loc -44.610 500.280 12.990 1.142
+
+[144] enablevrgrief
+    expands to: zonesetting var zonesetting.grief.disabled 0 0 0;zonesetting var zonesetting.grief.damage.multiplier 0 0 1;zonesetting var zonesetting.grief.point.multiplier 0 0 1
+
+[141] es
+    expands to: empirescore
+
+[092] esamir
+    expands to: zone 8
+
+[212] EsamirStorm
+    expands to: /zonelua ElectricalStorm.HelpCommand( self )
+
+[216] eStorm_Create_Storm
+    expands to: /npc create 53882
+
+[226] eStorm_ForceDebugEnable
+    expands to: /zonelua ElectricalStorm.ForceEnable(self)
+
+[217] eStorm_Get_Zone_Status
+    expands to: /zonelua ElectricalStorm.GetZoneStatusCommand( self )
+
+[225] eStorm_InsulatedArmor_Suit
+    expands to: /item add 6009485;/item add 6009486
+
+[219] eStorm_Neutralizer
+    expands to: /item add 6009487
+
+[228] eStorm_OverloadMyVehicle
+    expands to: /zonelua ElectricalStorm.OverloadMyVehicle(self)
+
+[218] eStorm_Remove_All
+    expands to: /zonelua ElectricalStorm.RemoveAllStorms( self )
+
+[215] eStorm_SpawnBolt
+    expands to: /zonelua ElectricalStorm.DebugSpawnSingleBolt(self, false)
+
+[214] eStorm_SpawnBolt_NoTarget
+    expands to: /zonelua ElectricalStorm.DebugSpawnSingleBolt(self, true)
+
+[213] eStorm_SpawnBolt_UseStorm
+    expands to: /zonelua ElectricalStorm.SpawnBoltCommand( self )
+
+[224] eStorm_SpawnLitArrester
+    expands to: /npc create 53887
+
+[086] fac
+    expands to: facility
+
+[023] faction
+    expands to: setfaction
+
+[087] factype
+    expands to: facilitytype
+
+[283] fillerup
+    expands to: /resources max 58 -t
+
+[266] fillnearbysilos
+    expands to: /zonelua devDebugTools.fillNearbySiloAlias( self, 50 )
+
+[273] find_a7
+    expands to: /zonelua local npcs=Zone:GetAllNpcs(53767) if npcs ~= nil then for i=1, #npcs do local loc=npcs[i]:GetLocation() ZoneServer.DebugAlert('/loc '..tostring(loc.x)..' '..tostring(loc.y)..' '..tostring(loc.z)) end else ZoneServer.DebugAlert('No Npcs found') end
+
+[244] Fl-34
+    expands to: /loc 56.520 471.060 -21.740 1.9
+
+[243] Fl34
+    expands to: /loc 56.520 471.060 -21.740 1.9
+
+[121] flash
+    expands to: vehicle 1
+
+[242] Flea
+    expands to: /loc 56.520 471.060 -21.740 1.9
+
+[234] Foster
+    expands to: /loc -44.278 500.280 10.695 0
+
+[022] fs
+    expands to: facilityspawn
+
+[135] gal
+    expands to: vehicle 11
+
+[136] galaxy
+    expands to: vehicle 11
+
+[154] gender
+    expands to: /__sendzonecommand setgender
+
+[019] ghost
+    expands to: noclip
+
+[251] givecampaignitems
+    expands to: item add 6009468; item add 6009495; item add 6009529; item add 6009605; item add 6009694; item add 6009528
+
+[027] gm_set
+    expands to: referee
+
+[032] go
+    expands to: goto
+
+[280] gofish
+    expands to: /item add 6013328
+
+[238] Hadley
+    expands to: /loc -98.852 528.900 147.528 -1.384
+
+[137] harasser
+    expands to: vehicle 12
+
+[114] hideclientareas
+    expands to: render areas
+
+[113] hideserverareas
+    expands to: /drawserverdebug zoneareas 0
+
+[098] hossin
+    expands to: zone 4
+
+[034] hour
+    expands to: timeofday
+
+[227] IgnoreMissionRequirement
+    expands to: /characterflag set IgnoreMissionRequirement 1
+
+[281] igp
+    expands to: /ingamepurchase
+
+[090] indar
+    expands to: zone 2
+
+[152] jaeger
+    expands to: worldvar ContinentLocking.MaxLockableContinents 0; worldvar MetaGameEvent.LaunchEnabled 0; bizenv set live mp_commerce_enabled 0 __no_broadcast__; bizenv set live boost_slots_enabled 0 __no_broadcast__
+
+[268] javelin
+    expands to: /vehicle 2033
+
+[239] Knightly
+    expands to: /loc -11.590 528.900 165.570 -0.785
+
+[133] lib
+    expands to: vehicle 10
+
+[134] liberator
+    expands to: vehicle 10
+
+[125] lightning
+    expands to: vehicle 3
+
+[223] LightningArrester
+    expands to: /item add 6009468
+
+[221] LightningGrenade
+    expands to: /item add 6009459
+
+[222] LitArrester
+    expands to: /item add 6009468
+
+[220] LitGrenade
+    expands to: /item add 6009459
+
+[035] loc
+    expands to: location
+
+[117] loyal
+    expands to: currency add 7026 5000
+
+[206] LoyaltyAddPoints
+    expands to: currency add 7026 
+
+[126] magrider
+    expands to: vehicle 4
+
+[205] merit_all_tactical_rewards
+    expands to: item add 6009014; item add 6009057; item add 6009065; item add 6009070; item add 6009046; item add 6009085
+
+[204] merit_caltrop
+    expands to: item add 6009085
+
+[202] merit_cortium_bomb
+    expands to: item add 6009070
+
+[199] merit_flash
+    expands to: item add 6009014
+
+[201] merit_hardlight
+    expands to: item add 6009065
+
+[203] merit_javelin
+    expands to: item add 6009046
+
+[200] merit_spitfire
+    expands to: item add 6009057
+
+[198] MeritAddPoints
+    expands to: currency add 7027 
+
+[110] mfn
+    expands to: zone 150
+
+[131] mosquito
+    expands to: vehicle 9
+
+[132] mossie
+    expands to: vehicle 9
+
+[248] Nalla
+    expands to: /loc 72.233 471.060 -2.541 1.626
+
+[158] nanites
+    expands to: currency add 4 750
+
+[096] nexus
+    expands to: zone 10
+
+[119] ooboff
+    expands to: hexcheck 1 1 1
+
+[120] oobon
+    expands to: hexcheck 0 0 0
+
+[115] op
+    expands to: operation
+
+[252] operationauraximas
+    expands to: /mission start 610;/mission start 611;/mission start 612;/mission start 613;/mission start 614;/mission start 615;/mission start 616;/mission start 617;/mission start 618;/mission complete 610;/mission complete 611;/mission complete 612;/mission complete 613;/mission complete 614;/mission complete 615;/mission complete 616;/mission complete 617;/mission complete 618;/mission reset;/mission start 619
+
+[253] operationmatchmaker
+    expands to: /mission start 547;/mission start 548;/mission start 549;/mission start 550;/mission start 551;/mission start 552;/mission complete 547;/mission complete 548;/mission complete 549;/mission complete 550;/mission complete 551;/mission complete 552;/mission reset;/mission start 553
+
+[174] osgun
+    expands to: item add 6002561
+
+[102] oshur
+    expands to: zone 344
+
+[036] outfit_member_demote
+    expands to: guild demote
+
+[037] outfit_member_promote
+    expands to: guild promote
+
+[160] ow_advance
+    expands to: zonelua AdminLuaCommand.GameModeAdminCommand(self, 'AdvanceGamePhase')
+
+[162] ow_hard_reset
+    expands to: zonelua AdminLuaCommand.GameModeAdminCommand(self, 'Sanitize')
+
+[166] ow_initialize
+    expands to: zonelua AdminLuaCommand.GameModeAdminCommand(self, 'Initialize')
+
+[161] ow_set_conquest_mode
+    expands to: gamemode set OutfitWars.Conquest
+
+[164] ow_triggerVictory_nc
+    expands to: zonelua Zone:SetResourceValue(97,750)
+
+[165] ow_triggerVictory_tr
+    expands to: zonelua Zone:SetResourceValue(98,750)
+
+[163] ow_triggerVictory_vs
+    expands to: zonelua Zone:SetResourceValue(96,750)
+
+[250] pipelineWaterToggle
+    expands to: pipeline stage Refraction;pipeline stage CompositeRefraction
+
+[146] plarp
+    expands to: say
+
+[038] player_info
+    expands to: info
+
+[039] player_reset
+    expands to: kill
+
+[020] player_respawn
+    expands to: revive
+
+[080] player_respawn
+    expands to: revive
+
+[040] profile_cert_clear
+    expands to: /skill reset
+
+[041] profile_cert_clearall
+    expands to: skill resetset;cert clearall
+
+[042] profile_cert_cleartree
+    expands to: cert clear tree
+
+[043] profile_cert_complete
+    expands to: skill select;skill grant 
+
+[044] profile_cert_completetree
+    expands to: cert complete current
+
+[045] profile_cert_list
+    expands to: skill list
+
+[046] profile_cert_parents
+    expands to: skill listpath
+
+[047] profile_exp_add
+    expands to: givexp
+
+[053] profile_implant_add
+    expands to: implant selectimplant
+
+[054] profile_implant_list
+    expands to: implant list
+
+[055] profile_implant_remove
+    expands to: implant unselectimplant
+
+[048] profile_item_add
+    expands to: item add
+
+[049] profile_item_list
+    expands to: item list
+
+[050] profile_item_remove
+    expands to: item deleteid
+
+[051] profile_rank_set
+    expands to: givexp rank
+
+[128] prowler
+    expands to: vehicle 6
+
+[282] pumpkinmassacre
+    expands to: /zonelua EventHauntedBastion.SpacePumpkinMassacre()
+
+[130] reaver
+    expands to: vehicle 8
+
+[148] req
+    expands to: requirement
+
+[208] sap
+    expands to: skill addpoints 5000
+
+[168] script_disable_respawn
+    expands to: zonelua Zone:DisableSpwans()
+
+[167] script_enable_respawn
+    expands to: zonelua Zone:EnableSpwans()
+
+[129] scythe
+    expands to: vehicle 7
+
+[100] searhus
+    expands to: zone 3
+
+[011] setfaction.indar.canyons.nc
+    expands to: broadcast Changing Indar's Canyons region to NC;facility setfaction 2 221;facility setfaction 2 222;facility setfaction 2 224;facility setfaction 2 225;facility setfaction 2 231;facility setfaction 2 232;facility setfaction 2 233;facility setfaction 2 234;facility setfaction 2 235;facility setfaction 2 236;facility setfaction 2 242;facility setfaction 2 243;facility setfaction 2 244;facility setfaction 2 245;facility setfaction 2 246;facility setfaction 2 247;facility setfaction 2 248;facility setfaction 2 250;facility setfaction 2 5900;facility setfaction 2 6200;facility setfaction 2 6300;facility setfaction 2 6400;facility setfaction 2 6500;facility setfaction 2 3601;facility setfaction 2 7000;facility setfaction 2 118000;
+
+[009] setfaction.indar.canyons.ns
+    expands to: broadcast Changing Indar's Canyons region to Neutral;facility setfaction 0 221;facility setfaction 0 222;facility setfaction 0 224;facility setfaction 0 225;facility setfaction 0 231;facility setfaction 0 232;facility setfaction 0 233;facility setfaction 0 234;facility setfaction 0 235;facility setfaction 0 236;facility setfaction 0 242;facility setfaction 0 243;facility setfaction 0 244;facility setfaction 0 245;facility setfaction 0 246;facility setfaction 0 247;facility setfaction 0 248;facility setfaction 0 250;facility setfaction 0 5900;facility setfaction 0 6200;facility setfaction 0 6300;facility setfaction 0 6400;facility setfaction 0 6500;facility setfaction 0 3601;facility setfaction 0 7000;facility setfaction 0 118000;
+
+[012] setfaction.indar.canyons.tr
+    expands to: broadcast Changing Indar's Canyons region to TR;facility setfaction 3 221;facility setfaction 3 222;facility setfaction 3 224;facility setfaction 3 225;facility setfaction 3 231;facility setfaction 3 232;facility setfaction 3 233;facility setfaction 3 234;facility setfaction 3 235;facility setfaction 3 236;facility setfaction 3 242;facility setfaction 3 243;facility setfaction 3 244;facility setfaction 3 245;facility setfaction 3 246;facility setfaction 3 247;facility setfaction 3 248;facility setfaction 3 250;facility setfaction 3 5900;facility setfaction 3 6200;facility setfaction 3 6300;facility setfaction 3 6400;facility setfaction 3 6500;facility setfaction 3 3601;facility setfaction 3 7000;facility setfaction 3 118000;
+
+[010] setfaction.indar.canyons.vs
+    expands to: broadcast Changing Indar's Canyons region to VS;facility setfaction 1 221;facility setfaction 1 222;facility setfaction 1 224;facility setfaction 1 225;facility setfaction 1 231;facility setfaction 1 232;facility setfaction 1 233;facility setfaction 1 234;facility setfaction 1 235;facility setfaction 1 236;facility setfaction 1 242;facility setfaction 1 243;facility setfaction 1 244;facility setfaction 1 245;facility setfaction 1 246;facility setfaction 1 247;facility setfaction 1 248;facility setfaction 1 250;facility setfaction 1 5900;facility setfaction 1 6200;facility setfaction 1 6300;facility setfaction 1 6400;facility setfaction 1 6500;facility setfaction 1 3601;facility setfaction 1 7000;facility setfaction 1 118000;
+
+[007] setfaction.indar.highlands.nc
+    expands to: broadcast Changing Indar's Highlands region to NC;facility setfaction 2 216;facility setfaction 2 226;facility setfaction 2 227;facility setfaction 2 228;facility setfaction 2 229;facility setfaction 2 230;facility setfaction 2 237;facility setfaction 2 238;facility setfaction 2 239;facility setfaction 2 240;facility setfaction 2 241;facility setfaction 2 252;facility setfaction 2 5700;facility setfaction 2 5800;facility setfaction 2 6000;facility setfaction 2 6100;facility setfaction 2 3400;facility setfaction 2 4001;facility setfaction 2 7500;facility setfaction 2 218;
+
+[005] setfaction.indar.highlands.ns
+    expands to: broadcast Changing Indar's Highlands region to Neutral;facility setfaction 0 216;facility setfaction 0 226;facility setfaction 0 227;facility setfaction 0 228;facility setfaction 0 229;facility setfaction 0 230;facility setfaction 0 237;facility setfaction 0 238;facility setfaction 0 239;facility setfaction 0 240;facility setfaction 0 241;facility setfaction 0 252;facility setfaction 0 5700;facility setfaction 0 5800;facility setfaction 0 6000;facility setfaction 0 6100;facility setfaction 0 3400;facility setfaction 0 4001;facility setfaction 0 7500;facility setfaction 0 218;
+
+[008] setfaction.indar.highlands.tr
+    expands to: broadcast Changing Indar's Highlands region to TR;facility setfaction 3 216;facility setfaction 3 226;facility setfaction 3 227;facility setfaction 3 228;facility setfaction 3 229;facility setfaction 3 230;facility setfaction 3 237;facility setfaction 3 238;facility setfaction 3 239;facility setfaction 3 240;facility setfaction 3 241;facility setfaction 3 252;facility setfaction 3 5700;facility setfaction 3 5800;facility setfaction 3 6000;facility setfaction 3 6100;facility setfaction 3 3400;facility setfaction 3 4001;facility setfaction 3 7500;facility setfaction 3 218;
+
+[006] setfaction.indar.highlands.vs
+    expands to: broadcast Changing Indar's Highlands region to VS;facility setfaction 1 216;facility setfaction 1 226;facility setfaction 1 227;facility setfaction 1 228;facility setfaction 1 229;facility setfaction 1 230;facility setfaction 1 237;facility setfaction 1 238;facility setfaction 1 239;facility setfaction 1 240;facility setfaction 1 241;facility setfaction 1 252;facility setfaction 1 5700;facility setfaction 1 5800;facility setfaction 1 6000;facility setfaction 1 6100;facility setfaction 1 3400;facility setfaction 1 4001;facility setfaction 1 7500;facility setfaction 1 218;
+
+[015] setfaction.indar.nc
+    expands to: broadcast Changing Indar to NC;facility setfaction 2 200;facility setfaction 2 201;facility setfaction 2 202;facility setfaction 2 203;facility setfaction 2 204;facility setfaction 2 205;facility setfaction 2 206;facility setfaction 2 207;facility setfaction 2 208;facility setfaction 2 209;facility setfaction 2 210;facility setfaction 2 211;facility setfaction 2 212;facility setfaction 2 213;facility setfaction 2 214;facility setfaction 2 215;facility setfaction 2 217;facility setfaction 2 219;facility setfaction 2 220;facility setfaction 2 223;facility setfaction 2 251;facility setfaction 2 5100;facility setfaction 2 5200;facility setfaction 2 5300;facility setfaction 2 5500;facility setfaction 2 3201;facility setfaction 2 3801;facility setfaction 2 4401;facility setfaction 2 216;facility setfaction 2 226;facility setfaction 2 227;facility setfaction 2 228;facility setfaction 2 229;facility setfaction 2 230;facility setfaction 2 237;facility setfaction 2 238;facility setfaction 2 239;facility setfaction 2 240;facility setfaction 2 241;facility setfaction 2 252;facility setfaction 2 5700;facility setfaction 2 5800;facility setfaction 2 6000;facility setfaction 2 6100;facility setfaction 2 3400;facility setfaction 2 4001;facility setfaction 2 7500;facility setfaction 2 221;facility setfaction 2 222;facility setfaction 2 224;facility setfaction 2 225;facility setfaction 2 231;facility setfaction 2 232;facility setfaction 2 233;facility setfaction 2 234;facility setfaction 2 235;facility setfaction 2 236;facility setfaction 2 242;facility setfaction 2 243;facility setfaction 2 244;facility setfaction 2 245;facility setfaction 2 246;facility setfaction 2 247;facility setfaction 2 248;facility setfaction 2 250;facility setfaction 2 5900;facility setfaction 2 6200;facility setfaction 2 6300;facility setfaction 2 6400;facility setfaction 2 6500;facility setfaction 2 3601;facility setfaction 2 7000;facility setfaction 2 118000;facility setfaction 2 218;
+
+[013] setfaction.indar.ns
+    expands to: broadcast Changing Indar to Neutral;facility setfaction 0 200;facility setfaction 0 201;facility setfaction 0 202;facility setfaction 0 203;facility setfaction 0 204;facility setfaction 0 205;facility setfaction 0 206;facility setfaction 0 207;facility setfaction 0 208;facility setfaction 0 209;facility setfaction 0 210;facility setfaction 0 211;facility setfaction 0 212;facility setfaction 0 213;facility setfaction 0 214;facility setfaction 0 215;facility setfaction 0 217;facility setfaction 0 219;facility setfaction 0 220;facility setfaction 0 223;facility setfaction 0 251;facility setfaction 0 5100;facility setfaction 0 5200;facility setfaction 0 5300;facility setfaction 0 5500;facility setfaction 0 3201;facility setfaction 0 3801;facility setfaction 0 4401;facility setfaction 0 216;facility setfaction 0 226;facility setfaction 0 227;facility setfaction 0 228;facility setfaction 0 229;facility setfaction 0 230;facility setfaction 0 237;facility setfaction 0 238;facility setfaction 0 239;facility setfaction 0 240;facility setfaction 0 241;facility setfaction 0 252;facility setfaction 0 5700;facility setfaction 0 5800;facility setfaction 0 6000;facility setfaction 0 6100;facility setfaction 0 3400;facility setfaction 0 4001;facility setfaction 0 7500;facility setfaction 0 221;facility setfaction 0 222;facility setfaction 0 224;facility setfaction 0 225;facility setfaction 0 231;facility setfaction 0 232;facility setfaction 0 233;facility setfaction 0 234;facility setfaction 0 235;facility setfaction 0 236;facility setfaction 0 242;facility setfaction 0 243;facility setfaction 0 244;facility setfaction 0 245;facility setfaction 0 246;facility setfaction 0 247;facility setfaction 0 248;facility setfaction 0 250;facility setfaction 0 5900;facility setfaction 0 6200;facility setfaction 0 6300;facility setfaction 0 6400;facility setfaction 0 6500;facility setfaction 0 3601;facility setfaction 0 7000;facility setfaction 0 118000;facility setfaction 0 218;
+
+[002] setfaction.indar.ocean.nc
+    expands to: broadcast Changing Indar's Ocean region to NC;facility setfaction 2 200;facility setfaction 2 201;facility setfaction 2 202;facility setfaction 2 203;facility setfaction 2 204;facility setfaction 2 205;facility setfaction 2 206;facility setfaction 2 207;facility setfaction 2 208;facility setfaction 2 209;facility setfaction 2 210;facility setfaction 2 211;facility setfaction 2 212;facility setfaction 2 213;facility setfaction 2 214;facility setfaction 2 215;facility setfaction 2 217;facility setfaction 2 219;facility setfaction 2 220;facility setfaction 2 223;facility setfaction 2 251;facility setfaction 2 5100;facility setfaction 2 5200;facility setfaction 2 5300;facility setfaction 2 5500;facility setfaction 2 3201;facility setfaction 2 3801;facility setfaction 2 4401;
+
+[004] setfaction.indar.ocean.ns
+    expands to: broadcast Changing Indar's Ocean region to Neutral;facility setfaction 0 200;facility setfaction 0 201;facility setfaction 0 202;facility setfaction 0 203;facility setfaction 0 204;facility setfaction 0 205;facility setfaction 0 206;facility setfaction 0 207;facility setfaction 0 208;facility setfaction 0 209;facility setfaction 0 210;facility setfaction 0 211;facility setfaction 0 212;facility setfaction 0 213;facility setfaction 0 214;facility setfaction 0 215;facility setfaction 0 217;facility setfaction 0 219;facility setfaction 0 220;facility setfaction 0 223;facility setfaction 0 251;facility setfaction 0 5100;facility setfaction 0 5200;facility setfaction 0 5300;facility setfaction 0 5500;facility setfaction 0 3201;facility setfaction 0 3801;facility setfaction 0 4401;
+
+[003] setfaction.indar.ocean.tr
+    expands to: broadcast Changing Indar's Ocean region to TR;facility setfaction 3 200;facility setfaction 3 201;facility setfaction 3 202;facility setfaction 3 203;facility setfaction 3 204;facility setfaction 3 205;facility setfaction 3 206;facility setfaction 3 207;facility setfaction 3 208;facility setfaction 3 209;facility setfaction 3 210;facility setfaction 3 211;facility setfaction 3 212;facility setfaction 3 213;facility setfaction 3 214;facility setfaction 3 215;facility setfaction 3 217;facility setfaction 3 219;facility setfaction 3 220;facility setfaction 3 223;facility setfaction 3 251;facility setfaction 3 5100;facility setfaction 3 5200;facility setfaction 3 5300;facility setfaction 3 5500;facility setfaction 3 3201;facility setfaction 3 3801;facility setfaction 3 4401;
+
+[001] setfaction.indar.ocean.vs
+    expands to: broadcast Changing Indar's Ocean region to VS;facility setfaction 1 200;facility setfaction 1 201;facility setfaction 1 202;facility setfaction 1 203;facility setfaction 1 204;facility setfaction 1 205;facility setfaction 1 206;facility setfaction 1 207;facility setfaction 1 208;facility setfaction 1 209;facility setfaction 1 210;facility setfaction 1 211;facility setfaction 1 212;facility setfaction 1 213;facility setfaction 1 214;facility setfaction 1 215;facility setfaction 1 217;facility setfaction 1 219;facility setfaction 1 220;facility setfaction 1 223;facility setfaction 1 251;facility setfaction 1 5100;facility setfaction 1 5200;facility setfaction 1 5300;facility setfaction 1 5500;facility setfaction 1 3201;facility setfaction 1 3801;facility setfaction 1 4401;
+
+[016] setfaction.indar.tr
+    expands to: broadcast Changing Indar to TR;facility setfaction 3 200;facility setfaction 3 201;facility setfaction 3 202;facility setfaction 3 203;facility setfaction 3 204;facility setfaction 3 205;facility setfaction 3 206;facility setfaction 3 207;facility setfaction 3 208;facility setfaction 3 209;facility setfaction 3 210;facility setfaction 3 211;facility setfaction 3 212;facility setfaction 3 213;facility setfaction 3 214;facility setfaction 3 215;facility setfaction 3 217;facility setfaction 3 219;facility setfaction 3 220;facility setfaction 3 223;facility setfaction 3 251;facility setfaction 3 5100;facility setfaction 3 5200;facility setfaction 3 5300;facility setfaction 3 5500;facility setfaction 3 3201;facility setfaction 3 3801;facility setfaction 3 4401;facility setfaction 3 216;facility setfaction 3 226;facility setfaction 3 227;facility setfaction 3 228;facility setfaction 3 229;facility setfaction 3 230;facility setfaction 3 237;facility setfaction 3 238;facility setfaction 3 239;facility setfaction 3 240;facility setfaction 3 241;facility setfaction 3 252;facility setfaction 3 5700;facility setfaction 3 5800;facility setfaction 3 6000;facility setfaction 3 6100;facility setfaction 3 3400;facility setfaction 3 4001;facility setfaction 3 7500;facility setfaction 3 221;facility setfaction 3 222;facility setfaction 3 224;facility setfaction 3 225;facility setfaction 3 231;facility setfaction 3 232;facility setfaction 3 233;facility setfaction 3 234;facility setfaction 3 235;facility setfaction 3 236;facility setfaction 3 242;facility setfaction 3 243;facility setfaction 3 244;facility setfaction 3 245;facility setfaction 3 246;facility setfaction 3 247;facility setfaction 3 248;facility setfaction 3 250;facility setfaction 3 5900;facility setfaction 3 6200;facility setfaction 3 6300;facility setfaction 3 6400;facility setfaction 3 6500;facility setfaction 3 3601;facility setfaction 3 7000;facility setfaction 3 118000;facility setfaction 3 218;
+
+[014] setfaction.indar.vs
+    expands to: broadcast Changing Indar to VS;facility setfaction 1 200;facility setfaction 1 201;facility setfaction 1 202;facility setfaction 1 203;facility setfaction 1 204;facility setfaction 1 205;facility setfaction 1 206;facility setfaction 1 207;facility setfaction 1 208;facility setfaction 1 209;facility setfaction 1 210;facility setfaction 1 211;facility setfaction 1 212;facility setfaction 1 213;facility setfaction 1 214;facility setfaction 1 215;facility setfaction 1 217;facility setfaction 1 219;facility setfaction 1 220;facility setfaction 1 223;facility setfaction 1 251;facility setfaction 1 5100;facility setfaction 1 5200;facility setfaction 1 5300;facility setfaction 1 5500;facility setfaction 1 3201;facility setfaction 1 3801;facility setfaction 1 4401;facility setfaction 1 216;facility setfaction 1 226;facility setfaction 1 227;facility setfaction 1 228;facility setfaction 1 229;facility setfaction 1 230;facility setfaction 1 237;facility setfaction 1 238;facility setfaction 1 239;facility setfaction 1 240;facility setfaction 1 241;facility setfaction 1 252;facility setfaction 1 5700;facility setfaction 1 5800;facility setfaction 1 6000;facility setfaction 1 6100;facility setfaction 1 3400;facility setfaction 1 4001;facility setfaction 1 7500;facility setfaction 1 221;facility setfaction 1 222;facility setfaction 1 224;facility setfaction 1 225;facility setfaction 1 231;facility setfaction 1 232;facility setfaction 1 233;facility setfaction 1 234;facility setfaction 1 235;facility setfaction 1 236;facility setfaction 1 242;facility setfaction 1 243;facility setfaction 1 244;facility setfaction 1 245;facility setfaction 1 246;facility setfaction 1 247;facility setfaction 1 248;facility setfaction 1 250;facility setfaction 1 5900;facility setfaction 1 6200;facility setfaction 1 6300;facility setfaction 1 6400;facility setfaction 1 6500;facility setfaction 1 3601;facility setfaction 1 7000;facility setfaction 1 118000;facility setfaction 1 218;
+
+[017] setfaction.indar.zurvandemo
+    expands to: broadcast Adjusting influence around Zurvan;facility setfaction 1 6100;facility setfaction 1 6200;facility setfaction 2 221;facility setfaction 2 235;facility setfaction 3 232;facility setfaction 3 234;
+
+[079] sethealth
+    expands to: player health set
+
+[052] sethistory
+    expands to: console_sethistory
+
+[111] showclientareas
+    expands to: render areas
+
+[112] showserverareas
+    expands to: /drawserverdebug zoneareas 1
+
+[247] Sparky
+    expands to: /loc 53.580 471.060 -22.925 -2.9
+
+[274] spawninfo
+    expands to: /spawncontext $admintarget$
+
+[245] SPRK-33
+    expands to: /loc 53.580 471.060 -22.925 -2.9
+
+[246] SPRK33
+    expands to: /loc 53.580 471.060 -22.925 -2.9
+
+[169] startstats
+    expands to: zonelua Zone:GetGameMode():StartStats()
+
+[072] statsactioneventqueue
+    expands to: stats 17
+
+[064] statsanimation
+    expands to: stats 9
+
+[071] statsassets
+    expands to: stats 16
+
+[076] statsassetunused
+    expands to: stats 21
+
+[075] statsassetusage
+    expands to: stats 20
+
+[063] statsaudio
+    expands to: stats 8
+
+[077] statscontent
+    expands to: stats 22
+
+[069] statscontroller
+    expands to: stats 14
+
+[056] statsdefault
+    expands to: stats 1
+
+[065] statsderivedclass
+    expands to: stats 10
+
+[070] statsflash
+    expands to: stats 15
+
+[078] statsgateway
+    expands to: stats 23
+
+[073] statsinput
+    expands to: stats 18
+
+[074] statsinput2
+    expands to: stats 19
+
+[062] statsmemory
+    expands to: stats 7
+
+[068] statsnetwork
+    expands to: stats 13
+
+[057] statsquick
+    expands to: stats 2
+
+[061] statsrender
+    expands to: stats 6
+
+[059] statstimingdetail
+    expands to: stats 4
+
+[058] statstimingsummary
+    expands to: stats 3
+
+[060] statstimingthreads
+    expands to: stats 5
+
+[066] statszoneprofiler
+    expands to: stats 11
+
+[067] statszonestats
+    expands to: stats 12
+
+[170] stopstats
+    expands to: zonelua Zone:GetGameMode():StopStats()
+
+[124] stryder
+    expands to: vehicle 2153
+
+[123] sunderer
+    expands to: vehicle 2
+
+[122] sundy
+    expands to: vehicle 2
+
+[108] supercleanroom
+    expands to: zone 199
+
+[082] superduperman
+    expands to: gm invuln toggle;fly;run 300;noclip
+
+[081] superman
+    expands to: gm invuln toggle;fly;run 100
+
+[263] tempestSiphonDebug
+    expands to: /zonelua ContainmentSiteLua.DebugTempestSiphonAlias(self, 'DebugTempestSiphonStatus')
+
+[264] tempestSiphonToggle
+    expands to: /zonelua ContainmentSiteLua.DebugTempestSiphonAlias(self, 'DebugToggleTempestSiphon')
+
+[265] testContainmentDamage
+    expands to: /characterflag set TestContainmentDamage 0
+
+[118] timers
+    expands to: acquiretimers clearall
+
+[249] Tolland
+    expands to: /loc 72.630 471.060 1.480 1.545
+
+[256] tutorial2_advanceStep
+    expands to: /zonelua Tutorial2Mission.AliasCommand_AdvanceTutorial(self)
+
+[257] tutorial2_debugDeath
+    expands to: /zonelua Tutorial2Mission.AliasCommand_DebugDeathSequence(self)
+
+[258] tutorial2_disableAutoExit
+    expands to: /zonelua Tutorial2Mission.AliasCommand_DisableAutoExit(self)
+
+[254] tutorial2_enterTutorial
+    expands to: /szone 103
+
+[259] tutorial2_forceSpawnDriveAwayVehicle
+    expands to: /zonelua Tutorial2Mission.AliasCommand_ForceSpawnDriveAwayVehicle(self)
+
+[260] tutorial2_gotoEchoSpawn
+    expands to: /zonelua Tutorial2Mission.AliasCommand_GotoEcho(self)
+
+[261] tutorial2_gotoLightnings
+    expands to: /zonelua Tutorial2Mission.AliasCommand_GotoLightnings(self)
+
+[262] tutorial2_gotoTower
+    expands to: /loc -24.420 524 -624.24
+
+[255] tutorial2_startSanctuary
+    expands to: /mission start 381
+
+[031] ubcast
+    expands to: universebroadcast
+
+[237] Umatherin
+    expands to: /loc 72.666 528.900 136.495 -0.225
+
+[138] valkyrie
+    expands to: vehicle 14
+
+[127] vanguard
+    expands to: vehicle 5
+
+[021] vehicle_create
+    expands to: vehicle
+
+[279] Viridian
+    expands to: /zonelua DistantShoresZoneScripts.GotoViridianAlias( self )
+
+[178] warasset_bypass_requirements
+    expands to: zonelua WarAssetSlashCommand.BypassWarAssetRequirements(self)
+
+[033] warp
+    expands to: goto
+
+[030] wbcast
+    expands to: worldbroadcast
+
+[142] wds
+    expands to: empirescore
+
+[143] wg
+    expands to: warpgate
+
+[179] worldow
+    expands to: worldoutfitwar
+
+[150] worldreq
+    expands to: worldrequirement
+
+[084] wstat
+    expands to: weaponstat
+
+[029] zbcast
+    expands to: zonebroadcast
+
+[093] zone.amerish
+    expands to: zone 6
+
+[103] zone.clean
+    expands to: zone 200
+
+[104] zone.cleanroom
+    expands to: zone 200
+
+[091] zone.esamir
+    expands to: zone 8
+
+[097] zone.hossin
+    expands to: zone 4
+
+[089] zone.indar
+    expands to: zone 2
+
+[109] zone.mfn
+    expands to: zone 150
+
+[095] zone.nexus
+    expands to: zone 10
+
+[101] zone.oshur
+    expands to: zone 344
+
+[099] zone.searhus
+    expands to: zone 3
+
+[106] zone.superclean
+    expands to: zone 199
+
+[107] zone.supercleanroom
+    expands to: zone 199
+
+[153] zoneflag
+    expands to: zoneflags
+
+[180] zoneow
+    expands to: zoneoutfitwar
+
+B. FIRST TOKENS FOUND IN EXPANSIONS
+Derived from the strings above; parameter grammar and execution are unverified.
+/__sendzonecommand, /characterflag, /drawserverdebug, /ingamepurchase, /item, /loc, /mission, /npc, /resources, /skill, /spawncontext, /szone, /vehicle, /zonelua, achievement, acquiretimers, bizenv, broadcast, cert, characterstat, clientrequirement, commands, console_sethistory, continentlocking, currency, debug_projectiles, drawdebug, empirescore, facility, facilityspawn, facilitytype, fly, gamemode, givexp, gm, goto, guild, guildbank, hexcheck, implant, info, item, kill, location, log_projectile_expiration, metagame, noclip, operation, pipeline, player, referee, render, repeatingactivity, requirement, resources, revive, reward, run, say, servertime, setfaction, skill, stats, timeofday, universebroadcast, vehicle, warpgate, weaponstat, worldbroadcast, worldoutfitwar, worldrequirement, worldvar, zone, zonebroadcast, zoneflags, zonelua, zoneoutfitwar, zonesetting, zonevar
+
+C. OUR LOCAL BACKEND CONSOLE (type in its server CMD, not in game chat)
+
+help - List backend console syntax.
+status - Backend status.
+health - Alias of backend status.
+clients - Alias of backend status.
+log - Show server log path.
+report - Export server report ZIP.
+factions - Show faction-ID mapping.
+faction <1..4> - Reports unsupported integration; does not switch the native character.
+map load <name-or-id> [preset-name] - Diagnostic/unsupported request; does not perform a playable map load.
+lists send - Guarded candidate list refresh; disabled in isolated default mode.
+creator - Request bounded creator capture through the local launcher.
+capture profiles - Request profile capture.
+profile starter - Show resolved VS starter catalog.
+profiles - Show profile catalog status.
+profile loadout <ID> - Inspect a catalog loadout; does not equip it.
+zone status - Show parsed Indar backend status.
+zone verify - Verify retained Indar data.
+zone area <ID> - Inspect parsed area metadata.
+zone object <group> <instance> - Inspect a parsed placement.
+quit - Stop the local backend.
+
+D. HELPER CONTROL-CHANNEL OPERATION NAMES
+These are structured helper RPC names, not chat or server-console commands.
+Use the packaged test CMDs for guarded application operations.
+health, status, client_started, client_exited, capture_creator, capture_profiles, export_report, apply_location_probe, apply_owned_probe, apply_profile_activation, apply_profile_placement
+
+E. ADDITIONAL NATIVE NAMES UNDER INVESTIGATION
+observer, observerold: present in native registration/name data; their chat
+invocation, complete handler route and successful camera activation remain unverified.
+location: target of the shipped loc alias; execution/output remains unverified.
+
+This export performs no command execution and changes no gameplay state.

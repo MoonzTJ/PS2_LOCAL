@@ -1,4 +1,22 @@
-## Current test: continent and character bootstrap
+## Admin/dev command references
+
+[Download complete shipped alias list (TXT)](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/PS2_admin_dev_commands_20261027.txt)
+
+[Download shipped aliases and expansions (CSV)](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/PS2_admin_dev_commands_20261027.csv)
+
+All283 active entries from the retained AdminCommandAliases.xml are exported,
+with282 distinct names and both player_respawn entries preserved. TXT also lists
+our20 backend console inputs and11 structured helper operations, labeled by
+input surface. The export is complete for this shipped alias file; native
+compiled-in and internal server command inventories remain incomplete. Alias
+presence does not establish working local gameplay handlers. No commands ran.
+
+## Completed diagnostic: continent and character bootstrap
+
+Actual134342 confirms an empty continent catalog and absent state-context object
+required by the recovered redeploy check. Character class19 and placement work,
+while model0/NC base/no arms persist. VS character and full starter-loadout
+initialization remain the priority; chat routing is also unfinished.
 
 [Download ps2_bootstrap_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_bootstrap_test.zip)
 
