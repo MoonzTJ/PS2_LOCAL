@@ -1,4 +1,25 @@
-## Current test: local character admin access
+## Current test: continent and character bootstrap
+
+[Download ps2_bootstrap_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_bootstrap_test.zip)
+
+Click **Download raw file**. Close the old local game/server, extract into a fresh
+folder outside the game, then run **start_bootstrap_test.cmd**. Choose the copied
+Local client and **LocalVSTest → Play**. At the3D view close map/menus/chat and
+run **capture_bootstrap_test.cmd once**. Return within **eight seconds** and stay
+idle until **THREE beeps**. **No W phase or commands.** Upload
+**local-bootstrap-….zip**, including failures. [Procedure](../docs/BOOTSTRAP_TEST.md).
+
+This measures continent metadata and redeploy prerequisites alongside character
+initialization, using the exact previously tested server and setup packets. It
+does not repair spawning or appearance. Unknown native checks stay unknown.
+All405 Python tests and7 native lookup cases pass; two backend starts preserve
+three saved-state files. All94 existing server/tools and26 earlier ZIPs remain
+byte-identical. Actual Windows bootstrap measurements are pending.
+
+ZIP3,004,460 bytes; SHA256:
+`45b6b92526ce4c359a039acc923fa1e7f9226a47912ac525c34466d7c76753eb`.
+
+## Completed test: local character admin permission
 
 [Download ps2_local_admin_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_admin_test.zip)
 
@@ -13,8 +34,9 @@ Upload **local-admin-access-….zip**, including failures. After capture try
 The server grants the verified IsAdminAccount login field to all five local
 characters. The test measures the native permission and retains the existing
 class19 activation/warpgate placement. It does not grant an admin client build
-or implement every gameplay command. Actual Windows access and execution are
-pending. Model/arms and camera remain incomplete; the CONTINENT header metadata
+or implement every gameplay command. Windows permission delivery is now verified
+for LocalVSTest in all three224846 captures. Observer and /loc produced no visible
+effect; command execution remains unverified. Model/arms and camera remain incomplete; the CONTINENT header metadata
 issue is tracked separately and unchanged.
 
 All398 Python tests and16 native permission cases pass, including
