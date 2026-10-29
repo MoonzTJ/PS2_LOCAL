@@ -1,13 +1,12 @@
-## Current test: Opus Local Test v3 (faction bodies + post-placement PreloadDone)
+## Current test: Opus Local Test v4 (faction bodies + placement message capture)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 
-The Local Test panel with the confirmed faction character-select bodies, plus one
-new switch: after the bootstrap placement the server sends PreloadDone once more
-(answering the client's ready signal, or on its own after five seconds). Every
-placement so far left that flag false with input locked. Double-click
+After placement the client stops its 15-per-second `2:02` messages and sends a new
+`2:fe`. This version records those messages' full bytes around the placement so
+they can be decoded. Nothing new is sent to the game. Double-click
 **Start Opus Local Test.cmd** and follow [the procedure](../docs/OPUS_LOCAL_TEST.md).
-451 Python tests pass. ZIP 3,018,630 bytes; SHA256 `1f0fd8efed20f2a3001d485eaf7fa5f030e6a46ab63ba76e3ffe0838b434ed76`.
+453 Python tests pass. ZIP 3,019,469 bytes; SHA256 `2e4be52a206866ef31d697bf39ef57c20dc56f8d1f5c9b7d7756937b69d6f356`.
 
 ## Result: post-placement PreloadDone (Opus Local Test v3)
 
