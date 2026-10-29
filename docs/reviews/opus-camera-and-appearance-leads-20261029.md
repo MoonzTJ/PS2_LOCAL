@@ -274,3 +274,34 @@ with model 165. Expected if the chain holds: actor_model_id 165, arms resource
 present, and the camera attached to the arms (the Camera capture verdict
 becomes camera_moved_with_actor). It is a different path from the class model
 words that crashed login, but it is not proven safe.
+
+## Windows v7 (model 165 in the activation): body and arms resource, camera still frozen
+
+`validation/evidence/local-camera-20261029-223027-287134-ae97d99d.json`: no crash;
+actor_model_id **165**, actor definition `Armor_VS_Male_LightAssault_Base.adr`
+(was the NC fallback), `first_person_arms_resource_present` **true** (first time),
+arms flags raw 32 with ready/failed both unset. The user sees the VS LA body walk
+with footsteps from the frozen view. The camera object is still bit-identical at
+the UpdateLocation target (verdict camera_frozen_while_actor_moved).
+
+## Native follow-up: which camera is active
+
+- E70700 has one thunk (70487) with three callers: E73730 (setup sequence that
+  clears flags and sets `[this+0x258]+0x2988`), E73A22 (guarded by
+  `this+0x261 & 0x10`) and **E7F1F1**, a per-frame step that copies the graphics
+  camera position, reads the target `[this+0x258]` position (thunk 13895),
+  compares its arms id (thunk 9279E) with the cached `this+0x3a0` and re-attaches
+  when it changes. So the first-person camera re-attaches by itself once its
+  target has arms; it can only fail to do so if it is not the active camera or
+  its target is not the local actor.
+- E6DD30 is that camera's constructor (vtable 3436CD8, object 0xA80 bytes): it
+  stores `owner->vfunc+0x1F8()` in `+0x258` and clears `+0x3a0`. Its only creator
+  is a camera factory around AD5B85-AD5C5C that switches on a camera type and
+  builds the first-person camera only when an owner (`rsi`) is present.
+- The teleport moved a different object: `[engine+0xB040]` → handle `+0x108`
+  (B32760). The `*_CAMERA_ID` column names are VehicleSeatInfo fields, not
+  infantry data.
+
+Next: find the factory's type switch value for the first-person camera, its
+callers, and the state/message that requests it for the local player (deploy/
+spawn lifecycle, game-mode context). Then decide which server message to send.

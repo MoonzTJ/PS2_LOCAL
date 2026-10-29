@@ -11,6 +11,12 @@ at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
 floor, while the screen stayed fixed. Input and movement work; the camera is
 not attached to the character.
 
+## Result: v7 gives the soldier a body and arms; camera still frozen
+
+Model 165 worked without a crash: VS Light Assault body, first-person arms
+resource created, the character visibly walks. The camera stays at the teleport
+point because the first-person camera is not the active camera yet.
+
 ## Current test: Opus Local Test v7 (body model 165 for arms + camera)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)

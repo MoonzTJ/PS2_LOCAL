@@ -50,13 +50,22 @@ From Claude Opus (cloud session), for Moon to pass to Codex. Branch:
   bootstrap phase model 0→accepts 0/165, and the readiness checks for the new
   switches. Every other frozen guard runs unmodified.
 
-## 4. Pending on Windows
+## 4. Latest Windows result (v7)
 
-**Opus Local Test v7**: bootstrap activation with model 165. Expected if the
-chain holds: actor_model_id 165, first-person arms resource present, camera
-attached (Camera capture verdict `camera_moved_with_actor`). Possible crash.
+Model 165 in the activation word: **no crash**, actor model 165, VS LA body
+definition, first-person arms resource present (ready flag unset), the user sees
+the body walk with footsteps — but the camera is still frozen at the teleport
+target. Native follow-up (review doc, last section): the first-person camera
+(ctor E6DD30, vtable 3436CD8, built by the camera factory near AD5C07 only with
+an owner) re-attaches to arms every frame via E7F1F1, so it is evidently **not
+the active camera**. The teleport moved `[engine+B040]`'s handle-`+0x108` camera.
 
 ## 5. Suggested next tasks for Codex (you have the full workspace)
+
+0. **Top priority:** the camera factory near AD5B85-AD5C5C — find its type switch
+   value for the first-person camera (0xA80 case), its callers, and the
+   lifecycle/state (deploy/spawn, game-mode context at entity system+0x2708)
+   that requests it for the local player. Then the server message behind it.
 
 1. **Run the model-165 activation natively past B9D0E0.** Populate the 4175A60
    engine table and engine+B098 model manager from the pinned Models.txt in
