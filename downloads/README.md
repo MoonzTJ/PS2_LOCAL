@@ -5,6 +5,16 @@ at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
 floor, while the screen stayed fixed. Input and movement work; the camera is
 not attached to the character.
 
+## Current test: Opus Local Test v7 (body model 165 for arms + camera)
+
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
+
+Game code shows the camera attaches to the first-person arms' "camera" bone and
+detaches without arms; your soldier has always had model 0 (no arms). v7 sends
+model 165 (VS Light Assault) in the activation message's model field, located
+natively at byte 121. Same panel as v6. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
+460 Python tests pass. ZIP 3,023,484 bytes; SHA256 `abd11b09f9a901da715963a2ff9b4f97d6bf7d8556e4c80505b68d9e566ba85c`.
+
 ## Result: camera confirmed frozen (v6, run 221053)
 
 Capture Camera: your character walked about 22 units while the game's camera
@@ -12,7 +22,7 @@ object stayed exactly at the teleport target. Movement works; the camera's
 follow update does not run. Next step is a native trace of what drives the
 camera each frame (see the review's "Exact native question").
 
-## Current test: Opus Local Test v6 (camera vs character position)
+## Previous: Opus Local Test v6 (camera vs character position)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 

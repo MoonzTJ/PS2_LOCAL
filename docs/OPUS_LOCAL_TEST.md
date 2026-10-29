@@ -1,22 +1,23 @@
-# Opus Local Test v6 — camera vs character position
+# Opus Local Test v7 — give your soldier a body (and arms for the camera)
 
-The normal Local Test panel with the confirmed faction character-select bodies,
-the 60-second message capture around the placement, and one new read-only tool.
+Found in the game's own code: the first-person camera attaches to a bone named
+"camera" on your first-person **arms** model, and detaches when there are no arms.
+Your character has always had body model 0, so no arms and no camera follow.
+This version sends body model **165** (VS Light Assault) in the activation
+message the bootstrap diagnostic uses. The game code shows that number leads to
+the first-person arms `FPArmor_VS_Male_LightAssault`. Everything else is as in v6:
+faction character-select bodies, message capture and **Capture Camera.cmd**.
 
-**Why:** decoded messages show your character walks, turns and stays on the
-floor after the placement, while the view stays where the teleport put it. The
-game also keeps describing your character's ID as a zero-size object at the
-teleport point. **Capture Camera.cmd** reads your character's position and the
-game's camera object position side by side, six times about 1.5 seconds apart.
-If the camera stays fixed while your character moves, the camera is bound to
-the frozen copy. It only reads memory; nothing is sent to or changed in the game.
+This is a new path; it could crash. If it does, that is a useful result.
 
 1. Close the game and server. Extract this ZIP into a fresh folder.
 2. Double-click **Start Opus Local Test.cmd** and click **Start local session**.
 3. Select **LocalVSTest**, press **Play**, then run **Advanced → Existing
    bootstrap diagnostic (once)** and wait for THREE beeps.
-4. Double-click **Capture Camera.cmd**. Go back to the game within five seconds.
-   At **TWO beeps** hold **W** and turn with the mouse; keep walking until
-   **THREE beeps** (about eight seconds).
-5. Upload the **local-camera-….json** from `reports` (the window prints the
-   result too), plus **Save server report ZIP** and the `local-bootstrap-…` zip.
+4. Look: do you see arms or a weapon-less first-person view? Does the view move
+   with W and the mouse? Take a screenshot.
+5. Double-click **Capture Camera.cmd**, go back to the game within five seconds,
+   at TWO beeps walk and turn until THREE beeps.
+6. Upload `reports\local-camera-….json`, the `local-bootstrap-…` zip and the
+   **Save server report ZIP**. If the game crashed, also the newest files in the
+   copied game folder's **Logs** folder.

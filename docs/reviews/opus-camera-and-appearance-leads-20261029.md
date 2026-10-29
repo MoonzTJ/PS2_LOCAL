@@ -241,3 +241,36 @@ The placement wrote the camera position once; no per-frame follow update runs.
    (spawn/deploy/"controlled entity"/camera-mode). That message is the fix.
 
 No guessed values, forced flags or native calls are needed for steps 1-2.
+
+## Native trace with the restored loaded sections (Opus, same day)
+
+Inputs: `/workspace/ps2-native-input/loaded-20261010-032924` from Moon/Codex.
+Section SHA-256 match the handoff (.text 1c006b0e…, .rdata 9b77a95d…, _RDATA
+2f15e694…). `native_character_preview_cases.py` reproduces 23/23 here.
+
+**Camera attachment.** `.rdata` strings `Attaching camera to arms - actor (%u)`
+(3437860), `Camera successfully attached to bone ID %d.` (3437898), `ERROR -
+failed to find camera bone on the first person arms actor (%u)!` (34378D0) and
+`Detaching camera from arms.` (3437960) are referenced only by E70700. E70700
+reads an arms-actor id through `this+0x258` (thunk 9279E); if it is 0 it takes
+the `Detaching camera from arms.` path (E70C3E). Otherwise it looks up the bone
+named `camera` (string 3437890) on the arms actor (thunk 4AF61) and builds the
+camera transform from it. The local actor has model 0, no FirstPersonArms
+mapping and no arms resource in every capture, so the camera is never attached
+and only the UpdateLocation path (A4C95F -> [engine+B040] -> B32760) moves it.
+
+**Activation model word.** The native outer reader 9B9320 (`--packet` mode) on
+a marker packet with scalars 11111111/22222222/33333333/44444444 returns
+component_key 0x11111111 (outer+44) and model_id 0x33333333 (outer+48): the
+model is the third scalar, wire offset 121 of the 138-byte message. The default
+packet stays byte-identical (SHA 517264…). B9D0E0 takes the engine via the
+4175A60 XOR table, looks the model up in engine+B098 (thunk DE0E) and, if
+found, calls actor virtual+530 (Codex: 1111B60 -> 110CAC0 -> EDF4F0 arms
+lookup; 165 -> FPArmor_VS_Male_LightAssault.adr). `--dispatch` with 165 faults
+at B9D108 only because the fixture never populates that engine table.
+
+**Next client test.** `--activation-model-id 165` sends the bootstrap activation
+with model 165. Expected if the chain holds: actor_model_id 165, arms resource
+present, and the camera attached to the arms (the Camera capture verdict
+becomes camera_moved_with_actor). It is a different path from the class model
+words that crashed login, but it is not proven safe.
