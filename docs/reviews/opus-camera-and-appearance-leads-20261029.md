@@ -130,3 +130,15 @@ the headless NC fallback), and class19 refs 165/166 in the captures. The actor
 model word remains 0, so first-person arms are not expected yet. Gateway gives
 `model_pairs` to `profile_probe` only when set, so older helper bundles that
 ship the original module keep working.
+
+## Windows result: menu body works; class model words crash login
+
+Menu row head1/model165/gender1 rendered the VS LA base body with an attached
+head for LocalVSTest; LocalVS (unchanged) stayed the NC fallback. With class19
+model words 165/166 also delivered, every character's login crashed the client
+after ProfileDefinitions (the class packet goes to every character; the menu
+rows of LocalNC/TR/NSO were unchanged). The class-word path through 118C9D0 is
+the native class asset loader whose successful callback path was never executed
+offline; trace it before sending class words again. Menu-only v2 restores the
+original class bytes. The full VS LA look in the user's live reference also
+needs the equipped loadout (armor/helmet/weapon) in the character row.

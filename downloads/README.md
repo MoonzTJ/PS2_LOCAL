@@ -1,31 +1,12 @@
-## Current test: VS Light Assault appearance (Local Test panel)
+## Current test: VS Light Assault appearance v2 (menu body only)
 
 [Download ps2_vs_appearance_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_local_test.zip)
 
-Click **Download raw file**, extract into a fresh folder, double-click
-**Start VS Appearance Test.cmd** and follow [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
-This is the normal Local Test panel (one window, one server console) with only
-LocalVSTest changed to the VS LA body 165/166. 453 Python tests pass.
-ZIP 3,019,239 bytes; SHA256 `dbd4962408ad1856856c99b4f67759473633d40745d8d785e3eb3fb93582377c`.
-
-## Superseded: ps2_vs_appearance_test.zip
-
-Its older launcher rejects the clean-UI config the Local Test panel writes, so
-the game did not start. Use the panel version above.
-
-## (superseded) VS Light Assault appearance, placement helper
-
-[Download ps2_vs_appearance_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_test.zip)
-
-Click **Download raw file**, extract into a fresh folder and follow
-[the procedure](../docs/VS_APPEARANCE_TEST.md). Run **start_vs_appearance_test.cmd**,
-screenshot LocalVSTest at character select, Play, then run
-**appearance_place_and_capture.cmd once** at the 3D view. Upload
-**local-profile-placement-….zip** from `reports` (it now includes the gateway log).
-
-Only LocalVSTest changes: class19 models 165/166 and its preview row. The other
-characters stay as the comparison. 449 Python tests pass. ZIP 2,996,909 bytes;
-SHA256 `64edbd74d21579796473abd9db2de11cd6df74f1c174ba0f9e21e82d6a2172f5`.
+v1 showed the VS LA body and head for LocalVSTest, but its class-19 model change
+crashed every character's login. v2 keeps only the character-select body; class
+data is back to its original bytes. Extract into a fresh folder, double-click
+**Start VS Appearance Test.cmd**, then follow [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
+450 Python tests pass. ZIP 3,019,151 bytes; SHA256 `71330864da46642693736d732f5e9e81d54cf39f875e07a6e79cb24b32cb4647`.
 
 ## Completed: actor asset check
 
