@@ -112,3 +112,21 @@ EDF4F0` then predicts arms `FPArmor_VS_Male_LightAssault.adr` for165.
 
 Full suite with these additions: see `CURRENT_CHECKPOINT.md`. Limits: fixtures
 do not read the user's packs; no Windows run; no native execution here.
+
+## Result: asset check and appearance candidate
+
+The Windows asset report (`validation/evidence/local-actor-assets-20261029-195412-729110.json`)
+shows 103 of 126 candidate names present. Every PC `Armor_*_Base` body and its
+`_UI` variant exists, including 165/166 and the native fallback 7430. All
+`Body_*_Standard` rows (1/25/26/95/96/97) and `FPArms_*_Standard` arms are
+absent, which explains V29's spinner. `FPArmor_VS_Male_LightAssault.adr` exists.
+
+`--vs-la-appearance-candidate` is opt-in and only valid with the isolated VS
+test character. It sets class19 model words 165/166 and LocalVSTest's menu row
+to head1/model165/gender1. The other four characters are the on-screen control.
+Defaults are pinned byte-identical. `ps2_vs_appearance_test.zip` is the client
+test: expect a VS LA body for LocalVSTest at character select (the others stay
+the headless NC fallback), and class19 refs 165/166 in the captures. The actor
+model word remains 0, so first-person arms are not expected yet. Gateway gives
+`model_pairs` to `profile_probe` only when set, so older helper bundles that
+ship the original module keep working.

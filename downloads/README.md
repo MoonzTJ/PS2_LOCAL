@@ -1,4 +1,23 @@
-## Current test: actor asset check (no game launch)
+## Current test: VS Light Assault appearance
+
+[Download ps2_vs_appearance_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_test.zip)
+
+Click **Download raw file**, extract into a fresh folder and follow
+[the procedure](../docs/VS_APPEARANCE_TEST.md). Run **start_vs_appearance_test.cmd**,
+screenshot LocalVSTest at character select, Play, then run
+**appearance_place_and_capture.cmd once** at the 3D view. Upload
+**local-profile-placement-….zip** from `reports` (it now includes the gateway log).
+
+Only LocalVSTest changes: class19 models 165/166 and its preview row. The other
+characters stay as the comparison. 449 Python tests pass. ZIP 2,996,909 bytes;
+SHA256 `64edbd74d21579796473abd9db2de11cd6df74f1c174ba0f9e21e82d6a2172f5`.
+
+## Completed: actor asset check
+
+Your report confirmed all VS LA body and _UI preview files exist; V29's
+Body_*_Standard files do not.
+
+## Previous: actor asset check (no game launch)
 
 [Download ps2_actor_asset_check.zip](ps2_actor_asset_check.zip)
 
