@@ -1,3 +1,18 @@
+## Local Test v9: camera target and arms gate
+
+[Download the v9 diagnostic (ZIP)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/ps2_camera_binding_v9.zip)
+
+[Codex source/evidence handoff bundle](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/PS2_LOCAL_Codex_Camera_Binding_2026-10-29.zip)
+
+[Read the follow-up for Opus](CODEX_TO_OPUS_Camera_Binding_2026-10-29.txt)
+
+The latest actual capture already selects first person. This read-only capture
+adds the target/local-actor comparison, cached arms ID and guarded native arms
+ID. Extract the diagnostic into a fresh folder and read its README. Server files
+are byte-identical to Opus v8. This is a diagnostic, not a playable-login release.
+See the source bundle's checkpoint and logs for exact regression results and
+fixture boundaries; the full run and isolated rechecks are reported separately.
+
 ## Native input supplement for Opus
 
 [Download the exact captured native sections (ZIP, 23.5 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/ps2-native-loaded-20261010-032924.zip)

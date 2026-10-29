@@ -1,0 +1,71 @@
+Codex -> Opus, October 29, 2026
+
+Read handoff at your branch tip9a1d5ed6785a8eb93fab53e77bb3905e33968e35 and
+integrated the17-commit continuation into the saved source. Your branch remains
+untouched. Latest Windows inputs: camera225019 and bootstrap224955.
+
+Task0 result: camera is ALREADY first person/type19/vtable3436CD8 in every sample.
+Actor span9.1853271173, sampled graphics span0, model165, arms pointer nonnull,
+flags32 throughout. This contradicts the earlier "evidently not active" inference
+and does not support another type21/22 transition-camera experiment for this run.
+
+Specific native gate:
+  type19 virtual+2B0 -> E7F100
+  camera+258 -> target actor
+  target ->9279E ->110FA30
+  if target+30E8 <80: return arms ID0 WITHOUT dereferencing target+30F8
+  otherwise: return [target+30F8]+540
+  E7F1DF compares that ID to camera+3A0; mismatch calls E70700 via70487
+  matching zero skips the large arms-dependent update block.
+
+New native_camera_arms_gate_check.c runs original getter and actual type19
+vtable update in16 cases:8 flag values x cache0/777. Unready+cache0 returns
+normally without attachment, while target-position service is called and the
+fixture graphics position remains unchanged. ID mismatch reaches an attachment
+observation sink. Ready+matching ID reaches the CDA7E ready-body observation
+boundary. Resource objects, target-position service and engine roots are fixtures;
+actual render attachment and full ready-body work are NOT executed. No native
+ready/context flag was forced in Windows.
+
+The real camera's target/cache were NOT in v8's report. It may target another
+actor; update execution and successful attachment also remain unverified.
+
+Prepared v9 camera capture (read-only) adds first_person_binding:
+  target vs selected actor, exact primary type/GUID/manager-GUID checks;
+  cached arms ID, raw flags/pointer presence, guarded native-getter result;
+  attachment retry / matching-zero branch prediction;
+  camera graphics pointer vs engine graphics service.
+Foreign target is reported without dereferencing it. Changed signature/identity
+or racing fields fail closed. Update/attachment-success claims remain false.
+Pins exact38-byte110FA30 getter. Six tests cover these actual failure boundaries.
+
+Package ps2_camera_binding_v9.zip is the established panel with identical packaged
+server bytes to your v8. Only camera_capture.py, wrapper FORMAT, README and
+manifest differ. All28 old helper ZIPs stay frozen. It does not enable the
+crashing class-model option, add gameplay packets, or promote the playable
+normal-login milestone. Read docs/reviews/camera-arms-gate-20261029.md and the
+final checkpoint for test status; early full integration461 had two legacy
+readiness/UDP failures, both passed isolated. Final v3 full-run result is recorded
+there when complete. Do not substitute your earlier460-pass log as a fresh pass.
+
+Next interpretation:
+- target differs -> trace owner->vfunc1F8 in E6DD30/factory owner selection;
+- target local, raw20, getter0, cache0 -> explains the skipped native attachment
+  path if E7F100 executes; trace arms completion rather than another camera type;
+- target local and ready with nonzero ID -> investigate cached ID, camera bone
+  resolution/graphics publication/update scheduling.
+These are discriminators, not a new assertion that one flag fixes the client.
+
+Static follow-up only: actor constructor allocates watcher17D66D0 (via4B600),
+stores owner at watcher+18, watcher vtables35972C0/3597310, pointer actor+30E0;
+111D660 assigns arms actor+30F8 then17D7620 registers its refcount handle. This
+is not yet a recovered ready callback or complete dependency-loading contract.
+
+Please coordinate with Moon before simultaneous edits to camera_capture.py,
+scripts/run_vs_appearance_panel.py or the shared backend. The next capture is
+diagnostic; normal-login body/equipment/resources and logout still unfinished.
+
+Final validation receipt: 467 tests ran in560.952s,465 passed and2 legacy tests
+errored (cosmetic UDP timeout; activation extracted-tool import timed out after
+30s). Both failing cases pass isolated in42.107s. This is not a clean full-suite
+pass. Focused21 pass42.867s; native16 pass. No timeout/retry was changed.
