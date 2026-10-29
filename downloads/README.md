@@ -1,12 +1,12 @@
-## Current test: VS Light Assault appearance v2 (menu body only)
+## Current test: faction Light Assault bodies v3 (character select)
 
 [Download ps2_vs_appearance_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_local_test.zip)
 
-v1 showed the VS LA body and head for LocalVSTest, but its class-19 model change
-crashed every character's login. v2 keeps only the character-select body; class
-data is back to its original bytes. Extract into a fresh folder, double-click
-**Start VS Appearance Test.cmd**, then follow [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
-450 Python tests pass. ZIP 3,019,151 bytes; SHA256 `71330864da46642693736d732f5e9e81d54cf39f875e07a6e79cb24b32cb4647`.
+v2 confirmed: LocalVSTest showed the VS body and every character logged in. v3
+gives LocalVS/LocalVSTest the VS LA body (165), LocalNC the NC LA body (159) and
+LocalTR the TR LA body (143) at character select. NSO is unchanged; class data
+keeps its original bytes. See [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
+450 Python tests pass. ZIP 3,019,441 bytes; SHA256 `d1fae1264a81867fd2bfe0b11421baa100ca94d473ecef337e2c5667b0417326`.
 
 ## Completed: actor asset check
 
