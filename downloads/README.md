@@ -1,3 +1,19 @@
+## Current test: actor asset check (no game launch)
+
+[Download ps2_actor_asset_check.zip](ps2_actor_asset_check.zip)
+
+Extract into a fresh folder and double-click **check_actor_assets.cmd**. It reads
+only the executable hash, pack indexes and three pinned tables; it never edits
+game files, launches the game or connects anywhere. Upload the
+**local-actor-assets-….json** it writes to `captures\`. If your copied client is
+not in the default folder, run `py -3 check_actor_assets.py --game-dir "<folder>"`.
+
+Also upload, if it still exists, the Oct 26 placement run's
+`reports\gateway-…-64044d49d88c2ce8.jsonl`. See
+[the review](../docs/reviews/opus-camera-and-appearance-leads-20261029.md).
+Continuation source patch and test log:
+[PS2_LOCAL_Opus_Continuation_2026-10-29.zip](PS2_LOCAL_Opus_Continuation_2026-10-29.zip).
+
 ## Claude Opus handoff — October 29, 2026
 
 [Download the handoff bundle (ZIP, approximately 4 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/PS2_LOCAL_Opus_Handoff_2026-10-29.zip)
