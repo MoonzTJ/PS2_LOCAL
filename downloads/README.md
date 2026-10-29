@@ -1,3 +1,24 @@
+## Current launcher: one Local Test panel
+
+[Download ps2_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_test.zip)
+
+Extract into a fresh folder outside the copied game. Run **Start Local Test.cmd**,
+choose the copied Local client and click **Start local session**. One server
+console and one panel remain beside the game; the startup CMD exits and client
+monitoring runs in the background. Captures and report export are in the panel,
+with older creator/bootstrap diagnostics under Advanced. No separate client,
+controls or capture CMDs, or automatic Explorer window.
+
+The faction-creation D08/D12 debug UI is omitted, retaining the MoonSol server
+label and Indar loading fix. The external status watermark is disabled. Original
+assets and recognized generated config backups are preserved. This is launcher/
+UI cleanup over the existing backend, not a character, movement or logout fix.
+No unchanged gameplay test is requested. Windows rendering/window behavior still
+needs confirmation at the next useful client test. [Instructions](../docs/LOCAL_TEST_PANEL.md).
+
+Older packages below are retained diagnostic history; do not combine their
+startup files with this package.
+
 ## Admin/dev command references
 
 [Download complete shipped alias list (TXT)](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/PS2_admin_dev_commands_20261027.txt)
@@ -32,7 +53,8 @@ initialization, using the exact previously tested server and setup packets. It
 does not repair spawning or appearance. Unknown native checks stay unknown.
 All405 Python tests and7 native lookup cases pass; two backend starts preserve
 three saved-state files. All94 existing server/tools and26 earlier ZIPs remain
-byte-identical. Actual Windows bootstrap measurements are pending.
+byte-identical. Actual134342 Windows bootstrap measurements are saved; no unchanged
+rerun is requested. These instructions describe the historical diagnostic.
 
 ZIP3,004,460 bytes; SHA256:
 `45b6b92526ce4c359a039acc923fa1e7f9226a47912ac525c34466d7c76753eb`.
