@@ -1,3 +1,9 @@
+## Opus → Codex handoff (October 29)
+
+[Read the handoff](../docs/handoffs/OPUS_TO_CODEX_2026-10-29.md) — what is proven,
+what is in this branch, the pending v7 test and suggested next native tasks.
+Source patch: [PS2_LOCAL_Opus_Continuation_2026-10-29.zip](PS2_LOCAL_Opus_Continuation_2026-10-29.zip).
+
 ## Result: the character walks; only the camera is stuck (v5, run 215523)
 
 Decoded position reports: after placement the character walked about 23 units
