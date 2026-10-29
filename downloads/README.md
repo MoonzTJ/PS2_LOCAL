@@ -1,12 +1,17 @@
-## Current test: faction Light Assault bodies v3 (character select)
+## Current test: Opus Local Test v3 (faction bodies + post-placement PreloadDone)
 
-[Download ps2_vs_appearance_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_local_test.zip)
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 
-v2 confirmed: LocalVSTest showed the VS body and every character logged in. v3
-gives LocalVS/LocalVSTest the VS LA body (165), LocalNC the NC LA body (159) and
-LocalTR the TR LA body (143) at character select. NSO is unchanged; class data
-keeps its original bytes. See [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
-450 Python tests pass. ZIP 3,019,441 bytes; SHA256 `d1fae1264a81867fd2bfe0b11421baa100ca94d473ecef337e2c5667b0417326`.
+The Local Test panel with the confirmed faction character-select bodies, plus one
+new switch: after the bootstrap placement the server sends PreloadDone once more
+(answering the client's ready signal, or on its own after five seconds). Every
+placement so far left that flag false with input locked. Double-click
+**Start Opus Local Test.cmd** and follow [the procedure](../docs/OPUS_LOCAL_TEST.md).
+451 Python tests pass. ZIP 3,018,630 bytes; SHA256 `1f0fd8efed20f2a3001d485eaf7fa5f030e6a46ab63ba76e3ffe0838b434ed76`.
+
+## Completed: faction character-select bodies
+
+Windows confirmed VS, NC and TR rows show their Light Assault base body.
 
 ## Completed: actor asset check
 
