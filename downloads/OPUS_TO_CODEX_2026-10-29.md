@@ -62,7 +62,12 @@ the active camera**. The teleport moved `[engine+B040]`'s handle-`+0x108` camera
 
 ## 5. Suggested next tasks for Codex (you have the full workspace)
 
-0. **Top priority:** the camera factory near AD5B85-AD5C5C — find its type switch
+0. **Camera state machine (mapped, see the review's last section):** type 19 is
+   first person; type 21 is the timed transition camera that switches to 19 when
+   `+0x178==0 && +0x180!=0 && +0x170==0`. Use Moon's Opus Local Test v8 Capture
+   Camera result to see which camera is active and which field never flips, then
+   find what writes it (likely a spawn/deploy server message).
+   Previous wording: **Top priority:** the camera factory near AD5B85-AD5C5C — find its type switch
    value for the first-person camera (0xA80 case), its callers, and the
    lifecycle/state (deploy/spawn, game-mode context at entity system+0x2708)
    that requests it for the local player. Then the server message behind it.

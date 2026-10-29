@@ -305,3 +305,17 @@ the UpdateLocation target (verdict camera_frozen_while_actor_moved).
 Next: find the factory's type switch value for the first-person camera, its
 callers, and the state/message that requests it for the local player (deploy/
 spawn lifecycle, game-mode context). Then decide which server message to send.
+
+## Native: the camera state machine (type 19 = first person, type 21 = transition)
+
+SetCamera AD57E0 (thunk BA974; wrapper AD53B0/thunk 20329 defers via engine+AFA8)
+builds cameras by type through jump table AD5EBC; the active camera is
+`[engine+B040]`, type = vfunc+70. Type 19 = first-person camera (ctor E6DD30,
+vtable 3436CD8). Types 21/22 = timed transition camera (ctor E61290, vtable
+3433A48, vfunc+70 returns 0x15). Its update (slot 0x2B0, E62490) counts down
+`+0x16C`; when "finished" (E61D50: `+0x178 == 0 && +0x180 != 0 && +0x170 == 0`)
+it reads the active actor and B96240 (`actor+0x9F0` bit 0, the value observed 0):
+clear -> "GameEvents:SetAliveInfantryGameState", "EVENT_RESPAWN_SCREEN_HIDE",
+SetCamera(19); set -> "GameEvents:SetSpawnSelectionGameState". Other type-19
+requests: 13AD774 (exit from camera type 26). Capture v2 (Opus Local Test v8)
+reads the active camera vtable -> type and, for type 21, the four fields.

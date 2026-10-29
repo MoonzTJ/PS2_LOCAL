@@ -17,7 +17,15 @@ Model 165 worked without a crash: VS Light Assault body, first-person arms
 resource created, the character visibly walks. The camera stays at the teleport
 point because the first-person camera is not the active camera yet.
 
-## Current test: Opus Local Test v7 (body model 165 for arms + camera)
+## Current test: Opus Local Test v8 (model 165 + active camera type)
+
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
+
+Same as v7; Capture Camera now also reports which camera type is active and the
+transition-camera fields that decide the switch to first person.
+461 Python tests pass. ZIP 3,024,369 bytes; SHA256 `1e6784be9e85a9c4562fcb76fdec3f2e0e0dbadb1bdab9a222b5ec57c0acc320`.
+
+## Previous: Opus Local Test v7 (body model 165 for arms + camera)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 

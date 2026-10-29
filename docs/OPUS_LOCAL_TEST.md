@@ -1,4 +1,4 @@
-# Opus Local Test v7 — give your soldier a body (and arms for the camera)
+# Opus Local Test v8 — body model 165 + which camera is active
 
 Found in the game's own code: the first-person camera attaches to a bone named
 "camera" on your first-person **arms** model, and detaches when there are no arms.
@@ -21,3 +21,8 @@ This is a new path; it could crash. If it does, that is a useful result.
 6. Upload `reports\local-camera-….json`, the `local-bootstrap-…` zip and the
    **Save server report ZIP**. If the game crashed, also the newest files in the
    copied game folder's **Logs** folder.
+
+**v8 addition:** Capture Camera now also reports which camera type the game is
+using (19 = first person; 21/22 = the timed spawn/deploy transition camera) and,
+for the transition camera, its timer and the three fields that decide when it
+hands over to first person. Same steps as above.
