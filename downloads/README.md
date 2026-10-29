@@ -1,3 +1,16 @@
+## Claude Opus handoff — October 29, 2026
+
+[Download the handoff bundle (ZIP, approximately 4 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/PS2_LOCAL_Opus_Handoff_2026-10-29.zip)
+
+[Read the handoff log (TXT)](PS2_LOCAL_Opus_Handoff_2026-10-29.txt)
+
+The bundle contains the paused 459-file source snapshot, report, checkpoint
+manifest and native preview/metadata evidence. The source snapshot is ahead of
+the unpacked files on this branch. It is a development handoff, not a playable
+client-test release. Native preview checks pass 23 cases; the full Python rerun
+was interrupted at the user's requested pause. Raw client/native inputs and
+older helper archives are excluded. Read the TXT before continuing development.
+
 ## Current launcher: one Local Test panel
 
 [Download ps2_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_test.zip)
