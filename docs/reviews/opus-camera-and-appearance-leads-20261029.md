@@ -214,3 +214,30 @@ share the 2:02 header and float position, then the same four varying bytes,
 `00 00 04 28 00 80 00 00`, a varying 2-4 byte field and `00 00 00 02 00 00 00`
 (byte 2 again marks grounded). They appear at movement changes (start, turn,
 hop, stop) and read as full-state keyframes between 2:02 deltas.
+
+## Confirmed on Windows: the camera object is frozen at the UpdateLocation target
+
+`validation/evidence/local-camera-20261029-221053-232974-d170502a.json` (sha 49f9fb2dcf3f6c00…),
+six read-only samples 1.5 s apart while the user walked after the bootstrap placement:
+the actor clean position moved (2946.9, 65.61, 126.08) -> (2948.5, 65.45, 147.72),
+velocity up to 4.0, grounded; the graphics singleton camera object
+(engine+B028 -> +580 -> +180) stayed bit-identical at (2946.908, 65.784, 126.081),
+exactly the UpdateLocation target (not the actor's settled Y). GetPlayerLoc's
+active-world-actor branch is taken (actor present). Verdict:
+camera_frozen_while_actor_moved, actor span 21.69, camera span 0.0.
+
+The placement wrote the camera position once; no per-frame follow update runs.
+
+### Exact native question (for whoever has the loaded sections)
+
+1. Find every writer of `camera+0x180` where `camera = [[engine+0xB028]+0x580]`.
+   One is reached from the UpdateLocation path (A4C615 -> BDFAC0/BDF9B0 -> ...),
+   which explains the single write. Find the per-frame/update-tick writer that
+   copies the controlled actor's transform (or a view target) into it.
+2. Trace that writer's caller back to its gate: which field selects the actor or
+   view target it follows, and which flag/state skips the update. Report the
+   current values of those fields as bounded observer reads in the next capture.
+3. Identify the server message whose handler sets that target/state
+   (spawn/deploy/"controlled entity"/camera-mode). That message is the fix.
+
+No guessed values, forced flags or native calls are needed for steps 1-2.

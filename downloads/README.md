@@ -5,6 +5,13 @@ at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
 floor, while the screen stayed fixed. Input and movement work; the camera is
 not attached to the character.
 
+## Result: camera confirmed frozen (v6, run 221053)
+
+Capture Camera: your character walked about 22 units while the game's camera
+object stayed exactly at the teleport target. Movement works; the camera's
+follow update does not run. Next step is a native trace of what drives the
+camera each frame (see the review's "Exact native question").
+
 ## Current test: Opus Local Test v6 (camera vs character position)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
