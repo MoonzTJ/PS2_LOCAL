@@ -180,3 +180,37 @@ screen stayed fixed. Input, local simulation, gravity, collision and heading
 all work. The open defect is camera attachment to the local actor. 0:8e (67 B,
 85 samples) repeats the GUID twice with current and placement coordinates.
 Do not pursue input-lock hypotheses further.
+
+## 0:8e decoded across 85 samples (capture 215523)
+
+All 67 bytes, little-endian. Only bytes 3-4, 7-9, 11-13 and 19 ever change.
+
+| Offset | Value | Observation |
+| --- | --- | --- |
+| 0-2 | `8e 01 00` | constant header |
+| 3, 7, 11 | float X/Y/Z | follows the walking actor, ~+0.8 Y above its feet (body centre) |
+| 15 | 126.081 | placement Z |
+| 19 | u32 6-8 | small varying count/state |
+| 23, 27 | 65.784, 65.784 | placement Y twice |
+| 31, 39 | 0x1000000000000101 twice | the LocalVSTest GUID |
+| 47, 51 | 2946.908, 2946.908 | placement X twice |
+| 55 | 2 | constant |
+| 59 | 126.081 | placement Z |
+| 63 | 0 | constant |
+
+The fixed part reads as the player's own GUID with a zero-size min/max box at
+the placement point, while the varying part is the live actor. Hypothesis
+(unverified): the client holds the moving local actor and a separate frozen
+representation of the same GUID at the UpdateLocation target, and the view is
+bound to the frozen one. This matches the October 15 result where the graphics
+location equalled the target exactly while the actor differed. Discriminator:
+read the graphics-singleton location (scene_observer.graphics_location_state)
+after walking; if it stays at the target while the actor moves, the camera
+follows that object. Native tracing of what retargets the camera to the local
+actor is still the direct route.
+
+2:fe (41-42 B) and 2:ff (43-44 B; two extra bytes `05 10` before the position)
+share the 2:02 header and float position, then the same four varying bytes,
+`00 00 04 28 00 80 00 00`, a varying 2-4 byte field and `00 00 00 02 00 00 00`
+(byte 2 again marks grounded). They appear at movement changes (start, turn,
+hop, stop) and read as full-state keyframes between 2:02 deltas.
