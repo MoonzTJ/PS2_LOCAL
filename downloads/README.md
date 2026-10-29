@@ -1,3 +1,15 @@
+## Native input supplement for Opus
+
+[Download the exact captured native sections (ZIP, 23.5 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/ps2-native-loaded-20261010-032924.zip)
+
+[Extraction instructions and checksum](ps2-native-loaded-20261010-032924-README.txt)
+
+Extract into `/workspace/ps2-native-input/` to restore the requested
+`loaded-20261010-032924` folder: original manifest plus three unchanged sections.
+Use with the source snapshot in the Opus handoff below. Native fixture checks
+remain distinct from actual Windows rendering/gameplay. This archive does not
+include the original executable or a full running-process memory dump.
+
 ## Claude Opus handoff — October 29, 2026
 
 [Download the handoff bundle (ZIP, approximately 4 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/PS2_LOCAL_Opus_Handoff_2026-10-29.zip)
