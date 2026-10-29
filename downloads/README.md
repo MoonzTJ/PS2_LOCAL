@@ -5,15 +5,15 @@ at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
 floor, while the screen stayed fixed. Input and movement work; the camera is
 not attached to the character.
 
-## Current test: Opus Local Test v5 (60-second placement message capture)
+## Current test: Opus Local Test v6 (camera vs character position)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 
-v4's capture showed the client does move the character and report positions when
-W is held after placement; the camera simply does not follow. v5 keeps capturing
-for 60 seconds so the W/mouse messages are recorded in full. Press W and move the
-mouse right after the bootstrap's three beeps. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
-453 Python tests pass. ZIP 3,019,629 bytes; SHA256 `44a4fc2a570860272441fb24f400e12eb236357e26408dbc0f742efa7100aec1`.
+Adds **Capture Camera.cmd**: six read-only samples of your character's position
+next to the game's camera object position, taken while you walk after the
+bootstrap placement. It tells whether the camera stays frozen at the teleport
+point. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
+458 Python tests pass. ZIP 3,022,573 bytes; SHA256 `3d666759605026247442450e7bcf25f8f3c13b0769ea325a0d0fc6cd3a72ddbc`.
 
 ## Result: post-placement PreloadDone (Opus Local Test v3)
 

@@ -1,26 +1,22 @@
-# Opus Local Test v5 — faction bodies + 60-second placement message capture
+# Opus Local Test v6 — camera vs character position
 
-The normal Local Test panel with two opt-in changes; class definitions keep
-their original bytes.
+The normal Local Test panel with the confirmed faction character-select bodies,
+the 60-second message capture around the placement, and one new read-only tool.
 
-**1. Character-select bodies (confirmed).** VS rows 165, NC 159, TR 143; NSO
-unchanged.
-
-**2. Full-byte capture around the placement (new).** In the last run's log the
-client's steady 15-per-second `2:02` messages stopped right after placement,
-and new `2:fe` and `0:02` messages appeared. Logs normally keep only 4 bytes per
-message. This version records the full bytes (up to 256 each) of the client's
-zone messages from the class activation until 60 seconds after placement, plus
-the first 30 `2:02` messages at the origin and the first copy of every rare
-message type. Nothing new is sent to the game. (The earlier extra PreloadDone
-was accepted but did not unlock input, so it is off here.)
+**Why:** decoded messages show your character walks, turns and stays on the
+floor after the placement, while the view stays where the teleport put it. The
+game also keeps describing your character's ID as a zero-size object at the
+teleport point. **Capture Camera.cmd** reads your character's position and the
+game's camera object position side by side, six times about 1.5 seconds apart.
+If the camera stays fixed while your character moves, the camera is bound to
+the frozen copy. It only reads memory; nothing is sent to or changed in the game.
 
 1. Close the game and server. Extract this ZIP into a fresh folder.
 2. Double-click **Start Opus Local Test.cmd** and click **Start local session**.
-3. Select **LocalVSTest**, press **Play** and wait for the 3D view.
-4. Hold **W** for two seconds and move the mouse (this fills the origin sample).
-5. Run **Advanced → Existing bootstrap diagnostic (once)** and follow its prompt
-   until THREE beeps. **Right after the beeps** (within 30 seconds): hold W for
-   three seconds, release, then move the mouse left and right for three seconds,
-   then hold W again while turning. The capture stops 60 s after placement.
-6. Click **Save server report ZIP** and upload it with the `local-bootstrap-…` zip.
+3. Select **LocalVSTest**, press **Play**, then run **Advanced → Existing
+   bootstrap diagnostic (once)** and wait for THREE beeps.
+4. Double-click **Capture Camera.cmd**. Go back to the game within five seconds.
+   At **TWO beeps** hold **W** and turn with the mouse; keep walking until
+   **THREE beeps** (about eight seconds).
+5. Upload the **local-camera-….json** from `reports` (the window prints the
+   result too), plus **Save server report ZIP** and the `local-bootstrap-…` zip.
