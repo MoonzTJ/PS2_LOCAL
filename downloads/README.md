@@ -1,4 +1,19 @@
-## Current test: VS Light Assault appearance
+## Current test: VS Light Assault appearance (Local Test panel)
+
+[Download ps2_vs_appearance_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_local_test.zip)
+
+Click **Download raw file**, extract into a fresh folder, double-click
+**Start VS Appearance Test.cmd** and follow [the procedure](../docs/VS_APPEARANCE_LOCAL_TEST.md).
+This is the normal Local Test panel (one window, one server console) with only
+LocalVSTest changed to the VS LA body 165/166. 453 Python tests pass.
+ZIP 3,019,239 bytes; SHA256 `dbd4962408ad1856856c99b4f67759473633d40745d8d785e3eb3fb93582377c`.
+
+## Superseded: ps2_vs_appearance_test.zip
+
+Its older launcher rejects the clean-UI config the Local Test panel writes, so
+the game did not start. Use the panel version above.
+
+## (superseded) VS Light Assault appearance, placement helper
 
 [Download ps2_vs_appearance_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_vs_appearance_test.zip)
 
