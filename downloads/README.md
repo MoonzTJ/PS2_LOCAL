@@ -1,12 +1,12 @@
-## Current test: Opus Local Test v4 (faction bodies + placement message capture)
+## Current test: Opus Local Test v5 (60-second placement message capture)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
 
-After placement the client stops its 15-per-second `2:02` messages and sends a new
-`2:fe`. This version records those messages' full bytes around the placement so
-they can be decoded. Nothing new is sent to the game. Double-click
-**Start Opus Local Test.cmd** and follow [the procedure](../docs/OPUS_LOCAL_TEST.md).
-453 Python tests pass. ZIP 3,019,469 bytes; SHA256 `2e4be52a206866ef31d697bf39ef57c20dc56f8d1f5c9b7d7756937b69d6f356`.
+v4's capture showed the client does move the character and report positions when
+W is held after placement; the camera simply does not follow. v5 keeps capturing
+for 60 seconds so the W/mouse messages are recorded in full. Press W and move the
+mouse right after the bootstrap's three beeps. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
+453 Python tests pass. ZIP 3,019,629 bytes; SHA256 `44a4fc2a570860272441fb24f400e12eb236357e26408dbc0f742efa7100aec1`.
 
 ## Result: post-placement PreloadDone (Opus Local Test v3)
 

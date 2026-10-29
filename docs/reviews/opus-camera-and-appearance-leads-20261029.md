@@ -150,3 +150,20 @@ post-placement PreloadDone (5 s) restored received_preload_done to true, and
 the user still could not move or mouse-look. Section A's hypothesis is
 rejected. The lock is elsewhere (spawn/deploy lifecycle or controller/camera
 activation) and needs native tracing rather than further message guesses.
+
+## Decoded capture 214141: input reaches the actor; the view does not follow
+
+2:02 (31 bytes) is the client's position report: `02 10`, a 32-bit ms-like
+counter, two zero bytes, float32 X/Y/Z, four facing-like bytes, flags `00 00 04 28`.
+At the origin X/Y/Z are 0 and it streams at ~15 Hz (the actor keeps falling,
+velocity Y -0.0556). After placement the first reports carry 2946.908/65.77/126.08,
+Y settles, and the stream pauses while idle. 2:fe (41-43 bytes) carries the same
+header and position plus extra fields; 2:01 (16-18 bytes) is a short state update.
+From 20.8 s to 25.2 s after placement (the user's W/mouse attempt) ~80 2:02/2:fe/
+2:01/2:ff reports were sent: the client simulates and reports movement. 0:8e
+(67 bytes, 9x while moving) contains the LocalVSTest GUID twice, the current
+position (2946.38, 65.49, 127.65) and the placement position, a likely
+position-mismatch/acknowledgement request the server never answers. Channel-1
+99 05 events name the UI "Deployable Status" and "InstructionEventManager"
+opening after placement. Conclusion: movement input is not blocked; the camera
+is not following the local actor. Capture v2 extends the window to 60 s.
