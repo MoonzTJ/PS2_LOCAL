@@ -167,3 +167,16 @@ position-mismatch/acknowledgement request the server never answers. Channel-1
 99 05 events name the UI "Deployable Status" and "InstructionEventManager"
 opening after placement. Conclusion: movement input is not blocked; the camera
 is not following the local actor. Capture v2 extends the window to 60 s.
+
+## Capture 215523 (60 s): the actor walks, turns and stays grounded; only the view is detached
+
+Correction to the layout above: X/Y/Z start at offset 7 of 2:02 (`02 10`, 4-byte
+counter, one zero byte). Decoded positions after placement: settle to Y 65.35;
+19.0-21.4 s Z 126.08 -> 135.43 at ~4.0 units/s (matches ExpectedSpeed 4.0);
+21.4-27.6 s heading changes (X increases at ~0.8 units/s while Z barely moves);
+27.7 s a ~0.56 vertical hop; 27.8-30.9 s Z -> 148.9. Byte 27 is 2 while grounded.
+About 23 units of grounded locomotion with the user's W and mouse, while the
+screen stayed fixed. Input, local simulation, gravity, collision and heading
+all work. The open defect is camera attachment to the local actor. 0:8e (67 B,
+85 samples) repeats the GUID twice with current and placement coordinates.
+Do not pursue input-lock hypotheses further.

@@ -1,3 +1,10 @@
+## Result: the character walks; only the camera is stuck (v5, run 215523)
+
+Decoded position reports: after placement the character walked about 23 units
+at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
+floor, while the screen stayed fixed. Input and movement work; the camera is
+not attached to the character.
+
 ## Current test: Opus Local Test v5 (60-second placement message capture)
 
 [Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
