@@ -142,3 +142,11 @@ the native class asset loader whose successful callback path was never executed
 offline; trace it before sending class words again. Menu-only v2 restores the
 original class bytes. The full VS LA look in the user's live reference also
 needs the equipped loadout (armor/helmet/weapon) in the character row.
+
+## Result: PreloadDone is not the control lock
+
+Bootstrap 212014: the client sent no second ready 04; the unsolicited
+post-placement PreloadDone (5 s) restored received_preload_done to true, and
+the user still could not move or mouse-look. Section A's hypothesis is
+rejected. The lock is elsewhere (spawn/deploy lifecycle or controller/camera
+activation) and needs native tracing rather than further message guesses.

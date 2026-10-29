@@ -9,6 +9,11 @@ placement so far left that flag false with input locked. Double-click
 **Start Opus Local Test.cmd** and follow [the procedure](../docs/OPUS_LOCAL_TEST.md).
 451 Python tests pass. ZIP 3,018,630 bytes; SHA256 `1f0fd8efed20f2a3001d485eaf7fa5f030e6a46ab63ba76e3ffe0838b434ed76`.
 
+## Result: post-placement PreloadDone (Opus Local Test v3)
+
+Run 212014: the server's extra PreloadDone was accepted (flag back to true), but
+movement and mouse-look stayed locked. PreloadDone is ruled out as the lock.
+
 ## Completed: faction character-select bodies
 
 Windows confirmed VS, NC and TR rows show their Light Assault base body.
