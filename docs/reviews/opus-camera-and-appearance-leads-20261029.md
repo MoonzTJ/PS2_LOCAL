@@ -105,7 +105,7 @@ EDF4F0` then predicts arms `FPArmor_VS_Male_LightAssault.adr` for165.
 ## Files and validation
 
 - `check_actor_assets.py`, `check_actor_assets.cmd`, `check_actor_assets_tests.py`
-  (5 tests; synthetic PACK2 indexes; corrupt actor payloads prove index-only reads).
+  (6 tests; synthetic PACK2 indexes; arms table key column not assumed; corrupt actor payloads prove index-only reads).
 - `gateway_timeline.py`, `gateway_timeline_tests.py` (4 tests; logs produced by the
   real `GatewayApplication`/`Gateway.event`, including a dropped post-placement04).
 - This review.
