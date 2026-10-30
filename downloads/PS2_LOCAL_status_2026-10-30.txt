@@ -1,0 +1,64 @@
+PS2_LOCAL status - October 30, 2026 (local Claude session)
+==========================================================
+
+Goal: playable VS Light Assault through normal login. Not reached. Diagnostic
+results only; nothing here was called playable.
+
+WHERE WE ARE
+- Login, Indar warpgate placement and walking work (walking since v9).
+- VS LA body (model 165) and first-person arms build when the placement is sent
+  BEFORE the activation (v10.2). The arms stay linked to the actor.
+- The camera is still frozen at the placement point. It targets the right actor
+  (LocalVSTest), but the actor's arms "ready" bit (actor+30E8 bit 0x80) is never
+  set, so the arms ID getter returns 0 and the camera never attaches.
+- The client logs "player does not have anything equipped in the primary
+  weapon slot!" before every arms build. Leading guess (unverified): the arms
+  wait for equipment/loadout data we do not send yet.
+
+LAUNCHER TESTS IN THIS BRANCH (downloads/)
+Each is the Opus Local Test panel on the frozen Local Test panel (sha 77257724...).
+Run: Start Opus Local Test.cmd -> Start local session -> select LocalVSTest -> Play.
+
+ps2_opus_local_test_v10.zip    2,991,501 bytes  sha256 19addccca09484ca79d98b38869d94aeb393b8ce6017fd03bde22bb9019a0d46
+  Resends the same activation 3 s after the placement.
+  Result: ignored (client skips an unchanged model).
+
+ps2_opus_local_test_v10_1.zip  2,992,333 bytes  sha256 996731f884468f621425ca08fb06fd362ffd0e8418a70d5628e67b22a41f7a51
+  After the placement: activation with model 0, then model 165.
+  Result: both acknowledged and ignored.
+
+ps2_opus_local_test_v10_2.zip  2,993,472 bytes  sha256 76baad825c81aad58f643a1b8fb517de99355dd103568342ef93f0d8118bbca0
+  Automatic on spawn: placement 5 s after PreloadDone, activation 8 s later.
+  No bootstrap button. Result: arms built and kept; camera still frozen.
+
+ps2_opus_local_test_v11.zip    2,996,952 bytes  sha256 0742d4fd465aa89e862307b5eb362cbdb2364aec52df58226a9610729ff8ba7c
+  v10.2 plus Watch Arms.cmd (read-only, 4 samples/s for 90 s; start it before Play).
+  Result: ready bit never set; arms resource = the logged arms actor; nothing pending.
+
+ps2_opus_local_test_v12.zip    2,998,540 bytes  sha256 da111bbf83d5fc643b961a68666fc4f6b461ce6e214f9e34b98aa22ff7f8b662
+  CURRENT TEST. v11 plus the activation's attachment array filled with the VS
+  starter armour (slot 10) and helmet (slot 11) model names from the client's
+  own tables, sent unchanged (with "<gender>"). Not run on Windows yet.
+  Upload after the run: reports, Logs/FirstPersonArms.log, Logs/FailedLoadAssets.log.
+
+H1Z1 COMPARISON (github.com/QuentinGruber/h1z1-server, GPL-3.0, reference only)
+- ClientUpdate opcodes line up at +2 for UpdateLocation, ActivateProfile and
+  DoneSendingPreload.
+- Activation attachment entry, checked in our client's reader: 4 strings then
+  4 u32 words; the 3rd word is the attachment slot key. H1Z1 has only 3 words.
+- 11 37 00 is NOT NetworkProximityUpdatesComplete here: it carries a GUID, a u8
+  and a bool. Our client already logs "WaitForWorldReady: waiting complete".
+- Still missing compared with H1Z1: ClientBeginZoning, ClientGameSettings, item
+  definitions, DynamicAppearance, CharacterStateDelta, SetCurrentLoadout,
+  projectile definitions.
+
+NEXT
+1. Run v12 on Windows: does the armour/helmet attach, is "<gender>" resolved,
+   does the ready bit appear.
+2. Equipment/loadout path (primary weapon slot, SetCurrentLoadout), checked in
+   the client's code before anything is sent.
+
+Tests: full suite 479 ran, 457 passed. The 22 failures are the same environmental ones as
+       before (frozen helper ZIPs not in this checkout, Windows symlink permission,
+       missing tools, two console/port tests). All new and changed tests pass.
+Defaults stay byte-identical; every new behaviour is opt-in.

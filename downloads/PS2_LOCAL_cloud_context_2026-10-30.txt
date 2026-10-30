@@ -1,0 +1,107 @@
+PS2_LOCAL - context for the cloud Claude session
+Written October 30, 2026 (evening) by the local Claude session on Moon's PC.
+==========================================================================
+
+WHO / WHAT
+Moon is building a local PlanetSide 2 emulator: a Python server for their own
+copied Windows client, build v0.0.1533.609523. Local only: no live services, no
+anti-cheat or access-control bypass. The local session writes patches, tests and
+Windows launcher packages; Moon runs them and the local session reads the logs.
+
+WHAT YOU CAN AND CANNOT SEE
+- You have the GitHub repo (MoonzTJ/PS2_LOCAL) and public web pages.
+- You do NOT have: the game, its logs, the native code sections, or the Python
+  source working copy (it lives only on Moon's PC). The server code you can read
+  is inside the launcher ZIPs under downloads/ (folder PS2_Server/ in each ZIP).
+- Branch claude/local-v11 has launchers v10, v10.1, v10.2, v11 and v12 plus
+  downloads/PS2_LOCAL_status_2026-10-30.txt. v12.1 is built locally, not pushed yet.
+
+RULES (from CLAUDE.md; please follow them too)
+- Don't invent mappings, force native ready/context flags, or call assumed
+  defaults "recovered". Every packet layout must be confirmed in our client's
+  native code (by the local session) before it is sent.
+- New behaviour is opt-in; defaults stay byte-identical.
+- Don't call anything "playable" from offline tests.
+- Never put the native game sections or anything copied from the game on GitHub.
+- Don't put model identifiers in commits.
+- h1z1-server (github.com/QuentinGruber/h1z1-server) is GPL-3.0: reference only,
+  never copy its code into PS2_LOCAL. Describe layouts in your own words.
+- Work on a branch, never main.
+
+MILESTONE
+Playable VS Light Assault through normal login: correct body, head and
+equipment; Indar warpgate spawn; look, walk, jump; first-person arms and a
+weapon; logout and reconnect.
+
+WHERE WE ARE (Windows-verified unless marked)
+Works:
+- Login to the world; automatic warpgate placement (UpdateLocation 11 0C 00);
+  walking (since v9).
+- Placement FIRST, then ActivateProfile (11 15 00) 8 s later with model 165:
+  the VS LA body and first-person arms are built and stay built (v10.2+).
+- v12.1: the activation's attachment array with
+  Armor_VS_Male_LightAssault_Look001.adr (slot key 10) and
+  Helmet_VS_Male_LightAssault_Look001.adr (slot key 11). The client loaded both
+  assets and their meshes. (v12 sent the table names with "<gender>" unchanged;
+  the attachment path does not expand it, so they failed.)
+Broken:
+- Camera frozen at the placement point. The type-19 first-person camera
+  targets our actor, but the actor's arms-ready bit (actor+30E8 bit 0x80) is
+  never set (90 s read-only timeline, v11 and v12.1), so the arms ID is 0 and the
+  camera never attaches. Bit 0x20 turns on when the camera becomes first person.
+- My Character screen shows the client's hard-coded fallback model: a headless
+  NC base body (Armor_NC_Male_Base_UI.adr) with Weapon_Common_NullParent.adr. The
+  Classes tab is empty. The UI logs "DS Player.Info not found". Name (LocalVSTest)
+  and BR 1 do show.
+- Every run logs "player does not have anything equipped in the primary weapon
+  slot!" just before the arms are built.
+Working theory (UNVERIFIED): the character record the client gets at login
+(class/profile list, loadouts, equipped items) is mostly empty. That would
+explain the fallback model, the empty Classes tab, the missing weapon, and
+possibly the arms-ready bit.
+
+NATIVE FINDINGS (our client, RVAs, base 0x140000000)
+- ClientUpdate dispatch A4BA53: u16 sub-opcode minus 1, max 0x3B, jump table
+  A4E170 (60 entries). 0x15 -> A4D1F8 (activation); 0x1B -> A4D806 (PreloadDone);
+  0x21 -> A4D8D6; 0x22 -> A4D945; 0x37 -> A4E0E3. Default (no handler) for
+  0x19, 0x1A, 0x1C, 0x2C.
+- Activation reader 98BD00: u8, u16, counted profile, attachment array,
+  u32 +44, u32 +40, u32 +48 (model), u32 +4C, two strings, bool.
+- Attachment entry (reader 986E20, 0x170 bytes): four strings (u32 length +
+  bytes, no terminator), then four u32 words. H1Z1 has three words. Consumer
+  BE8BC0 keys the actor attachment map by the THIRD word (+168), copies the
+  first three strings and all words, and attaches via B2FF8. Meaning of words
+  1, 2 and 4 and of string 4: unknown.
+- 11 37 00 is NOT NetworkProximityUpdatesComplete here: payload u8, u16,
+  u64 GUID, u8, bool; applies the values to the object with that GUID.
+  WaitForWorldReady already logs "waiting complete" in our runs.
+- Arms: getter 110FA30 needs actor+30E8 >= 0x80. Arms watcher at actor+30E0;
+  its slot 4 -> 11135F0 mounts equipped items onto the arms via the
+  equipment-slot lookup DAB120 -> 111EA60 -> AED36. The code that sets 0x80 is
+  in runtime-protected bytes, which are out of scope.
+
+LOGIN SEQUENCE VS H1Z1 (sent / missing)
+Sent: SendZoneDetails, minimal SendSelfToClient, ZoneDoneSendingInitialData,
+PreloadDone (on ClientIsReady 04), identity-only class definitions,
+UpdateLocation, ActivateProfile (+attachments, opt-in).
+Missing: ClientBeginZoning, ClientGameSettings, item definitions (the client
+requests them; we don't reply), ReferenceData.DynamicAppearance,
+CharacterStateDelta, projectile definitions, Loadout.SetCurrentLoadout, game
+time sync after ClientFinishedLoading.
+
+WHAT WOULD HELP FROM YOU (public sources only; report in your own words)
+1. SendSelfToClient in h1z1-server (ClientProtocol_860 and _1080): the overall
+   field order, especially the profile/class list, loadouts, loadout slots and
+   equipment-slot arrays. Which fields drive the character preview model and the
+   class list? Field names, types and nesting are enough.
+2. Loadout.SetCurrentLoadout (and any other Loadout.* packets sent at login):
+   opcode, fields, and what H1Z1 puts in them for a starting character.
+3. How H1Z1 represents an equipped primary weapon at login (equipment slot
+   entry vs. loadout slot vs. item instance), and which IDs link them.
+4. Any public description of Forgelight "FirstPersonArms" readiness, or of what
+   must exist before first-person arms are marked ready for the camera.
+Name the file and line ranges you used for each answer so the local session can
+compare them against the client's own readers. Don't paste large code blocks.
+
+Previous docs on GitHub: CLAUDE.md, docs/handoffs/OPUS_TO_CODEX_2026-10-29.md,
+downloads/PS2_LOCAL_status_2026-10-30.txt (branch claude/local-v11).
