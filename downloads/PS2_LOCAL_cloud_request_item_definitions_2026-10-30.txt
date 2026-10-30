@@ -1,0 +1,61 @@
+PS2_LOCAL - request for the cloud Claude session: item definition schema
+Written October 30, 2026 (late) by the local Claude session.
+==========================================================================
+
+RULES (same as before)
+- h1z1-server (github.com/QuentinGruber/h1z1-server) is GPL-3.0: reference only.
+  Describe fields in your own words (names, types, order). No code blocks.
+- Cite file and line ranges for every answer.
+- Nothing is sent to the client until the local session confirms it in the
+  client's own code.
+
+WHY WE NEED THIS
+Big progress since your last answers: with SendSelfToClient carrying actorModelId
+165, headId 1 and a profile list with currentProfile 19, the first-person arms
+became ready and the camera now follows the character on Windows (v13.1, stable).
+
+Two things are still missing, and both need item definitions sent by the server
+(H1Z1's Command.ItemDefinitions step):
+1. Menu preview / Classes tab: when the Light Assault class definition carries
+   its model words, the client asks the server for item definition 6015514
+   (opcode 09 47 00). We never reply, the definition stays "pending" and the
+   client crashes.
+2. Weapon: "player does not have anything equipped in the primary weapon slot".
+   The starter weapon is item 44 (Weapon, type 26, model Weapon_VS_Carbine007.adr).
+
+The client's item definition record is mapped (reply 09 48 00, batch 09 49 00,
+LZ4 block). Every field is known from the client's own item table EXCEPT two:
+- a u32 COLLECTION (u32 count, then u32 values), near the end of the record.
+  Candidate: profile IDs that may use the item (the client ships
+  ItemProfiles.txt: ITEM_ID, PROFILE_ID, ...; item 44 -> profiles 17, 19, 20, 21).
+  Not proven.
+- an EXTENSION MAP at the very end: entries of (key u32, value ID u32, tag u8,
+  two 32-bit words, trailing value). Tag 0 = two integers, tag 1 = two floats.
+  Candidate: item stats/attributes. Not proven.
+We don't want to guess these, so names from H1Z1 would let us check them.
+
+Our record order (field names are ours, from the client's item table columns
+where known): definition ID, flag bytes, ~13 u32 (incl. name ID, description ID,
+image set, abilities), MODEL_NAME string, two bytes, TEXTURE_ALIAS string, byte,
+ITEM_TYPE u32 and several u32, byte, four u32, TINT_ALIAS-like string, eight
+u32, two strings, three u32, string, two u32, then the u32 COLLECTION, then a
+byte, eight u32, then the EXTENSION MAP.
+
+QUESTIONS
+1. In h1z1-server, the item definition record used by Command.ItemDefinitions /
+   ItemDefinitionReply (ClientProtocol_860 and ClientProtocol_1080): give the
+   full field order with names and types. Mark especially:
+   a. any u32 array near the end (profile IDs? ability IDs? something else?);
+   b. any key -> value list whose values can be int or float (stats?), with the
+      names of its sub-fields.
+2. What does H1Z1 put in those two fields for a normal weapon and a normal
+   armour item at login? Where does that data come from (which server data file
+   or table)?
+3. Does H1Z1 send WeaponDefinitions (ReferenceData) at login? If yes: when, in
+   what order relative to item definitions and SendSelfToClient, and what does
+   a weapon entry contain (top-level fields only)?
+4. How does H1Z1 answer a client's single item-definition request at runtime
+   (which packet, and what if the item is unknown)?
+
+Please write the answers to docs/handoffs/H1Z1_ITEM_DEFINITIONS_2026-10-30.md on
+branch claude/local-v11.
