@@ -1,4 +1,194 @@
-## Current test: class19 placement and movement
+## Opus → Codex handoff (October 29)
+
+[Read the handoff](../docs/handoffs/OPUS_TO_CODEX_2026-10-29.md) — what is proven,
+what is in this branch, the pending v7 test and suggested next native tasks.
+Source patch: [PS2_LOCAL_Opus_Continuation_2026-10-29.zip](PS2_LOCAL_Opus_Continuation_2026-10-29.zip).
+
+## Result: the character walks; only the camera is stuck (v5, run 215523)
+
+Decoded position reports: after placement the character walked about 23 units
+at the normal 4 units/s, turned with the mouse, hopped once and stayed on the
+floor, while the screen stayed fixed. Input and movement work; the camera is
+not attached to the character.
+
+## Result: v7 gives the soldier a body and arms; camera still frozen
+
+Model 165 worked without a crash: VS Light Assault body, first-person arms
+resource created, the character visibly walks. The camera stays at the teleport
+point because the first-person camera is not the active camera yet.
+
+## Current test: Opus Local Test v8 (model 165 + active camera type)
+
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
+
+Same as v7; Capture Camera now also reports which camera type is active and the
+transition-camera fields that decide the switch to first person.
+461 Python tests pass. ZIP 3,024,369 bytes; SHA256 `1e6784be9e85a9c4562fcb76fdec3f2e0e0dbadb1bdab9a222b5ec57c0acc320`.
+
+## Previous: Opus Local Test v7 (body model 165 for arms + camera)
+
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
+
+Game code shows the camera attaches to the first-person arms' "camera" bone and
+detaches without arms; your soldier has always had model 0 (no arms). v7 sends
+model 165 (VS Light Assault) in the activation message's model field, located
+natively at byte 121. Same panel as v6. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
+460 Python tests pass. ZIP 3,023,484 bytes; SHA256 `abd11b09f9a901da715963a2ff9b4f97d6bf7d8556e4c80505b68d9e566ba85c`.
+
+## Result: camera confirmed frozen (v6, run 221053)
+
+Capture Camera: your character walked about 22 units while the game's camera
+object stayed exactly at the teleport target. Movement works; the camera's
+follow update does not run. Next step is a native trace of what drives the
+camera each frame (see the review's "Exact native question").
+
+## Previous: Opus Local Test v6 (camera vs character position)
+
+[Download ps2_opus_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/claude/opus-continuation-20261029/downloads/ps2_opus_local_test.zip)
+
+Adds **Capture Camera.cmd**: six read-only samples of your character's position
+next to the game's camera object position, taken while you walk after the
+bootstrap placement. It tells whether the camera stays frozen at the teleport
+point. See [the procedure](../docs/OPUS_LOCAL_TEST.md).
+458 Python tests pass. ZIP 3,022,573 bytes; SHA256 `3d666759605026247442450e7bcf25f8f3c13b0769ea325a0d0fc6cd3a72ddbc`.
+
+## Result: post-placement PreloadDone (Opus Local Test v3)
+
+Run 212014: the server's extra PreloadDone was accepted (flag back to true), but
+movement and mouse-look stayed locked. PreloadDone is ruled out as the lock.
+
+## Completed: faction character-select bodies
+
+Windows confirmed VS, NC and TR rows show their Light Assault base body.
+
+## Completed: actor asset check
+
+Your report confirmed all VS LA body and _UI preview files exist; V29's
+Body_*_Standard files do not.
+
+## Previous: actor asset check (no game launch)
+
+[Download ps2_actor_asset_check.zip](ps2_actor_asset_check.zip)
+
+Extract into a fresh folder and double-click **check_actor_assets.cmd**. It reads
+only the executable hash, pack indexes and three pinned tables; it never edits
+game files, launches the game or connects anywhere. Upload the
+**local-actor-assets-….json** it writes to `captures\`. If your copied client is
+not in the default folder, run `py -3 check_actor_assets.py --game-dir "<folder>"`.
+
+Also upload, if it still exists, the Oct 26 placement run's
+`reports\gateway-…-64044d49d88c2ce8.jsonl`. See
+[the review](../docs/reviews/opus-camera-and-appearance-leads-20261029.md).
+Continuation source patch and test log:
+[PS2_LOCAL_Opus_Continuation_2026-10-29.zip](PS2_LOCAL_Opus_Continuation_2026-10-29.zip).
+
+## Claude Opus handoff — October 29, 2026
+
+[Download the handoff bundle (ZIP, approximately 4 MB)](https://raw.githubusercontent.com/MoonzTJ/PS2_LOCAL/codex/class-definition-export/downloads/PS2_LOCAL_Opus_Handoff_2026-10-29.zip)
+
+[Read the handoff log (TXT)](PS2_LOCAL_Opus_Handoff_2026-10-29.txt)
+
+The bundle contains the paused 459-file source snapshot, report, checkpoint
+manifest and native preview/metadata evidence. The source snapshot is ahead of
+the unpacked files on this branch. It is a development handoff, not a playable
+client-test release. Native preview checks pass 23 cases; the full Python rerun
+was interrupted at the user's requested pause. Raw client/native inputs and
+older helper archives are excluded. Read the TXT before continuing development.
+
+## Current launcher: one Local Test panel
+
+[Download ps2_local_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_test.zip)
+
+Extract into a fresh folder outside the copied game. Run **Start Local Test.cmd**,
+choose the copied Local client and click **Start local session**. One server
+console and one panel remain beside the game; the startup CMD exits and client
+monitoring runs in the background. Captures and report export are in the panel,
+with older creator/bootstrap diagnostics under Advanced. No separate client,
+controls or capture CMDs, or automatic Explorer window.
+
+The faction-creation D08/D12 debug UI is omitted, retaining the MoonSol server
+label and Indar loading fix. The external status watermark is disabled. Original
+assets and recognized generated config backups are preserved. This is launcher/
+UI cleanup over the existing backend, not a character, movement or logout fix.
+No unchanged gameplay test is requested. Windows rendering/window behavior still
+needs confirmation at the next useful client test. [Instructions](../docs/LOCAL_TEST_PANEL.md).
+
+Older packages below are retained diagnostic history; do not combine their
+startup files with this package.
+
+## Admin/dev command references
+
+[Download complete shipped alias list (TXT)](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/PS2_admin_dev_commands_20261027.txt)
+
+[Download shipped aliases and expansions (CSV)](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/PS2_admin_dev_commands_20261027.csv)
+
+All283 active entries from the retained AdminCommandAliases.xml are exported,
+with282 distinct names and both player_respawn entries preserved. TXT also lists
+our20 backend console inputs and11 structured helper operations, labeled by
+input surface. The export is complete for this shipped alias file; native
+compiled-in and internal server command inventories remain incomplete. Alias
+presence does not establish working local gameplay handlers. No commands ran.
+
+## Completed diagnostic: continent and character bootstrap
+
+Actual134342 confirms an empty continent catalog and absent state-context object
+required by the recovered redeploy check. Character class19 and placement work,
+while model0/NC base/no arms persist. VS character and full starter-loadout
+initialization remain the priority; chat routing is also unfinished.
+
+[Download ps2_bootstrap_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_bootstrap_test.zip)
+
+Click **Download raw file**. Close the old local game/server, extract into a fresh
+folder outside the game, then run **start_bootstrap_test.cmd**. Choose the copied
+Local client and **LocalVSTest → Play**. At the3D view close map/menus/chat and
+run **capture_bootstrap_test.cmd once**. Return within **eight seconds** and stay
+idle until **THREE beeps**. **No W phase or commands.** Upload
+**local-bootstrap-….zip**, including failures. [Procedure](../docs/BOOTSTRAP_TEST.md).
+
+This measures continent metadata and redeploy prerequisites alongside character
+initialization, using the exact previously tested server and setup packets. It
+does not repair spawning or appearance. Unknown native checks stay unknown.
+All405 Python tests and7 native lookup cases pass; two backend starts preserve
+three saved-state files. All94 existing server/tools and26 earlier ZIPs remain
+byte-identical. Actual134342 Windows bootstrap measurements are saved; no unchanged
+rerun is requested. These instructions describe the historical diagnostic.
+
+ZIP3,004,460 bytes; SHA256:
+`45b6b92526ce4c359a039acc923fa1e7f9226a47912ac525c34466d7c76753eb`.
+
+## Completed test: local character admin permission
+
+[Download ps2_local_admin_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_local_admin_test.zip)
+
+Click **Download raw file**. Close the old local game/server, extract into a
+fresh folder outside the game, then run **start_local_admin_test.cmd**.
+Choose the copied Local client and **LocalVSTest → Play**. At the3D view close
+menus/map/chat and run **activate_and_capture_admin.cmd once**. Return within
+**eight seconds** and stay idle until **THREE beeps**. **No W-held phase**.
+Upload **local-admin-access-….zip**, including failures. After capture try
+**/loc** and report the exact response. [Procedure](../docs/LOCAL_ADMIN_TEST.md).
+
+The server grants the verified IsAdminAccount login field to all five local
+characters. The test measures the native permission and retains the existing
+class19 activation/warpgate placement. It does not grant an admin client build
+or implement every gameplay command. Windows permission delivery is now verified
+for LocalVSTest in all three224846 captures. Observer and /loc produced no visible
+effect; command execution remains unverified. Model/arms and camera remain incomplete; the CONTINENT header metadata
+issue is tracked separately and unchanged.
+
+All398 Python tests and16 native permission cases pass, including
+all-five-character encrypted delivery and stable saves across two starts.
+All25 previous helpers and87 parent members remain byte-identical.
+ZIP2,996,397 bytes; SHA256:
+`9643e66081e018c1ad060c3503cdf98b86fa967df62158749b9f5ee55d4ceaf8`.
+
+## Completed test: class19 placement and movement
+
+Actual220929 confirms actor position changes about9.48 game units between placed
+idle and W-held, with nonzero ground positions and jumping cleared. User says
+the view remained fixed and audio direction may have changed. Camera control,
+appearance, safe floor and complete spawning remain unresolved. The old test
+procedure is preserved below as history; no unchanged rerun is requested.
 
 [Download ps2_profile_placement_test.zip](https://github.com/MoonzTJ/PS2_LOCAL/blob/codex/class-definition-export/downloads/ps2_profile_placement_test.zip)
 

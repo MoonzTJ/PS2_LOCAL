@@ -1,0 +1,284 @@
+﻿source_index,alias,expansion
+24,achievements,achievement
+85,addallitems,reward give 746
+155,aitest,debug_projectiles 1;zonevar zone_debug_ai_projectiles 1
+88,alert,metagame
+94,amerish,zone 6
+139,ant,vehicle 15
+140,antfull,vehicle 15 -d -r 58 max
+147,asdf,empirescore
+241,Ayla,/loc 0-.130 451.960 6.030 1.196
+209,aziz,servertime hour 12
+173,basegun,item add 6002421
+176,bastion,"zonelua WarAssetBastion.CreateBastion(self:GetGuid(), nil, true)"
+196,bastion_add_to_guild_bank,guildbank addasset 6008913
+194,bastion_get_zone_status,zonelua WarAssetBastion_Vehicle.ZoneGetBastionStatus(self)
+193,bastion_ignore_exit,zonelua WarAssetBastion_Vehicle.IgnoreExit(self)
+192,bastion_instant_self_destruct,"zonelua WarAssetBastion_Vehicle.SelfDestructCommand(self, 0)"
+177,bastion_mount,"zonelua local bastion=WarAssetBastion.CreateBastion(self:GetGuid(), nil, true) self:MountVehicle(bastion)"
+197,bastion_refund_active_bastions,zonelua WarAssetBastion_Vehicle.RefundActiveBastions(self)
+189,bastion_reset_movement_vars,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.InitializeScriptData ~= nil then vehicle:InitializeScriptData(0) else print('You need to be in a Bastion for this command to work.') end
+190,bastion_self_destruct,"zonelua WarAssetBastion_Vehicle.SelfDestructCommand(self, 1)"
+183,bastion_speed_down_05,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(-5) else print('You need to be in a Bastion for this command to work.') end
+184,bastion_speed_down_20,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(-25) else print('You need to be in a Bastion for this command to work.') end
+181,bastion_speed_up_05,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(5) else print('You need to be in a Bastion for this command to work.') end
+182,bastion_speed_up_20,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyFlightSpeed ~= nil then vehicle:ModifyFlightSpeed(25) else print('You need to be in a Bastion for this command to work.') end
+195,bastion_timeout,zonelua WarAssetBastion_Vehicle.TimeoutCommand(self)
+186,bastion_turnRate_down_01,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyRotationRate ~= nil then vehicle:ModifyRotationRate(-1) else print('You need to be in a Bastion for this command to work.') end
+185,bastion_turnRate_up_01,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyRotationRate ~= nil then vehicle:ModifyRotationRate(1) else print('You need to be in a Bastion for this command to work.') end
+188,bastion_turnVelocityScalar_down_0005,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyTurningVelocityScalar ~= nil then vehicle:ModifyTurningVelocityScalar(-0.05) else print('You need to be in a Bastion for this command to work.') end
+187,bastion_turnVelocityScalar_up_0005,/zonelua local vehicle=self:GetMountedVehicle() if vehicle ~= nil and vehicle.ModifyTurningVelocityScalar ~= nil then vehicle:ModifyTurningVelocityScalar(0.05) else print('You need to be in a Bastion for this command to work.') end
+191,bastion_wipe_all,"zonelua WarAssetBastion_Vehicle.DestroyAllCommand(self, 1)"
+28,bcast,broadcast
+272,boat,/vehicle 2142
+151,briggs,worldvar ContinentLocking.MaxLockableContinents 3; continentlocking disablecap
+116,bux,currency max;acquiretimers clearall;resources add 58 5000 -v
+233,campaign01_AnalysisImplant,/item add 6009519
+232,campaign01sowingChaos_SpawnPlant,/npc create 53947
+231,campaign01sowingChaos_SpawnPlantSpawner,/npc create 53964
+240,Campner,/loc -42.976 500.280 -14.956 2.131
+207,CertAddPoints,skill addpoints
+270,chimera,/vehicle 2137
+105,cleanroom,zone 200
+149,clientreq,clientrequirement
+172,colossus,vehicle 2007
+18,commands_list,commands
+271,corsair,/vehicle 2142
+26,councelor,referee
+175,crystalgun,item add 6002429
+83,cstat,characterstat
+25,daily,repeatingactivity
+156,debug_zone_projectiles,debug_projectiles 1;zonevar zone_debug_ai_projectiles 1;log_projectile_expiration 1
+269,dervish,/vehicle 2136
+159,desolation,zone 338
+210,DetonateCortiumBomb,zonelua WarAsset_Merit_CortiumBomb_Npc.CommandAliasDetonate(self)
+145,disablevrgrief,zonesetting var zonesetting.grief.disabled 0 0 1;zonesetting var zonesetting.grief.damage.multiplier 0 0 0;zonesetting var zonesetting.grief.point.multiplier 0 0 0
+236,Dolan,/loc -77.320 473.210 27.730 4
+267,drainnearbysilos,"/zonelua devDebugTools.drainNearbySilosAlias( self, 50 )"
+171,drawbones,drawdebug skeleton 1 bonenames 1 bonescale 10
+157,easymoney,item add 497;currency add 11 10000
+211,ElectricalStorm,/zonelua ElectricalStorm.HelpCommand( self )
+229,elysiumDrill_GetZoneStatus,/zonelua Mission_ElysiumDrill_ControllerNpc.PrintZoneStatus(self)
+230,elysiumDrill_ResetDrills,/zonelua Mission_ElysiumDrill.ResetDrills(self)
+275,EmbassyGoto,/zonelua SanctuaryZoneScript.AliasGotoEmbassy( self )
+277,EmbassyGotoNc,"/zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 2 )"
+278,EmbassyGotoTr,"/zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 3 )"
+276,EmbassyGotoVs,"/zonelua SanctuaryZoneScript.AliasGotoEmbassy( self, 1 )"
+235,Emerson,/loc -44.610 500.280 12.990 1.142
+144,enablevrgrief,zonesetting var zonesetting.grief.disabled 0 0 0;zonesetting var zonesetting.grief.damage.multiplier 0 0 1;zonesetting var zonesetting.grief.point.multiplier 0 0 1
+141,es,empirescore
+92,esamir,zone 8
+212,EsamirStorm,/zonelua ElectricalStorm.HelpCommand( self )
+216,eStorm_Create_Storm,/npc create 53882
+226,eStorm_ForceDebugEnable,/zonelua ElectricalStorm.ForceEnable(self)
+217,eStorm_Get_Zone_Status,/zonelua ElectricalStorm.GetZoneStatusCommand( self )
+225,eStorm_InsulatedArmor_Suit,/item add 6009485;/item add 6009486
+219,eStorm_Neutralizer,/item add 6009487
+228,eStorm_OverloadMyVehicle,/zonelua ElectricalStorm.OverloadMyVehicle(self)
+218,eStorm_Remove_All,/zonelua ElectricalStorm.RemoveAllStorms( self )
+215,eStorm_SpawnBolt,"/zonelua ElectricalStorm.DebugSpawnSingleBolt(self, false)"
+214,eStorm_SpawnBolt_NoTarget,"/zonelua ElectricalStorm.DebugSpawnSingleBolt(self, true)"
+213,eStorm_SpawnBolt_UseStorm,/zonelua ElectricalStorm.SpawnBoltCommand( self )
+224,eStorm_SpawnLitArrester,/npc create 53887
+86,fac,facility
+23,faction,setfaction
+87,factype,facilitytype
+283,fillerup,/resources max 58 -t
+266,fillnearbysilos,"/zonelua devDebugTools.fillNearbySiloAlias( self, 50 )"
+273,find_a7,"/zonelua local npcs=Zone:GetAllNpcs(53767) if npcs ~= nil then for i=1, #npcs do local loc=npcs[i]:GetLocation() ZoneServer.DebugAlert('/loc '..tostring(loc.x)..' '..tostring(loc.y)..' '..tostring(loc.z)) end else ZoneServer.DebugAlert('No Npcs found') end"
+244,Fl-34,/loc 56.520 471.060 -21.740 1.9
+243,Fl34,/loc 56.520 471.060 -21.740 1.9
+121,flash,vehicle 1
+242,Flea,/loc 56.520 471.060 -21.740 1.9
+234,Foster,/loc -44.278 500.280 10.695 0
+22,fs,facilityspawn
+135,gal,vehicle 11
+136,galaxy,vehicle 11
+154,gender,/__sendzonecommand setgender
+19,ghost,noclip
+251,givecampaignitems,item add 6009468; item add 6009495; item add 6009529; item add 6009605; item add 6009694; item add 6009528
+27,gm_set,referee
+32,go,goto
+280,gofish,/item add 6013328
+238,Hadley,/loc -98.852 528.900 147.528 -1.384
+137,harasser,vehicle 12
+114,hideclientareas,render areas
+113,hideserverareas,/drawserverdebug zoneareas 0
+98,hossin,zone 4
+34,hour,timeofday
+227,IgnoreMissionRequirement,/characterflag set IgnoreMissionRequirement 1
+281,igp,/ingamepurchase
+90,indar,zone 2
+152,jaeger,worldvar ContinentLocking.MaxLockableContinents 0; worldvar MetaGameEvent.LaunchEnabled 0; bizenv set live mp_commerce_enabled 0 __no_broadcast__; bizenv set live boost_slots_enabled 0 __no_broadcast__
+268,javelin,/vehicle 2033
+239,Knightly,/loc -11.590 528.900 165.570 -0.785
+133,lib,vehicle 10
+134,liberator,vehicle 10
+125,lightning,vehicle 3
+223,LightningArrester,/item add 6009468
+221,LightningGrenade,/item add 6009459
+222,LitArrester,/item add 6009468
+220,LitGrenade,/item add 6009459
+35,loc,location
+117,loyal,currency add 7026 5000
+206,LoyaltyAddPoints,currency add 7026 
+126,magrider,vehicle 4
+205,merit_all_tactical_rewards,item add 6009014; item add 6009057; item add 6009065; item add 6009070; item add 6009046; item add 6009085
+204,merit_caltrop,item add 6009085
+202,merit_cortium_bomb,item add 6009070
+199,merit_flash,item add 6009014
+201,merit_hardlight,item add 6009065
+203,merit_javelin,item add 6009046
+200,merit_spitfire,item add 6009057
+198,MeritAddPoints,currency add 7027 
+110,mfn,zone 150
+131,mosquito,vehicle 9
+132,mossie,vehicle 9
+248,Nalla,/loc 72.233 471.060 -2.541 1.626
+158,nanites,currency add 4 750
+96,nexus,zone 10
+119,ooboff,hexcheck 1 1 1
+120,oobon,hexcheck 0 0 0
+115,op,operation
+252,operationauraximas,/mission start 610;/mission start 611;/mission start 612;/mission start 613;/mission start 614;/mission start 615;/mission start 616;/mission start 617;/mission start 618;/mission complete 610;/mission complete 611;/mission complete 612;/mission complete 613;/mission complete 614;/mission complete 615;/mission complete 616;/mission complete 617;/mission complete 618;/mission reset;/mission start 619
+253,operationmatchmaker,/mission start 547;/mission start 548;/mission start 549;/mission start 550;/mission start 551;/mission start 552;/mission complete 547;/mission complete 548;/mission complete 549;/mission complete 550;/mission complete 551;/mission complete 552;/mission reset;/mission start 553
+174,osgun,item add 6002561
+102,oshur,zone 344
+36,outfit_member_demote,guild demote
+37,outfit_member_promote,guild promote
+160,ow_advance,"zonelua AdminLuaCommand.GameModeAdminCommand(self, 'AdvanceGamePhase')"
+162,ow_hard_reset,"zonelua AdminLuaCommand.GameModeAdminCommand(self, 'Sanitize')"
+166,ow_initialize,"zonelua AdminLuaCommand.GameModeAdminCommand(self, 'Initialize')"
+161,ow_set_conquest_mode,gamemode set OutfitWars.Conquest
+164,ow_triggerVictory_nc,"zonelua Zone:SetResourceValue(97,750)"
+165,ow_triggerVictory_tr,"zonelua Zone:SetResourceValue(98,750)"
+163,ow_triggerVictory_vs,"zonelua Zone:SetResourceValue(96,750)"
+250,pipelineWaterToggle,pipeline stage Refraction;pipeline stage CompositeRefraction
+146,plarp,say
+38,player_info,info
+39,player_reset,kill
+20,player_respawn,revive
+80,player_respawn,revive
+40,profile_cert_clear,/skill reset
+41,profile_cert_clearall,skill resetset;cert clearall
+42,profile_cert_cleartree,cert clear tree
+43,profile_cert_complete,skill select;skill grant 
+44,profile_cert_completetree,cert complete current
+45,profile_cert_list,skill list
+46,profile_cert_parents,skill listpath
+47,profile_exp_add,givexp
+53,profile_implant_add,implant selectimplant
+54,profile_implant_list,implant list
+55,profile_implant_remove,implant unselectimplant
+48,profile_item_add,item add
+49,profile_item_list,item list
+50,profile_item_remove,item deleteid
+51,profile_rank_set,givexp rank
+128,prowler,vehicle 6
+282,pumpkinmassacre,/zonelua EventHauntedBastion.SpacePumpkinMassacre()
+130,reaver,vehicle 8
+148,req,requirement
+208,sap,skill addpoints 5000
+168,script_disable_respawn,zonelua Zone:DisableSpwans()
+167,script_enable_respawn,zonelua Zone:EnableSpwans()
+129,scythe,vehicle 7
+100,searhus,zone 3
+11,setfaction.indar.canyons.nc,broadcast Changing Indar's Canyons region to NC;facility setfaction 2 221;facility setfaction 2 222;facility setfaction 2 224;facility setfaction 2 225;facility setfaction 2 231;facility setfaction 2 232;facility setfaction 2 233;facility setfaction 2 234;facility setfaction 2 235;facility setfaction 2 236;facility setfaction 2 242;facility setfaction 2 243;facility setfaction 2 244;facility setfaction 2 245;facility setfaction 2 246;facility setfaction 2 247;facility setfaction 2 248;facility setfaction 2 250;facility setfaction 2 5900;facility setfaction 2 6200;facility setfaction 2 6300;facility setfaction 2 6400;facility setfaction 2 6500;facility setfaction 2 3601;facility setfaction 2 7000;facility setfaction 2 118000;
+9,setfaction.indar.canyons.ns,broadcast Changing Indar's Canyons region to Neutral;facility setfaction 0 221;facility setfaction 0 222;facility setfaction 0 224;facility setfaction 0 225;facility setfaction 0 231;facility setfaction 0 232;facility setfaction 0 233;facility setfaction 0 234;facility setfaction 0 235;facility setfaction 0 236;facility setfaction 0 242;facility setfaction 0 243;facility setfaction 0 244;facility setfaction 0 245;facility setfaction 0 246;facility setfaction 0 247;facility setfaction 0 248;facility setfaction 0 250;facility setfaction 0 5900;facility setfaction 0 6200;facility setfaction 0 6300;facility setfaction 0 6400;facility setfaction 0 6500;facility setfaction 0 3601;facility setfaction 0 7000;facility setfaction 0 118000;
+12,setfaction.indar.canyons.tr,broadcast Changing Indar's Canyons region to TR;facility setfaction 3 221;facility setfaction 3 222;facility setfaction 3 224;facility setfaction 3 225;facility setfaction 3 231;facility setfaction 3 232;facility setfaction 3 233;facility setfaction 3 234;facility setfaction 3 235;facility setfaction 3 236;facility setfaction 3 242;facility setfaction 3 243;facility setfaction 3 244;facility setfaction 3 245;facility setfaction 3 246;facility setfaction 3 247;facility setfaction 3 248;facility setfaction 3 250;facility setfaction 3 5900;facility setfaction 3 6200;facility setfaction 3 6300;facility setfaction 3 6400;facility setfaction 3 6500;facility setfaction 3 3601;facility setfaction 3 7000;facility setfaction 3 118000;
+10,setfaction.indar.canyons.vs,broadcast Changing Indar's Canyons region to VS;facility setfaction 1 221;facility setfaction 1 222;facility setfaction 1 224;facility setfaction 1 225;facility setfaction 1 231;facility setfaction 1 232;facility setfaction 1 233;facility setfaction 1 234;facility setfaction 1 235;facility setfaction 1 236;facility setfaction 1 242;facility setfaction 1 243;facility setfaction 1 244;facility setfaction 1 245;facility setfaction 1 246;facility setfaction 1 247;facility setfaction 1 248;facility setfaction 1 250;facility setfaction 1 5900;facility setfaction 1 6200;facility setfaction 1 6300;facility setfaction 1 6400;facility setfaction 1 6500;facility setfaction 1 3601;facility setfaction 1 7000;facility setfaction 1 118000;
+7,setfaction.indar.highlands.nc,broadcast Changing Indar's Highlands region to NC;facility setfaction 2 216;facility setfaction 2 226;facility setfaction 2 227;facility setfaction 2 228;facility setfaction 2 229;facility setfaction 2 230;facility setfaction 2 237;facility setfaction 2 238;facility setfaction 2 239;facility setfaction 2 240;facility setfaction 2 241;facility setfaction 2 252;facility setfaction 2 5700;facility setfaction 2 5800;facility setfaction 2 6000;facility setfaction 2 6100;facility setfaction 2 3400;facility setfaction 2 4001;facility setfaction 2 7500;facility setfaction 2 218;
+5,setfaction.indar.highlands.ns,broadcast Changing Indar's Highlands region to Neutral;facility setfaction 0 216;facility setfaction 0 226;facility setfaction 0 227;facility setfaction 0 228;facility setfaction 0 229;facility setfaction 0 230;facility setfaction 0 237;facility setfaction 0 238;facility setfaction 0 239;facility setfaction 0 240;facility setfaction 0 241;facility setfaction 0 252;facility setfaction 0 5700;facility setfaction 0 5800;facility setfaction 0 6000;facility setfaction 0 6100;facility setfaction 0 3400;facility setfaction 0 4001;facility setfaction 0 7500;facility setfaction 0 218;
+8,setfaction.indar.highlands.tr,broadcast Changing Indar's Highlands region to TR;facility setfaction 3 216;facility setfaction 3 226;facility setfaction 3 227;facility setfaction 3 228;facility setfaction 3 229;facility setfaction 3 230;facility setfaction 3 237;facility setfaction 3 238;facility setfaction 3 239;facility setfaction 3 240;facility setfaction 3 241;facility setfaction 3 252;facility setfaction 3 5700;facility setfaction 3 5800;facility setfaction 3 6000;facility setfaction 3 6100;facility setfaction 3 3400;facility setfaction 3 4001;facility setfaction 3 7500;facility setfaction 3 218;
+6,setfaction.indar.highlands.vs,broadcast Changing Indar's Highlands region to VS;facility setfaction 1 216;facility setfaction 1 226;facility setfaction 1 227;facility setfaction 1 228;facility setfaction 1 229;facility setfaction 1 230;facility setfaction 1 237;facility setfaction 1 238;facility setfaction 1 239;facility setfaction 1 240;facility setfaction 1 241;facility setfaction 1 252;facility setfaction 1 5700;facility setfaction 1 5800;facility setfaction 1 6000;facility setfaction 1 6100;facility setfaction 1 3400;facility setfaction 1 4001;facility setfaction 1 7500;facility setfaction 1 218;
+15,setfaction.indar.nc,broadcast Changing Indar to NC;facility setfaction 2 200;facility setfaction 2 201;facility setfaction 2 202;facility setfaction 2 203;facility setfaction 2 204;facility setfaction 2 205;facility setfaction 2 206;facility setfaction 2 207;facility setfaction 2 208;facility setfaction 2 209;facility setfaction 2 210;facility setfaction 2 211;facility setfaction 2 212;facility setfaction 2 213;facility setfaction 2 214;facility setfaction 2 215;facility setfaction 2 217;facility setfaction 2 219;facility setfaction 2 220;facility setfaction 2 223;facility setfaction 2 251;facility setfaction 2 5100;facility setfaction 2 5200;facility setfaction 2 5300;facility setfaction 2 5500;facility setfaction 2 3201;facility setfaction 2 3801;facility setfaction 2 4401;facility setfaction 2 216;facility setfaction 2 226;facility setfaction 2 227;facility setfaction 2 228;facility setfaction 2 229;facility setfaction 2 230;facility setfaction 2 237;facility setfaction 2 238;facility setfaction 2 239;facility setfaction 2 240;facility setfaction 2 241;facility setfaction 2 252;facility setfaction 2 5700;facility setfaction 2 5800;facility setfaction 2 6000;facility setfaction 2 6100;facility setfaction 2 3400;facility setfaction 2 4001;facility setfaction 2 7500;facility setfaction 2 221;facility setfaction 2 222;facility setfaction 2 224;facility setfaction 2 225;facility setfaction 2 231;facility setfaction 2 232;facility setfaction 2 233;facility setfaction 2 234;facility setfaction 2 235;facility setfaction 2 236;facility setfaction 2 242;facility setfaction 2 243;facility setfaction 2 244;facility setfaction 2 245;facility setfaction 2 246;facility setfaction 2 247;facility setfaction 2 248;facility setfaction 2 250;facility setfaction 2 5900;facility setfaction 2 6200;facility setfaction 2 6300;facility setfaction 2 6400;facility setfaction 2 6500;facility setfaction 2 3601;facility setfaction 2 7000;facility setfaction 2 118000;facility setfaction 2 218;
+13,setfaction.indar.ns,broadcast Changing Indar to Neutral;facility setfaction 0 200;facility setfaction 0 201;facility setfaction 0 202;facility setfaction 0 203;facility setfaction 0 204;facility setfaction 0 205;facility setfaction 0 206;facility setfaction 0 207;facility setfaction 0 208;facility setfaction 0 209;facility setfaction 0 210;facility setfaction 0 211;facility setfaction 0 212;facility setfaction 0 213;facility setfaction 0 214;facility setfaction 0 215;facility setfaction 0 217;facility setfaction 0 219;facility setfaction 0 220;facility setfaction 0 223;facility setfaction 0 251;facility setfaction 0 5100;facility setfaction 0 5200;facility setfaction 0 5300;facility setfaction 0 5500;facility setfaction 0 3201;facility setfaction 0 3801;facility setfaction 0 4401;facility setfaction 0 216;facility setfaction 0 226;facility setfaction 0 227;facility setfaction 0 228;facility setfaction 0 229;facility setfaction 0 230;facility setfaction 0 237;facility setfaction 0 238;facility setfaction 0 239;facility setfaction 0 240;facility setfaction 0 241;facility setfaction 0 252;facility setfaction 0 5700;facility setfaction 0 5800;facility setfaction 0 6000;facility setfaction 0 6100;facility setfaction 0 3400;facility setfaction 0 4001;facility setfaction 0 7500;facility setfaction 0 221;facility setfaction 0 222;facility setfaction 0 224;facility setfaction 0 225;facility setfaction 0 231;facility setfaction 0 232;facility setfaction 0 233;facility setfaction 0 234;facility setfaction 0 235;facility setfaction 0 236;facility setfaction 0 242;facility setfaction 0 243;facility setfaction 0 244;facility setfaction 0 245;facility setfaction 0 246;facility setfaction 0 247;facility setfaction 0 248;facility setfaction 0 250;facility setfaction 0 5900;facility setfaction 0 6200;facility setfaction 0 6300;facility setfaction 0 6400;facility setfaction 0 6500;facility setfaction 0 3601;facility setfaction 0 7000;facility setfaction 0 118000;facility setfaction 0 218;
+2,setfaction.indar.ocean.nc,broadcast Changing Indar's Ocean region to NC;facility setfaction 2 200;facility setfaction 2 201;facility setfaction 2 202;facility setfaction 2 203;facility setfaction 2 204;facility setfaction 2 205;facility setfaction 2 206;facility setfaction 2 207;facility setfaction 2 208;facility setfaction 2 209;facility setfaction 2 210;facility setfaction 2 211;facility setfaction 2 212;facility setfaction 2 213;facility setfaction 2 214;facility setfaction 2 215;facility setfaction 2 217;facility setfaction 2 219;facility setfaction 2 220;facility setfaction 2 223;facility setfaction 2 251;facility setfaction 2 5100;facility setfaction 2 5200;facility setfaction 2 5300;facility setfaction 2 5500;facility setfaction 2 3201;facility setfaction 2 3801;facility setfaction 2 4401;
+4,setfaction.indar.ocean.ns,broadcast Changing Indar's Ocean region to Neutral;facility setfaction 0 200;facility setfaction 0 201;facility setfaction 0 202;facility setfaction 0 203;facility setfaction 0 204;facility setfaction 0 205;facility setfaction 0 206;facility setfaction 0 207;facility setfaction 0 208;facility setfaction 0 209;facility setfaction 0 210;facility setfaction 0 211;facility setfaction 0 212;facility setfaction 0 213;facility setfaction 0 214;facility setfaction 0 215;facility setfaction 0 217;facility setfaction 0 219;facility setfaction 0 220;facility setfaction 0 223;facility setfaction 0 251;facility setfaction 0 5100;facility setfaction 0 5200;facility setfaction 0 5300;facility setfaction 0 5500;facility setfaction 0 3201;facility setfaction 0 3801;facility setfaction 0 4401;
+3,setfaction.indar.ocean.tr,broadcast Changing Indar's Ocean region to TR;facility setfaction 3 200;facility setfaction 3 201;facility setfaction 3 202;facility setfaction 3 203;facility setfaction 3 204;facility setfaction 3 205;facility setfaction 3 206;facility setfaction 3 207;facility setfaction 3 208;facility setfaction 3 209;facility setfaction 3 210;facility setfaction 3 211;facility setfaction 3 212;facility setfaction 3 213;facility setfaction 3 214;facility setfaction 3 215;facility setfaction 3 217;facility setfaction 3 219;facility setfaction 3 220;facility setfaction 3 223;facility setfaction 3 251;facility setfaction 3 5100;facility setfaction 3 5200;facility setfaction 3 5300;facility setfaction 3 5500;facility setfaction 3 3201;facility setfaction 3 3801;facility setfaction 3 4401;
+1,setfaction.indar.ocean.vs,broadcast Changing Indar's Ocean region to VS;facility setfaction 1 200;facility setfaction 1 201;facility setfaction 1 202;facility setfaction 1 203;facility setfaction 1 204;facility setfaction 1 205;facility setfaction 1 206;facility setfaction 1 207;facility setfaction 1 208;facility setfaction 1 209;facility setfaction 1 210;facility setfaction 1 211;facility setfaction 1 212;facility setfaction 1 213;facility setfaction 1 214;facility setfaction 1 215;facility setfaction 1 217;facility setfaction 1 219;facility setfaction 1 220;facility setfaction 1 223;facility setfaction 1 251;facility setfaction 1 5100;facility setfaction 1 5200;facility setfaction 1 5300;facility setfaction 1 5500;facility setfaction 1 3201;facility setfaction 1 3801;facility setfaction 1 4401;
+16,setfaction.indar.tr,broadcast Changing Indar to TR;facility setfaction 3 200;facility setfaction 3 201;facility setfaction 3 202;facility setfaction 3 203;facility setfaction 3 204;facility setfaction 3 205;facility setfaction 3 206;facility setfaction 3 207;facility setfaction 3 208;facility setfaction 3 209;facility setfaction 3 210;facility setfaction 3 211;facility setfaction 3 212;facility setfaction 3 213;facility setfaction 3 214;facility setfaction 3 215;facility setfaction 3 217;facility setfaction 3 219;facility setfaction 3 220;facility setfaction 3 223;facility setfaction 3 251;facility setfaction 3 5100;facility setfaction 3 5200;facility setfaction 3 5300;facility setfaction 3 5500;facility setfaction 3 3201;facility setfaction 3 3801;facility setfaction 3 4401;facility setfaction 3 216;facility setfaction 3 226;facility setfaction 3 227;facility setfaction 3 228;facility setfaction 3 229;facility setfaction 3 230;facility setfaction 3 237;facility setfaction 3 238;facility setfaction 3 239;facility setfaction 3 240;facility setfaction 3 241;facility setfaction 3 252;facility setfaction 3 5700;facility setfaction 3 5800;facility setfaction 3 6000;facility setfaction 3 6100;facility setfaction 3 3400;facility setfaction 3 4001;facility setfaction 3 7500;facility setfaction 3 221;facility setfaction 3 222;facility setfaction 3 224;facility setfaction 3 225;facility setfaction 3 231;facility setfaction 3 232;facility setfaction 3 233;facility setfaction 3 234;facility setfaction 3 235;facility setfaction 3 236;facility setfaction 3 242;facility setfaction 3 243;facility setfaction 3 244;facility setfaction 3 245;facility setfaction 3 246;facility setfaction 3 247;facility setfaction 3 248;facility setfaction 3 250;facility setfaction 3 5900;facility setfaction 3 6200;facility setfaction 3 6300;facility setfaction 3 6400;facility setfaction 3 6500;facility setfaction 3 3601;facility setfaction 3 7000;facility setfaction 3 118000;facility setfaction 3 218;
+14,setfaction.indar.vs,broadcast Changing Indar to VS;facility setfaction 1 200;facility setfaction 1 201;facility setfaction 1 202;facility setfaction 1 203;facility setfaction 1 204;facility setfaction 1 205;facility setfaction 1 206;facility setfaction 1 207;facility setfaction 1 208;facility setfaction 1 209;facility setfaction 1 210;facility setfaction 1 211;facility setfaction 1 212;facility setfaction 1 213;facility setfaction 1 214;facility setfaction 1 215;facility setfaction 1 217;facility setfaction 1 219;facility setfaction 1 220;facility setfaction 1 223;facility setfaction 1 251;facility setfaction 1 5100;facility setfaction 1 5200;facility setfaction 1 5300;facility setfaction 1 5500;facility setfaction 1 3201;facility setfaction 1 3801;facility setfaction 1 4401;facility setfaction 1 216;facility setfaction 1 226;facility setfaction 1 227;facility setfaction 1 228;facility setfaction 1 229;facility setfaction 1 230;facility setfaction 1 237;facility setfaction 1 238;facility setfaction 1 239;facility setfaction 1 240;facility setfaction 1 241;facility setfaction 1 252;facility setfaction 1 5700;facility setfaction 1 5800;facility setfaction 1 6000;facility setfaction 1 6100;facility setfaction 1 3400;facility setfaction 1 4001;facility setfaction 1 7500;facility setfaction 1 221;facility setfaction 1 222;facility setfaction 1 224;facility setfaction 1 225;facility setfaction 1 231;facility setfaction 1 232;facility setfaction 1 233;facility setfaction 1 234;facility setfaction 1 235;facility setfaction 1 236;facility setfaction 1 242;facility setfaction 1 243;facility setfaction 1 244;facility setfaction 1 245;facility setfaction 1 246;facility setfaction 1 247;facility setfaction 1 248;facility setfaction 1 250;facility setfaction 1 5900;facility setfaction 1 6200;facility setfaction 1 6300;facility setfaction 1 6400;facility setfaction 1 6500;facility setfaction 1 3601;facility setfaction 1 7000;facility setfaction 1 118000;facility setfaction 1 218;
+17,setfaction.indar.zurvandemo,broadcast Adjusting influence around Zurvan;facility setfaction 1 6100;facility setfaction 1 6200;facility setfaction 2 221;facility setfaction 2 235;facility setfaction 3 232;facility setfaction 3 234;
+79,sethealth,player health set
+52,sethistory,console_sethistory
+111,showclientareas,render areas
+112,showserverareas,/drawserverdebug zoneareas 1
+247,Sparky,/loc 53.580 471.060 -22.925 -2.9
+274,spawninfo,/spawncontext $admintarget$
+245,SPRK-33,/loc 53.580 471.060 -22.925 -2.9
+246,SPRK33,/loc 53.580 471.060 -22.925 -2.9
+169,startstats,zonelua Zone:GetGameMode():StartStats()
+72,statsactioneventqueue,stats 17
+64,statsanimation,stats 9
+71,statsassets,stats 16
+76,statsassetunused,stats 21
+75,statsassetusage,stats 20
+63,statsaudio,stats 8
+77,statscontent,stats 22
+69,statscontroller,stats 14
+56,statsdefault,stats 1
+65,statsderivedclass,stats 10
+70,statsflash,stats 15
+78,statsgateway,stats 23
+73,statsinput,stats 18
+74,statsinput2,stats 19
+62,statsmemory,stats 7
+68,statsnetwork,stats 13
+57,statsquick,stats 2
+61,statsrender,stats 6
+59,statstimingdetail,stats 4
+58,statstimingsummary,stats 3
+60,statstimingthreads,stats 5
+66,statszoneprofiler,stats 11
+67,statszonestats,stats 12
+170,stopstats,zonelua Zone:GetGameMode():StopStats()
+124,stryder,vehicle 2153
+123,sunderer,vehicle 2
+122,sundy,vehicle 2
+108,supercleanroom,zone 199
+82,superduperman,gm invuln toggle;fly;run 300;noclip
+81,superman,gm invuln toggle;fly;run 100
+263,tempestSiphonDebug,"/zonelua ContainmentSiteLua.DebugTempestSiphonAlias(self, 'DebugTempestSiphonStatus')"
+264,tempestSiphonToggle,"/zonelua ContainmentSiteLua.DebugTempestSiphonAlias(self, 'DebugToggleTempestSiphon')"
+265,testContainmentDamage,/characterflag set TestContainmentDamage 0
+118,timers,acquiretimers clearall
+249,Tolland,/loc 72.630 471.060 1.480 1.545
+256,tutorial2_advanceStep,/zonelua Tutorial2Mission.AliasCommand_AdvanceTutorial(self)
+257,tutorial2_debugDeath,/zonelua Tutorial2Mission.AliasCommand_DebugDeathSequence(self)
+258,tutorial2_disableAutoExit,/zonelua Tutorial2Mission.AliasCommand_DisableAutoExit(self)
+254,tutorial2_enterTutorial,/szone 103
+259,tutorial2_forceSpawnDriveAwayVehicle,/zonelua Tutorial2Mission.AliasCommand_ForceSpawnDriveAwayVehicle(self)
+260,tutorial2_gotoEchoSpawn,/zonelua Tutorial2Mission.AliasCommand_GotoEcho(self)
+261,tutorial2_gotoLightnings,/zonelua Tutorial2Mission.AliasCommand_GotoLightnings(self)
+262,tutorial2_gotoTower,/loc -24.420 524 -624.24
+255,tutorial2_startSanctuary,/mission start 381
+31,ubcast,universebroadcast
+237,Umatherin,/loc 72.666 528.900 136.495 -0.225
+138,valkyrie,vehicle 14
+127,vanguard,vehicle 5
+21,vehicle_create,vehicle
+279,Viridian,/zonelua DistantShoresZoneScripts.GotoViridianAlias( self )
+178,warasset_bypass_requirements,zonelua WarAssetSlashCommand.BypassWarAssetRequirements(self)
+33,warp,goto
+30,wbcast,worldbroadcast
+142,wds,empirescore
+143,wg,warpgate
+179,worldow,worldoutfitwar
+150,worldreq,worldrequirement
+84,wstat,weaponstat
+29,zbcast,zonebroadcast
+93,zone.amerish,zone 6
+103,zone.clean,zone 200
+104,zone.cleanroom,zone 200
+91,zone.esamir,zone 8
+97,zone.hossin,zone 4
+89,zone.indar,zone 2
+109,zone.mfn,zone 150
+95,zone.nexus,zone 10
+101,zone.oshur,zone 344
+99,zone.searhus,zone 3
+106,zone.superclean,zone 199
+107,zone.supercleanroom,zone 199
+153,zoneflag,zoneflags
+180,zoneow,zoneoutfitwar

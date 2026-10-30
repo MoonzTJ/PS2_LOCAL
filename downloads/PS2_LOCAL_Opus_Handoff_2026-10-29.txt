@@ -1,0 +1,408 @@
+PS2_LOCAL — CODEX HANDOFF TO CLAUDE OPUS
+Prepared October 29, 2026 (America/New_York)
+Status: development paused at the user's request; continuation/review requested.
+
+PURPOSE
+
+Continue the character initialization work from the saved source below. The
+immediate focus is correct VS character body/head/resource initialization, followed
+by a controllable local soldier. Please distinguish observations, synthetic test
+inputs, disassembly findings and unverified hypotheses in your response.
+
+The latest session made no backend appearance changes. It established and tested
+the actual native preview selection contract. Do not read this report as a claim
+that the character is fixed, that Windows accepted the new backend startup, or
+that another playable client-test package is ready.
+
+1. AGREED MILESTONE AND PROJECT LAYOUT
+
+The next major milestone is a playable VS Light Assault through normal login:
+- Select/create LocalVSTest and see the correct VS body, head and equipment.
+- Press Play and automatically spawn above an Indar warpgate floor.
+- Look around, walk, jump and maintain floor contact.
+- See first-person arms and an equipped starter weapon.
+- Log out to character selection and reconnect with the same saved loadout,
+  including after a server restart.
+- No separate activation or location commands.
+
+Keep territory capture, vehicles, missions, the full store and broad admin
+commands for later. Correct preview appearance alone is not this milestone.
+
+Desired dedicated-server layout:
+  PS2_Server/ — backend, rules, required data, saves, logs
+  PS2_Client/ — game executable, rendering assets, client settings
+  PS2_Tools/  — launchers and captures
+
+Current development checkout: /workspace/PS2_LOCAL
+Public repository: https://github.com/MoonzTJ/PS2_LOCAL
+IMPORTANT: the latest checkpoint source is ahead of the published helper branch.
+Do not assume that browsing GitHub supplies the current modules or validators.
+The last scoped helper publication recorded here is commit
+b5acfe31faad1ca50c8adf6c92b76b4f47fa85bb on codex/class-definition-export.
+No new GitHub publication was made for the work described below.
+
+2. START FROM THIS SAVED CHECKPOINT
+
+Checkpoint:
+  /workspace/ps2-saved-checkpoints/character-preview-contract-20261029
+Manifest SHA256:
+  cbc55ac93c4537668a02f28fde295254e9f73a11f2fe782ba214e0b500f63371
+
+PS2_LOCAL-source.zip:
+  459 source files; 3,953,031 bytes
+  SHA256 32dcf1f24367acb9dc116f19407fcf308caf656d35d2af3df3edf1043982e4b0
+preview-verification.zip:
+  70,693 bytes; native results, disassembly, source pins and interrupted test log
+  SHA256 1f8bbbc438328be0150567861216aad6e3ac2cafb173113825ed0ed7defdeb68
+
+Parent checkpoint: character-metadata-20261029
+Parent manifest SHA256:
+  312de1aad5dd0d6cf268997151f25b74e769e7ed298fcfda1c62fdab0df294e0
+That parent has the latest COMPLETED 430-test full Python pass (468.710 seconds).
+
+All 28 previous helper ZIPs are frozen and unchanged. The latest existing
+ps2_local_test.zip predates the repository/inventory changes described here.
+It must not be used as evidence that this latest source has run on Windows.
+
+The handoff bundle accompanying this report contains the latest source ZIP,
+latest checkpoint manifest, preview evidence and the parent's metadata evidence.
+It excludes the 40 MB archive of old helpers, raw native image/executable inputs,
+full original client assets, user screenshots/videos and reference-repo archives.
+Local absolute paths in this report do not automatically exist in your workspace.
+If needed, ask Moon for the specific missing input, rather than reporting a
+fixture as real execution or assuming GitHub contains it.
+
+Read these first from the source ZIP:
+  AGENTS.md
+  docs/CURRENT_CHECKPOINT.md — newest section first; older sections are history
+  docs/CLOUD_DEVELOPMENT.md
+  docs/ARCHITECTURE.md
+  docs/reviews/character-preview-contract-20261029.md
+  docs/reviews/character-metadata-20261029.md
+  docs/reviews/character-inventory-20261029.md
+  docs/reviews/character-initialization-20261029.md
+  docs/reviews/character-lifecycle-backend-20261029.md
+
+3. ACTUAL WINDOWS OBSERVATIONS SO FAR
+
+The user can log into the local character selection and request/load Indar
+geometry, sky, minimap and menu shells. Most gameplay/menu data remains empty.
+Characters have shown a headless NC-looking body even when LocalVSTest is VS.
+The world view stays fixed; no usable first-person weapon/arms have appeared.
+A manual location command moved the view to the northern warpgate interior,
+but this did not establish movement, floor contact or a player-controlled camera.
+The user reports little/no effect from chat/admin commands. The map title has
+shown 'Continent' and redeploy has been disabled. Logout historically hangs at
+loading/disconnect and requires Alt+F4.
+
+Previous Windows owned-item probes did observe two generic owned instances and
+matching equipment GUIDs. This is narrower than a working loadout or soldier.
+Other captures showed a selected actor and movement-related calculations; actor
+absence is NOT established as the sole cause of the fixed camera. Missing
+ClientResourceComponent context is a separate observed prerequisite issue.
+Do not state that territory ownership, missing scripts, loadouts, or a model
+alone is the proven cause of every symptom.
+
+4. IMPLEMENTED BACKEND FOUNDATION — CURRENT SOURCE
+
+A. Persistent characters
+  character_repository.py owns a separate SQLite characters-v1.sqlite3 database.
+  Explicit opt-in:
+    python3 local_server.py --class-delivery-probe --character-repository <separate-save-directory>
+  Creation commits character, 14 distinct starter instance GUIDs and equipment
+  links atomically. Exact creation retries are idempotent, names are unique,
+  LocalVSTest is created once and saved GUIDs survive restart. Rank changes use
+  revision checks. Arbitrary progression/inventory/appearance editing is not
+  implemented. Four historical preset characters remain compatibility placeholders.
+
+  Supported creator choices: human VS; creator profile type1; male gender1/
+  heads1–4 or female gender2/heads5–8. Creator profile type1 is not LA profile19
+  and is not proof of the class-definition type namespace.
+
+  Requested head/gender are saved. Native preview fields remain zero under the
+  V29.1 rollback. Saved appearance choices are not yet a working wire assignment.
+
+B. Normal-login sequencing
+  GatewayLoginReply
+  -> IndarZoneDetails
+  -> InitializePersistentItemMetadata (actual 09/49 bulk packet)
+  -> SendSelfToClient
+
+  First valid authenticated channel0 startup73:
+  -> identity-only ProfileDefinitions
+  -> InitializePersistentCharacterProfile (verified 138-byte profile19 transition)
+  -> ZoneDoneSendingInitialData
+
+  Channel0 opcode04 gets PreloadDone separately at the established delayed
+  V31.2 point. Wrong channels, malformed/duplicate startup and early04 do not
+  produce extra activation. Legacy presets keep their existing behavior.
+
+C. Inventory and equipment
+  profile_catalog.py resolves 24 faction/class mappings and 33,720 item definitions.
+  Supported VS LA: faction1, profile19, loadout17, tab0, 14 saved starter references.
+  Seven generic instances are actually serialized and linked in SendSelf:
+    slot7  -> 804621  (InfantryEquipment/type36)
+    slot8  -> 25      (InfantryEquipment/type36)
+    slot10 -> 6002573 (InfantryCosmetic/type39)
+    slot11 -> 108     (InfantryCosmetic/type39)
+    slot13 -> 7644    (InfantryEquipment/type36)
+    slot15 -> 6003475 (Implant/type45)
+    slot20 -> 6002619 (Implant/type45)
+  Seven weapons remain excluded from native delivery.
+
+  The equipment map row key is19. Actual DAB300 normal lookup reads the active
+  selector at player+0x218 and uses that key. A row keyed0 would miss after19
+  activation. Stored references, owned instances and equipped GUID links remain
+  separate structures. Unknown quantity/ammunition fields stay explicitly unknown.
+
+D. Early item metadata
+  character_metadata.py projects source-backed scalar/flag/string values plus
+  native constructor defaults for the same seven generic definitions. It sends
+  actual09/49 before SendSelf so B4DE10 has its required parsed metadata cache.
+  Auxiliary collections and extension maps remain constructor-empty: these are
+  partial definitions, not recovered complete live item behavior.
+  Reconnect sends metadata again without regenerating ownership or GUIDs.
+
+E. Logout
+  Repository-only C7/false -> C8/true/counted dummy string '0' is implemented.
+  It validates saved state, ends zone input and permits a fresh transport/ticket.
+  Native handler reaches its state32 handoff in an isolated fixture; encrypted
+  backend logout/reconnect/restart works. Actual Windows teardown and return to
+  character selection remain unverified. 'Reply implemented' is distinct from
+  'logout-to-selection implemented'.
+
+5. LATEST FINDING: WHY THE PREVIEW CAN LOOK NC
+
+All native addresses below are hexadecimal RVAs, not absolute addresses.
+The isolated native image base is 0x140000000.
+
+Native GUI path:
+  Lua Set3dGuiModelPlayer 142B4B0
+  -> 1236950 -> virtual+0x88 / 196ED60
+  -> 196C5F0 -> 196C950
+
+New validation/native_character_preview_check.c runs actual:
+  9A9D30 class-map reception
+  196C950 GUI preview selection
+  1151940 class lookup
+  F79C70 model lookup
+  native filename/string operations
+  1760B80 / 17548F0 head-type lookup
+
+The production identity-only class payload, with model words zero, reproduces
+an explicit request for:
+  Armor_NC_Male_Base_UI.adr
+An unknown nonzero model also produces that fallback. Native code at196CAFD
+uses a pointer at3451448 to 'Armor_NC_Male_Base.adr' at3451408 when model lookup
+fails. The GUI then changes .adr to _UI.adr.
+
+This is direct offline execution of the failure mechanism, consistent with the
+screenshots. It is not a new Windows fix or proof of the world-camera cause.
+
+Two DIFFERENT preview input paths must be respected:
+
+  Character-selection/menu path (no current-player root):
+    body = menu ModelId at object+0x40
+    head = menu HeadId at object+0x3C
+           -> character wrapper's HeadTypes lookup
+
+  Current-player/profile preview:
+    class selected using loadout object+0x04
+    body = class record male word+0x28 or female word+0x2C
+    head = selected actor's existing string+0x28F0
+
+These are decoded object offsets, NOT automatically wire offsets.
+Gender2 selects the female model; other nonzero genders choose the male model.
+Explicit gender0 inherits player+0x118. Missing class returns before an asset
+request. Missing character wrapper skips head selection. Missing actor stops
+head selection in the current-player path.
+
+All eight source HeadTypes rows resolve to their exact raw filenames. Unknown
+IDs0/999999 do not. The menu head name still contains '<gender>' at the observed
+boundary; later substitution/attachment was not executed by this checker.
+
+Controlled comparison cases insert165/166 into class model words ONLY IN TEST
+PAYLOADS. Their native decoding and selection work. These are NOT recovered
+profile19 values and were not assigned by the backend. A menu model26 still
+wins over those synthetic class values in the menu branch.
+
+Fixture limits are essential:
+- Model/head table storage and process roots are fixtures.
+- Metadata/settings are empty; tint and faction observation are fixtures.
+- Body asset function2B74C and head function3C619 are observation sinks.
+- No body resource loads, no actual head attaches, no actor is constructed.
+- Head setting0 is from the empty fixture, NOT a Windows measurement.
+  Original1962110 skips attachment for a nonpositive setting.
+- No camera, physics, control or native readiness/context flag is forced.
+
+Latest source additions:
+  validation/native_character_preview_check.c
+  validation/native_character_preview_cases.py
+  docs/reviews/character-preview-contract-20261029.md
+Existing validator change only:
+  NATIVE_PROFILE_NO_MAIN guard around native_profile_check.c's main entry.
+Latest session backend change: NONE.
+
+6. RELATED BODY / ARMS / HEAD LEADS
+
+Current Models.txt / FirstPersonArms.txt relationships:
+  model26  Body_VS_Male_Standard.adr
+           -> FPArms_VS_Male_Standard.adr
+  model97  same body filename
+           -> FPArms_VS_Male_Standard_Heavy.adr
+  model165 Armor_VS_Male_LightAssault_Base.adr
+           -> FPArmor_VS_Male_LightAssault.adr
+  model166 Armor_VS_Female_LightAssault_Base.adr
+           -> FPArmor_VS_Male_LightAssault.adr
+
+Model0 has no source model/arms table entry. Filename matching alone cannot
+recover the right model ID (26 and97 demonstrate the ambiguity). Current source
+rows and successful synthetic selection do not recover profile19's live pair.
+Actual presence/loading of corresponding _UI.adr files is also unverified here.
+
+Changed runtime model in A4B9B0 activation:
+  B9D0E0 -> model lookup F79C70 -> actor virtual+0x530
+  local actor vtable3491548 ->1111B60
+  -> E5AC40/BC91C0 ->110CAC0 -> EDF4F0 first-person arms lookup
+A prior 48-case lookup check covers all45 source arms rows plus three misses;
+resource construction/callback success is outside it.
+
+Player.HeadModelName / Player.HairModelName / Player.SkinToneName are named
+native property leads in9742A0 and976A70. Current-player preview reads actor+0x28F0.
+These names are NOT a recovered network component schema. Do not construct
+invented DA messages or property layouts from names alone.
+
+An earlier reference thought F21CC0 was preview construction; corrected analysis
+identifies it as server-queue exit. Do not carry that obsolete inference forward.
+C14ED0 actor construction and its descriptor/context remain separate work.
+Observed missing context at entity system+0x2708 affects a redeploy prerequisite;
+ClientResourceComponent and ClientGameModeComponent are distinct. No complete
+DA/context payload or supported readiness values are recovered.
+
+7. WEAPONS: REAL PARSING PROGRESS, STILL NOT USABLE WEAPONS
+
+Native WeaponDefinitions reception/finalization/factory checker passes37 cases.
+Manager constructor1243470/base12432F0, six native collections, raw/LZ4/named
+ReferenceData dispatch and B4DE10 ->1492FB0 factory initialization execute.
+Key recovered step: derived virtual+0x60 ->1248910 ->1246780 copies map keys
+into definition identities. Decoding alone leaves weapon record+0x18 at zero.
+
+Current source-backed item -> PARAM1 joins:
+  44->17, 21->13, 802768->77851, 19->9,
+  44705->75, 7->6, 6015553->78837
+
+But the formal weapon records use 105-byte synthetic constructor defaults,
+five auxiliary collections are empty, ammo/groups are empty and selected indices
+are -1. These are not recovered damage/ammo/firemode stats or playable weapons.
+Backend weapon delivery remains OFF. Existing initializer49-case regression
+also passes. Do not promote empty successful factory construction into a claim
+that the gun can equip, render or fire.
+
+8. VERIFICATION STATUS AT THE PAUSE
+
+Completed at the paused checkpoint:
+  23 native preview selection cases PASS.
+  54 original native profile cases PASS (three expected guarded input overreads).
+
+Inherited, source-pinned evidence from the parent:
+  14 combined metadata/SendSelf/inventory/equipment/profile cases PASS,
+     including actual09/49 into empty cache and repeated replacement.
+  37 native weapon-catalog cases PASS under synthetic-data boundaries.
+  49 native initializer regression cases PASS.
+  430 Python tests PASS in468.710 seconds at the metadata parent checkpoint.
+
+IMPORTANT: a NEW full Python regression run was interrupted by SIGINT when Moon
+asked to pause. Exit130/KeyboardInterrupt in preview-full-tests.log is that
+requested interruption, not a completed pass and not a diagnosed new regression.
+It stopped during profile_placement_tests. Rerun the full suite on continuation;
+do not cite 430 as a freshly completed pass on the paused preview checkpoint.
+
+No new Windows package or actual Windows gameplay test was performed for these
+source changes. No confirmed playable soldier, camera control or logout screen.
+
+9. REPRODUCING CHECKS — INPUTS REQUIRED
+
+Full Python suite from the source root:
+  python3 -m unittest discover -p '*_tests.py' -v
+
+New native preview checker:
+  gcc -O0 -fno-pie -no-pie validation/native_character_preview_check.c -o /tmp/ps2-preview-check
+  python3 validation/native_character_preview_cases.py /tmp/ps2-preview-check /workspace/ps2-native-input/loaded-20261010-032924 /tmp/ps2-preview-results.json
+
+Original profile regression:
+  gcc -O0 -fno-pie -no-pie validation/native_profile_check.c -o /tmp/ps2-profile-check
+  python3 validation/native_profile_cases.py /workspace/ps2-native-input/loaded-20261010-032924 /tmp/ps2-profile-check /tmp/ps2-profile-results.json
+
+Combined current metadata/inventory/profile checker:
+  gcc -O0 -fno-pie -no-pie validation/native_character_initialization_check.c -o /tmp/ps2-init-check
+  python3 validation/native_character_initialization_cases.py /tmp/ps2-init-check /workspace/ps2-native-input/loaded-20261010-032924 /tmp/ps2-init-results.json
+
+Native loaded section hashes:
+  section-00-text.bin, RVA1000:
+    1c006b0e94360d8999a35329abadfe05b727167ccdf971d8ef5b85ca916c6b2b
+  section-01-rdata.bin, RVA32B8000:
+    9b77a95d916825c10ca31421e42d76b9d284b5ef68b3a24a7e03666648e73d7b
+  section-09-_RDATA.bin, RVA48D0000:
+    2f15e694c5f791a90de934d73e1205aa5dc58fa3e105a9e8804259a4f15185da
+  Matching executable identity:
+    e32f897cd52e5f24e8000901ab8a18814c691eb8aeb21049b943fb1320bfe957
+  User-visible client version: v0.0.1533.609523 x64.
+
+These checks execute captured instructions in isolated Linux-mapped copies.
+They do not attach to or modify a running online game. Without the actual inputs,
+inspect the included disassembly/results, and explicitly report that you could
+not reproduce native execution. Do not substitute a different build silently.
+
+Private runtime, if available in your environment:
+  /workspace/ps2-runtime/big-test-20261029
+  preview-native-results.json
+  preview-profile-regression-results.json
+  preview-full-tests.log
+  cold-metadata-native-results.json
+  weapon-catalog-native-results.json
+  weapon-initialization-regression-results.json
+
+10. RECOMMENDED CONTINUATION FOR THIS STEP
+
+A. Confirm you have the latest source and required inputs; run/finish appropriate
+   baseline checks. Work from the paused checkpoint, not an old helper ZIP.
+
+B. Trace and implement the remaining appearance contract, separately for:
+   1) persistent creator choices -> decoded roster/menu ModelId/HeadId/gender;
+   2) selected class -> supported body model -> native model/arms resources;
+   3) saved head choice -> actual actor head string/component -> real attachment.
+   Object offsets above are leads, not guessed packet offsets. Investigate the
+   V29 failed-preview history before lifting the rollback. Complete resource
+   dependencies/callbacks instead of forcing successful readiness.
+
+C. Verify actual backend-produced bytes through native consumers. Establish how
+   metadata/equipment resources feed appearance without conflating cosmetic
+   item ownership with base model/head assignment. Keep synthetic class values
+   explicitly experimental and separate from recovered source values.
+
+D. Then address complete weapon definitions/owned weapon delivery and local-player
+   actor/context/camera/control plus automatic warpgate spawning. Keep logout-to-
+   selection/reconnect in the final acceptance criteria; it remains unfinished.
+
+A useful result from Opus would include a concrete patch/diff against this source,
+exact supporting native/table evidence, tests and their limits, files changed,
+and one clearly stated next client-test expectation when ready. If blocked,
+identify the exact missing input/field/path and why it blocks the implementation.
+Please avoid another broad explanation of what an emulator is or an unchanged
+manual activation/location test without a demonstrated new hypothesis.
+
+11. CONSTRAINTS TO PRESERVE
+
+- Read AGENTS.md; use the checkout directly, no reset/broad staging/worktree.
+- Preserve V29.1 preview rollback, V30.1 controls, V31.2 delayed preload until a
+  supported replacement is established and explicitly validated.
+- Keep class definitions, item metadata, owned instances, equipment links,
+  creator choices and actor appearance as distinct structures.
+- Do not invent mappings, force native ready/context flags or silently replace
+  unknown live data with assumed defaults and call it recovered.
+- Preserve existing saved records, immutable probes and all28 frozen helpers.
+- Local emulator work only. No bypass of live anti-cheat or access controls.
+- A correct-looking preview is not proof of world spawn or movement.
+- Do not package/publish a 'playable' candidate based only on offline fixtures.
+
+END OF HANDOFF
