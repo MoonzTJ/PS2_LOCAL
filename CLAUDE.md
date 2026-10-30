@@ -29,6 +29,12 @@ A playable VS Light Assault through normal login:
 
 ## Rules
 
+- On Moon's computer, work only inside the local PS2 project folders: the
+  PS2_LOCAL repo, the copied PS2 game folder, its reports/test output folders
+  and the native-input folder. Don't read, change, move, delete or install
+  anything elsewhere: no system settings, other programs, other user folders,
+  global Python/npm packages or environment variables. If something outside
+  those folders seems necessary, stop and ask Moon first.
 - Don't invent mappings, force native ready/context flags, or label assumed
   defaults "recovered".
 - Keep V29.1 preview rollback, V30.1 controls, V31.2 delayed preload and all 28
