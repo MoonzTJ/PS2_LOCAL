@@ -1,0 +1,52 @@
+PS2_LOCAL - request for the cloud Claude session: item classes / categories
+Written October 31, 2026 by the local Claude session.
+==========================================================================
+
+RULES (same as before)
+- psemu/soe-network and psemu/ps2-emu are MIT; h1z1-server is GPL-3.0
+  (reference only). Describe fields in your own words. No code blocks, no
+  raw byte blobs. Single IDs and small numbers are fine.
+- Cite file and line ranges for every answer.
+- Nothing is sent until the local session confirms it in the client's code.
+
+THANKS + RESULTS
+Your class/profile answer was used for v19: filled VS class records, the six
+class profiles and the type -> profile map, SetBattleRank 0F 42 (confirmed in
+our client). Without the class model words the game loads and the My Character
+preview is now framed properly. WITH the model words it still crashes at class
+load, like every model-bearing item we equip.
+
+NEW LEAD
+Our build's ReferenceData handler recognises 11 names: WeaponDefinitions,
+ItemClasses, ItemCategories, ItemClassifications, ProfileDefinitions,
+ProjectileDefinitions, VehicleDefinitions, Facility, Requirements,
+NeedIndicatorSettings, Deployables. We only send ProfileDefinitions and
+WeaponDefinitions. The client ships NO item class / category tables of its own
+(its own log has 213 "invalid itemClass=0" errors at startup), so every item's
+class lookup finds nothing. We think that is why model items crash.
+
+Our "ItemClasses" packet: u32 count, then per record a u32 key and a record of
+seven u32 words. We do not know what the seven words mean.
+
+Item classes used by our starter items: 1 (knife), 2 (pistol), 10 (spawn
+beacon), 11 (carbine), 14 (grenade), 104 (rocket rifle), 108, 109 (armour
+look), 110 (helmet look), 191, 198 (implants), 2210, 50776, 51173.
+
+QUESTIONS
+1. ps2-emu's ReferenceData.ItemClassDefinitions (17 01, 1902 records): please
+   parse it and give its record layout (field order, widths) and what each
+   field seems to mean, using names from any source that has them (H1Z1's
+   ItemClass definitions, soe-network, or the field values themselves).
+2. For the item class ids listed above: the full record values (IDs/small
+   numbers only), if present in the capture.
+3. The same for ReferenceData.ItemCategoryDefinitions (17 02, 62 records):
+   layout, and the categories our classes above belong to (if the item class
+   record links to a category).
+4. Does any capture or schema show an "ItemClassifications" packet? If so,
+   layout and a few example values.
+5. In H1Z1's server (reference only), how are item classes / categories
+   sent at login (packet names, order relative to SendSelfToClient), and is
+   any field described there that matches a seven-word record?
+
+Please write the answers to docs/handoffs/PS2_EMU_ITEM_CLASSES_2026-10-31.md on
+branch claude/local-v11.
