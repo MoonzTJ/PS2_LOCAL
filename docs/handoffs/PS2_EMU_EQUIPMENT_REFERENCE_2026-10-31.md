@@ -180,3 +180,70 @@ for later changes.
 3. Test order: SendSelfToClient with the equipment rows empty, the profile-19
    loadout filled and owned items present. Then send SetCurrentLoadout on
    ClientIsReady, after the profile and item definitions.
+
+## Addendum: how a PS2 character is assembled (psemu/ps2-character-view)
+
+Source: psemu/ps2-character-view (MIT, commit `0ea04ac`, 2015-02-14). It's a
+browser viewer that assembles a TR Heavy Assault from real ADR files in
+`assets/actors/`.
+
+**Assembly order** (`view.html` 85–103, `Character.js`): body (armor), then
+head, then helmet, then the weapon attachment. Each step starts only after the
+previous one has finished loading.
+
+**Each ADR's `<Usage>` element says how it joins the character.** Parsed in
+`Actor.js` 48–51; values from the four bundled ADRs:
+
+| ADR | actorUsage | borrowSkeleton | Bone | Other |
+| --- | --- | --- | --- | --- |
+| `Armor_TR_Male_HeavyAssault_Look001.adr` | 1 (body) | 0 (owns the skeleton) | none | `AnimationNetwork ThirdPerson.mrn`, set `Male` |
+| `Head_Male_Asian.adr` | 2 | 1 (uses the body's skeleton) | none | |
+| `Helmet_TR_Male_All_PS037.adr` | 2 | 1 (uses the body's skeleton) | none | |
+| `Weapon_TR_LMG001.adr` | 3 | 0 | `boneAttachmentName="R_weapon"` | `Rifle.mrn` |
+
+The weapon is parented to the body skeleton's `R_weapon` bone, found by the
+Jenkins one-at-a-time hash of the uppercased bone name (`Actor.js` 298–312).
+
+**Why this matters for the crash (hypothesis):**
+- Heads, helmets and other usage-2 pieces **borrow the body's skeleton**.
+- Weapons need a **bone on the body's skeleton**.
+- So every model-bearing equipment piece depends on a loaded body actor.
+
+If the body/actor model isn't set when SendSelfToClient builds the character
+(your actor+17AC = 0 lead), those pieces have no skeleton to bind to. Items
+without models never need one. That fits all of your bisect results:
+- links only or items only: fine;
+- model-less equipment: fine;
+- armor/helmet/weapons: crash.
+
+It also fits v12.1, where the same Look001 armor/helmet loaded fine through
+ActivateProfile, which sets the model first.
+
+Note: here the "Look001" armor ADR is itself a **body** actor (usage 1, owns
+the skeleton and animation network), not a skinned add-on.
+
+**Native checks:**
+1. Read `<Usage>` (actorUsage, borrowSkeleton, boneAttachmentName) in our
+   client's own ADRs:
+   - `Armor_VS_Male_LightAssault_Look001.adr`;
+   - `Helmet_VS_Male_LightAssault_Look001.adr`;
+   - the base body `Armor_VS_Male_LightAssault_Base.adr`;
+   - the weapon `Weapon_VS_Carbine007.adr`.
+2. In the crashing attach path, check whether it dereferences the owner's
+   skeleton or model (actor+17AC) for borrowSkeleton or bone-attachment
+   pieces.
+3. If so, deliver the equipment only after the body model is set. Options:
+   the loadout path (SetCurrentLoadout after ClientIsReady), or a model set
+   before the equipment, as in v12.1.
+
+The other references in Moon's list were reviewed by Codex on 2026-10-09/12
+and are about assets, maps and transport:
+- soe-pack, dbg-pack, Mandible, ps2ls/ps2ls2, forgelight-dme/zone,
+  binary-templates;
+- Sanctuary.SoeProtocol (transport only);
+- PSF-LoginServer (PS1);
+- patchside (PS1).
+
+None of them carries PS2 equipment or loadout game packets. soe-locale or
+Mandible's locale tools could resolve name IDs, for example to confirm item
+44's name or the profile names, if needed.
