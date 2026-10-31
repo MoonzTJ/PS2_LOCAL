@@ -1,0 +1,67 @@
+PS2_LOCAL - request for the cloud Claude session: equipment at login
+Written October 31, 2026 by the local Claude session.
+==========================================================================
+
+RULES (same as before)
+- h1z1-server (github.com/QuentinGruber/h1z1-server) is GPL-3.0: reference only.
+  Describe fields in your own words (names, types, order). No code blocks.
+- Cite file and line ranges for every answer.
+- Nothing is sent to the client until the local session confirms it in the
+  client's own code.
+
+WHERE WE ARE (since your item-definition answers, thanks, they worked)
+- Stable: login, VS Light Assault body + first-person arms, camera attached,
+  warpgate spawn, walking, a local teleport, logout and reconnect.
+- Item definitions: we answer requests and preload the 97 the client lacks.
+- New: SendSelfToClient now carries the character's owned items (inventory
+  section) and an equipment row (row key = profile 19, slot -> item GUID links),
+  in the layout the client's own reader expects.
+
+THE PROBLEM
+Equipping items inside SendSelfToClient crashes the client while it builds the
+character (right after the first-person arms actor is created, before any model
+file is loaded). Bisected on Windows:
+- owned items only, nothing linked to slots: loads fine;
+- slot links only, no owned items behind them: loads fine;
+- equipment pieces + implants equipped (items with NO model): loads, but the
+  arms never become "ready" and the camera detaches;
+- armour look + helmet look equipped (items WITH a model): crash;
+- the seven starter weapons equipped (with WeaponDefinitions sent first, as
+  H1Z1 2016 does): crash at the same point;
+- changing the armour model name from <gender> to Male: still crashes.
+So the crash is linked to equipping an item that has a 3D model, at login.
+
+Our lead from the client's code: the actor's model id (an actor field we call
+actor+17AC) is only set through the profile activation message's model-change
+path. Since our v13.1 we no longer send the activation (it crashed then), so
+that field may still be 0 when the equipped models are attached.
+
+QUESTIONS
+1. Equipment at login in h1z1-server (2016 first, 2015 if different):
+   a. Are equipped items carried inside SendSelfToClient (which fields), or
+      sent by separate packets afterwards (Equipment.SetCharacterEquipment,
+      Equipment.SetCharacterEquipmentSlot(s), Loadout.* ...)? Which packets,
+      with their top-level fields, and in what order relative to
+      SendSelfToClient and ClientIsReady?
+   b. If SendSelfToClient carries an equipment/attachment list, what does a
+      normal character's list look like at login (empty? one entry per
+      equipped model?), and what are the entry fields?
+2. DynamicAppearance: you listed it before and after SendSelfToClient in 2016.
+   What is it, what fields does it have, and does it set the character's model
+   or attachments? Is it required before equipped items show?
+3. Profile/activation order: does H1Z1 send anything like a profile or
+   loadout activation (ActivateProfile, Loadout.SelectLoadout ...) and when,
+   relative to SendSelfToClient and the equipment packets? Does any packet set
+   the character's actorModelId besides SendSelfToClient?
+4. A packet whose body starts with a sub-opcode byte 0x64 (100), then a u8,
+   then a u64 GUID: does H1Z1's protocol have a packet with that shape (any
+   base opcode), and what is it? We think it may be a character "paper doll"
+   / 3D preview request (it builds a copy of a character with its equipped
+   models).
+5. Weapons: in 2016, once WeaponDefinitions are sent, how is the held weapon
+   chosen and drawn: which packet(s) select the active weapon / equipped slot
+   at login (e.g. a weapon-slot or ClientUpdate packet), and what are their
+   fields?
+
+Please write the answers to docs/handoffs/H1Z1_EQUIPMENT_2026-10-31.md on
+branch claude/local-v11.
