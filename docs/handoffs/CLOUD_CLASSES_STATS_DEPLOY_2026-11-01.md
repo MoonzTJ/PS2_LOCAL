@@ -294,3 +294,10 @@ Suggested steps:
    byte at a time, and record which field changes.
 5. Then send one Create per zone (2, 4, 6, 8, 10, 96, 338, 344) and check the
    deploy list.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. Confirmed: stat ids 2/5/3/4/7 for MaxMovementSpeed/Sprint/Crouch/Backpedal/Strafe. Do crouch, backpedal and strafe speeds now behave correctly too?
+2. Does any other system log a missing 0xD1 name (look for lookups falling back to defaults)? Send any names you see so they can go into the same 0xD1.
