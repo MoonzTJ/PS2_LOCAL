@@ -2,7 +2,7 @@
 
 Layout executed through the client's reader 998560 (see
 docs/handoffs/CLOUD_VR_ENTITIES_FIREMODES_2026-11-01.md). Prints hex.
-Usage: python3 build_npc55.py [model] [faction_byte]
+Usage: python3 build_npc55.py [body_model] [faction_byte] [head_model]
 """
 import struct, sys
 
@@ -19,11 +19,13 @@ def packed_uint(v):
     raise ValueError(v)
 
 
-def build(guid=0x4000000000000001, tid=100, model=165, faction=2,
+def build(guid=0x4000000000000001, tid=100, model=165, faction=2, head=0,
           pos=(586.6, 467.2, -212.2), rot=(0, 0, 0, 1), scale=(1, 1, 1, 1)):
     b = bytes([0x0F, 0x55]) + struct.pack('<Q', guid) + packed_uint(tid)
     b += bytes(8) + struct.pack('<I', 0) + bytes([faction])
-    b += struct.pack('<II', 0, model) + struct.pack('<4f', *scale)
+    # +0x34 = body model id (looked up in the model manager, AD969B);
+    # +0x38 = second model id, probably the head (AD96EC, used only if > 0)
+    b += struct.pack('<II', model, head) + struct.pack('<4f', *scale)
     b += s() + s() + struct.pack('<I', 0) + struct.pack('<3f', *pos)
     b += struct.pack('<4f', 0, 0, 0, 0) + struct.pack('<4f', *rot) + struct.pack('<I', 0)
     b += s() + s() + s() + struct.pack('<3I', 0, 0, 0) + bytes([0])
@@ -36,5 +38,6 @@ def build(guid=0x4000000000000001, tid=100, model=165, faction=2,
 if __name__ == '__main__':
     m = int(sys.argv[1]) if len(sys.argv) > 1 else 165
     f = int(sys.argv[2]) if len(sys.argv) > 2 else 2
-    out = build(model=m, faction=f)
+    h = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+    out = build(model=m, faction=f, head=h)
     print(len(out), out.hex())

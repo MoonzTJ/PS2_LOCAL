@@ -39,8 +39,8 @@ Results:
 | next | 8 raw bytes | +0x24 | unknown, send 0 |
 | next | u32 | +0x2C | nameId (text id) |
 | next | u8 | +0x30 | probably **factionId** (h1z1-860 puts a u8 faction just before the model) |
-| next | u32 | +0x34 | unknown |
-| next | u32 | +0x38 | **modelId** (TRACED by the earlier static read) |
+| next | u32 | +0x34 | **body modelId** (corrected: see CLOUD_NPC_MODEL_REMOVE) |
+| next | u32 | +0x38 | second model id, probably the head (corrected) |
 | next | 4 floats | +0x40 | **scale** |
 | next | string, string | +0x50, +0x68 | unknown (h1z1: texture, string13) |
 | next | u32 | +0x98 | unknown |
