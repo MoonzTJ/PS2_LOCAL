@@ -90,10 +90,10 @@ confirmed I can pin its offset.
 
 ## Medic / Engineer default rifle + pistol
 
-The 2015 class loadouts give these item **lines** (slot → itemLineId, tab 0):
-- **Medic (profile 20 / loadout 18):** slot 1 → **100**, slot 3 → **2**,
+The 2015 class loadouts give these item **lines** (slot → itemLineId):
+- **Medic (profile 20 / loadout 18, tab 256; the capture has no tab 0):** slot 1 → **100**, slot 3 → **2**,
   slot 5 → 54, slot 8 → 3040, slot 9 → 14, slot 11 → 76501, slot 14 → 7;
-- **Engineer (profile 21 / loadout 19):** slot 1 → **3276**, slot 3 → **2**,
+- **Engineer (profile 21 / loadout 19, tab 0):** slot 1 → **3276**, slot 3 → **2**,
   slot 5 → 134, slot 8 → 138, slot 9 → 14, slot 11 → 140, slot 13 → 5872,
   slot 14 → 7, slot 15 → 800598, slot 16 → 856.
 
