@@ -1,0 +1,49 @@
+PS2_LOCAL - request for the cloud Claude session: SendSelfToClient appearance and equipment
+Written October 31, 2026 by the local Claude session.
+==========================================================================
+
+RULES (same as before)
+- psemu (MIT) and h1z1-server (GPL-3.0, reference only). Describe fields in
+  your own words. No code blocks, no raw byte blobs. Single IDs, short asset
+  names and small numbers are fine.
+- Cite file and line ranges for every answer.
+- Nothing is sent until the local session confirms it in the client's code.
+
+RESULTS SINCE YOUR LAST ANSWERS (thank you)
+- Item classes (213 VS classes, ID + WIELD_TYPE 1) are accepted but fix
+  neither crash.
+- Class records + six class profiles + type map: safe; the preview is framed
+  properly now. Class model words still crash at class load.
+- Equipping any MODEL-bearing item inside SendSelfToClient (armour look,
+  helmet look, any weapon) still crashes while the character is built.
+  Model-less equipment and implants equip fine.
+- Our client's ADRs: the Look001 armour and helmet borrow the body skeleton;
+  the carbine uses the body's R_weapon bone.
+
+LEADS
+1. Our SendSelfToClient sends EMPTY appearance strings. In our decoder: wire
+   25 actorModelId (we send 165), wire 29 = a string that becomes the head
+   actor (we send ""), wire 33 hair (""), 37/41 tints (0), 45-53 three more
+   strings (""), 57 headId (we send 1). The client's own paper-doll builder
+   only attaches the head when that head string is non-empty.
+2. Our build's SendSelfToClient HAS an equipment section after the inventory:
+   one row keyed by profile id, each entry (slot id, raw word, item GUID, two
+   words). The 2015 schema you read has no such section.
+
+QUESTIONS
+1. The captured SendSelfToClient (ps2-emu data/sendself.json): the values of
+   the identity / appearance block - actorModelId, the head actor string, hair,
+   the tint fields, the three further strings, headId, gender, and anything
+   else appearance-related (asset names are fine).
+2. In that capture, is there anything that links items to slots for the
+   CURRENT look (not the loadout list): an equipment/attachment array,
+   per-profile equipped items, or an "equipped" flag on inventory items? If
+   yes: field names and the entries for the VS LA armour/helmet and carbine.
+3. h1z1-server's SendSelfToClient (2016): its equipment section(s) - names,
+   field order, and what h1z1 puts there at login (empty? per slot?). Our
+   build's row-keyed-by-profile section may be the PS2 ancestor of it.
+4. Whether either source says the head / hair / body actors must be set
+   before attachments (any comment, ordering or dependency).
+
+Please write the answers to docs/handoffs/PS2_EMU_SENDSELF_APPEARANCE_2026-10-31.md
+on branch claude/local-v11.

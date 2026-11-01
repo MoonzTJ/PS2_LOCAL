@@ -1,0 +1,48 @@
+Request for the cloud session (2026-11-01): a usable VS starter carbine (item 44, weapon key 17)
+
+Context (Windows tests, build v0.0.1533.609523)
+- The class records with model words, sent after placement, now make the profile preview show
+  Armor_VS_Male_LightAssault_Base_UI.adr (v23, no crash).
+- Loadout 86 07 (D2B170: 86 07 | type u8 | kind u8 | u32) with kind 0 sets the ACTIVE SLOT
+  (manager+250) and 15D9B60 equips that slot from the current loadout record into player+7D830.
+  A read-only runtime snapshot showed all 14 starter slots, 14 owned items and their definitions
+  are present (slot 1 = item 44, Weapon_VS_Carbine007.adr).
+- Sending 86 07 for slot 1 crashes the client, also when sent manually while standing in the
+  world. Our WeaponDefinitions still sends weapon 17 as the 105-byte constructor-default record
+  (no ammo slots, no fire groups) and five empty collections; the SendSelf weapon instance
+  detail (144ECA0) has zero ammo/group counts and selected group -1.
+
+What I traced statically in this build (please verify natively)
+- WeaponDefinitions container 97C3A0 reads six collections into manager +48/+60/+78/+90/+C8/+100:
+  9B2E30 (weapons, element 9A4500), 9B2880 (element 990D00), 9B2CF0 (element 990F90 -> 9A07F0),
+  9AAB20 (element 9AAF50), 9B2BA0 (element 9910C0), 9AA5C0 (element 985EB0).
+- Weapon record 9A4500 (after the u32 key): +24 u32, +20 u8, +28..+40 seven u16, +44 u32,
+  +48/+4C floats, +50/+54 u16, +58 u32, +5C 9ABC50 (8 bytes), +68 string, +80/+84/+88/+8C u16,
+  +94 u32, +98/+9C floats, +A0 u32, +A4 u32, 9AC030 ammo-slot array (element 986560: u32 ammoId,
+  u16 clip, u32 capacity, u8 +C, u8 +18, three strings), 9ADED0 u32 array (fire group ids),
+  +90 u16, +D8 u32, +DC u32, then 9A8A80 at +E0 and +E4. Sizes add up to the 105-byte default.
+- Fire group 990D00: u32 array (fire mode ids), u8, u16 +3C, u32 +40, u16 +44, u8 +48, u8 +4C,
+  u16 +50/+54/+58 (matches soe-network's fire group schema).
+
+Please
+1. Map the fire-mode reader 9A07F0 field by field (widths, order, nested arrays/strings) and the
+   other three collections' elements (9AAF50, 9910C0, 985EB0). Give the constructor-default
+   wire size of a fire mode record, like the 105 bytes for a weapon.
+2. With the native weapon oracles (validation/native_weapon_*_check.c), build and verify a
+   WeaponDefinitions body where:
+   - weapon 17 = the captured values (group 24, "Rifle", times 550/250/150/150/125/150/300,
+     pitch -85..85, ammo slot 0 = ammoId 1 clip 30 capacity 210, fire groups [15, 1015]);
+   - fire groups 15 -> modes [15, 115] and 1015 -> modes [1015, 1115] (flags 8, transition 500);
+   - fire modes 15/115/1015/1115 as constructor defaults plus whatever links are required
+     (ammo slot 0, ammo item), with any values you can verify.
+   Confirm the reader accepts it and the factory/instance initialization (144ECA0 path) selects
+   a valid group and mode instead of -1.
+3. Give the item 44 SendSelf weapon-instance detail that matches it (capture: ammo
+   [(30,180),(1,3),(1,1),(1,1)], groups 15 and 1015 with two mode entries {0,0,143,0} each),
+   in this build's 144ECA0 layout, and say which selected group/mode value is correct.
+4. If the oracle can call the active-slot path (15D9B60 / the weapon draw after 86 07), say
+   what else it dereferences that a server must have sent (e.g. ammo item definitions,
+   projectile mapping, player-state groups).
+
+Please answer in docs/handoffs/PS2_EMU_WEAPON17_2026-11-01.md. Reference repos as before:
+psemu (MIT) for structure only, h1z1-server (GPL) for reading only, no copied code.
