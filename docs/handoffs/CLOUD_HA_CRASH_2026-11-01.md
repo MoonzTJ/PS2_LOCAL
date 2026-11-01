@@ -110,3 +110,11 @@ stack. Fix 1 removes the crash for both paths either way.
 3. `!class heavy` → relog → My Profile.
 4. Check AssetFailure.log for remaining "GenderDefinition is nullptr" lines,
    then find the gender table as described.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. Does AssetFailure.log still show 'GenderDefinition is nullptr' with gender = 1?
+2. Which table does the model manager's +0x98 object load (look for a Gender*.txt next to Models.txt/RaceDefinitions.txt)? Is it present in your packs?
+3. What GENDER value do Models.txt rows 165, 173 and 7430 have?

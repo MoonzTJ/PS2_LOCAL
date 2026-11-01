@@ -109,3 +109,13 @@ Cheapest way to find it: on Windows, set a hardware **write breakpoint on
 `[M]+0x08`** (x64dbg: Breakpoint → Hardware, Write, 8 bytes) before login,
 and note the RIP that writes it. If it never fires, the client expects the
 records from a packet you don't send yet. Try `A3 13` anyway and report.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. Do you currently send ClientGameSettings (base opcode 0x60) at login? If yes, what is the 5th field (dword3)? Please change it to 1, then report whether the 'nothing equipped in the primary weapon slot' error goes away.
+2. After that change, dump `[[base+0x41709F0 decoded]+0xF8]` (the primary slot id). Is it 1?
+3. In the same dump, is the equipment map at player+0x7D840 populated (count at +0x8+0xA0 > 0)?
+4. If the v49 equipment section crashes the player build, send the Breakpad fault address and stack.
+5. Deploy screen: set a hardware write breakpoint on `[M]+0x08` (M = [base+0x41DD050]) during login and report the writing RIP, or say that it never fires.

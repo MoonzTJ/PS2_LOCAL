@@ -115,3 +115,12 @@ draw sequence uses the weapon's equip time (550 ms) and animation set.
 If still no model, send a dump at the moment after 86 07. Which function is
 waiting (the weapon state at the active slot) will show what's missing, for
 example the animation set "Rifle" lookup or the item's ACTIVE equip slot.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. With 1.0 at fire-mode bytes 152/156: can you move while a weapon is drawn?
+2. Does the carbine model appear now? Is any Weapon_* asset requested after `86 07`?
+3. Which item ids did ItemLines 100 / 2 / 3276 resolve to in your client? (You sent 20 and 29000. Was the pistol line 2 resolved too?)
+4. Any new crash on switching weapons: send the fault address.

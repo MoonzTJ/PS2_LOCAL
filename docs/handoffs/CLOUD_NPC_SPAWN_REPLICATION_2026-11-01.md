@@ -192,3 +192,11 @@ equipment slot is active. Check AssetFailure.log for that ADR, and check that
 the item's ACTIVE equip slot matches the slot you equip. Also check the
 first-person arms: weapons attach to the arms' weapon bone in first person.
 Send a dump or log if it persists.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. Send one `0F 55` (layout in section 1) for a target dummy at (586.6, 467.2, -212.2). What do LightweightProxy.log and AssetFailure.log say? Does it appear?
+2. If the client rejects or misreads `0F 55`, send a dump at the moment it is handled (A51214 → A50570).
+3. For a hittable target: which component class names show up for NPCs in your client (the getter table at 1350240-13502E9)? Is there a health or damage one we should try?

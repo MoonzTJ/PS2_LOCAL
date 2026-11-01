@@ -97,3 +97,12 @@ handler table you already have.
 1. The manager dump (deploy screen).
 2. The actor flag dump (observer).
 3. The 0xE6 sub-table decode, once we know what the server should send.
+
+## Questions for the local session
+
+Please answer these in your next request (numbers help):
+
+1. Dump the continent manager M = [base+0x41DD050]: the node list at M+0x08 (record+0x10 = zoneId, first 0x40 bytes) and the M+0x20 list after login. Is M+0x08 empty?
+2. Send `A3 13` with one 17-byte entry per zone (zoneId first). Does the deploy list change at all?
+3. Observer: dump local actor+0x9F0…0x9F8 before and after typing `observer`. Is bit 4 of +0x9F7 set?
+4. Which packets does the client send after `observer` besides `09 DF 04` (any base 0xE6)? Please include the payloads.
