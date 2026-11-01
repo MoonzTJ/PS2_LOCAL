@@ -255,3 +255,42 @@ loaded sections and say which pointer was null and what data it expects. It
 costs Moon one minute per crash and turns guessing into a direct answer. Also
 useful: the last 50 lines of the client log and GFxWrap.log from the same
 run.
+
+### Replication decode: starting points for the local session
+
+The cloud session stopped here and handed the decode over. Log-string
+cross-references (.rdata string → code that references it):
+
+| String | .rdata | Referenced at |
+| --- | --- | --- |
+| `Received ReplicationCreatePacket for transientId=%u…` | 34EA730 | 135062A |
+| `Received ReplicationDestroyPacket for repId=%u class=%x but it was not cached` | 34EA790 | 1350D1C |
+| `Received ReplicationUpdatePacket for repId=%u…` | 34EAB20 | 1350DF1 |
+| `ReplicationUpdatePacket: Sequence (%u) doesn't match…` | 34EAB80 | 1350EA4 |
+| `Replication update in-place failed…` | 34EAC00 | 1350F63 |
+| `Received ReplicationUpdateFullPacket…` | 34EAC60 | 1351292 |
+| `Replication data type (%x) type (%d) for guid (%lld)…` | 34EA640 | 13507CD |
+
+All of these sit in the region **≈1350439–13513xx**. It looks like one large
+replication dispatcher, or adjacent handlers, with no direct callers, so it is
+reached through a vtable or registry. The component class
+`ContinentalReplicationData` has vtables 34EA280 / 34EA2E8 and name getter
+1350280. Slot 7 differs between the two vtables (19D6BFC vs 134FB90).
+
+Suggested steps:
+1. Find how the dispatcher is reached:
+   - check the registry (A083F → 962010) registrations whose callbacks land in
+     134xxxx–135xxxx;
+   - or look for the replication manager's vtable that points at 1350439.
+   That gives the replication **base opcode and its sub-opcodes** (create /
+   update / update-full / destroy).
+2. Map each packet's header: repId / transientId, class id (`class=%x`),
+   sequence, owner guid.
+3. Find the class-id → component table, and the id for
+   `ContinentalReplicationData`.
+4. Map that component's serialized fields against the 34 ContinentBattleInfo
+   columns above. Use the probe method from `validation/opus_weapon17`
+   (`probe_check.c` / `probemap.py`): run the real reader on zeros, flip one
+   byte at a time, and record which field changes.
+5. Then send one Create per zone (2, 4, 6, 8, 10, 96, 338, 344) and check the
+   deploy list.
