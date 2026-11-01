@@ -6,6 +6,17 @@ Moon has a local copy of PlanetSide Arena's game assets. Arena is a 2019
 Forgelight fork of PS2 that shut down in January 2020. **Keep every Arena file
 local. Never commit any of it.**
 
+## Client assets changed (Moon, 2026-11-01)
+
+Moon has **added some PS:A map data into the local client's assets**. Treat the
+copied client as modified from now on:
+- Re-check any asset pins and pack hashes the tests rely on before trusting
+  new results.
+- When a result changes (map, terrain, zone loading, crashes), first ask
+  whether the Arena data is involved.
+- Ask Moon which files were added and where, and record that in
+  `docs/CURRENT_CHECKPOINT.md`.
+
 ## Why it matters
 
 - It is **not newer than our client**. Our build is DX11; PS2 moved to DX11
